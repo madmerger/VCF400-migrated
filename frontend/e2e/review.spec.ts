@@ -32,3 +32,14 @@ test('LEARN EOF retains cursor for F8 and restores forward navigation',async({pa
   await page.keyboard.press('F8');await expect(page.getByTestId('page-number')).toHaveText('PAGE 07');
   await expect(page.getByTestId('error-row')).toHaveText('');await expect(page.getByTestId('key-F5')).toBeEnabled();
 });
+
+test('LEARN first page disables F8 and physical F8 sends no resolve request',async({page})=>{
+  await page.getByTestId('menu-1').click();await expect(page.getByTestId('page-number')).toHaveText('PAGE 01');
+  await expect(page.getByTestId('key-F8')).toBeDisabled();
+  const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/resolve'))requests.push(r.url());});
+  await page.keyboard.press('F8');
+  await page.keyboard.press('F5');await expect(page.getByTestId('page-number')).toHaveText('PAGE 02');
+  expect(requests).toHaveLength(1);await expect(page.getByTestId('key-F8')).toBeEnabled();
+  await page.getByTestId('key-F8').click();await expect(page.getByTestId('page-number')).toHaveText('PAGE 01');
+  await expect(page.getByTestId('error-row')).toHaveText('');
+});

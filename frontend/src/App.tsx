@@ -80,6 +80,7 @@ export function App() {
     }
     if(key==='F12'&&['vote','post','read'].includes(view)){await open(profile==='MM2024'?'menu':'kiosk');return;}
     if(view==='learn'&&data.fKeys?.[key]){
+      if(key==='F8'&&(data.page||0)<=1&&!data.backPage)return;
       const result=await request(`/learn/${encodeURIComponent(collection)}/resolve`,'POST',{from:data.page||0,action:key,backPage:data.backPage||0});
       if(result.message)return;
       if(result.callScreen)setCall(result.callScreen);
@@ -124,7 +125,7 @@ export function App() {
         {['VOTEEND','ENDCMT','ENDOFCON','DAVE'].includes(data.screen||'')&&<div className="panel success-card" data-testid="completion"><span className="success-icon">{data.screen==='ENDOFCON'?'◷':'✓'}</span>{data.CMTID!==undefined&&<h2 data-testid="new-comment-id">{data.CMTID}</h2>}<button onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button></div>}
         {view==='settings'&&<div className="panel"><div className="eyebrow">VOTING PERIOD</div><h2 data-testid="voting-status">{data.ALWVOTE==='Y'?'受付中 / Open':'受付終了 / Closed'}</h2>{token.current?<button data-testid="toggle-voting" disabled={busy} onClick={async()=>{const result=await request('/settings','PATCH',{ALWVOTE:data.ALWVOTE==='Y'?'N':'Y'});if(result.ALWVOTE)setData(result);}}>投票受付を切り替える</button>:<p>変更には展示キオスクでの管理者認証が必要です。</p>}</div>}
         {view==='info'&&data.content&&<article className="panel">{data.content}</article>}
-        <footer className="actions">{Object.entries(data.fKeys||{}).sort().map(([key,label])=><button data-testid={`key-${key}`} key={key} disabled={busy||(view==='learn'&&(data.ended||(key==='F5'&&data.allowForward===false)))} onClick={()=>void keypress(key)}><kbd>{key}</kbd>{label}</button>)}{['settings','auth'].includes(view)&&<button data-testid="admin-exit" disabled={busy} onClick={()=>void keypress('F3')}><kbd>F3</kbd>Exit</button>}{view!=='menu'&&<button className="quiet" data-testid="return-menu" onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button>}</footer>
+        <footer className="actions">{Object.entries(data.fKeys||{}).sort().map(([key,label])=><button data-testid={`key-${key}`} key={key} disabled={busy||(view==='learn'&&(data.ended||(key==='F5'&&data.allowForward===false)||(key==='F8'&&(data.page||0)<=1&&!data.backPage)))} onClick={()=>void keypress(key)}><kbd>{key}</kbd>{label}</button>)}{['settings','auth'].includes(view)&&<button data-testid="admin-exit" disabled={busy} onClick={()=>void keypress('F3')}><kbd>F3</kbd>Exit</button>}{view!=='menu'&&<button className="quiet" data-testid="return-menu" onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button>}</footer>
       </section><footer className="page-footer"><span>VCF/400</span><span>Preserving the past. Inspiring what's next.</span></footer>
     </main>
     {call&&<div className="modal-backdrop"><section className="panel modal" role="dialog" aria-modal="true" aria-labelledby="call-title"><div className="eyebrow">LEARN/400 · PROGRAM</div><h2 id="call-title" data-testid="call-title">{call.screenTitle}</h2><p>Vintage Computer Festival · VCF/400</p><button data-testid="call-return" onClick={()=>setCall(undefined)}>LEARN/400へ戻る</button></section></div>}
