@@ -69,6 +69,21 @@ class ApiSecurityTest {
         return mapper.readTree(response.getResponse().getContentAsByteArray()).path("token").asText();
     }
 
+    @Test void logoutRevokesOnlySuppliedTokenAndIsIdempotent() throws Exception {
+        String first = token();
+        String second = token();
+        mvc.perform(post("/api/admin/logout").header("Authorization", "Bearer " + first))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.loggedOut").value(true));
+        mvc.perform(patch("/api/settings").header("Authorization", "Bearer " + first)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"N\"}"))
+                .andExpect(status().isUnauthorized());
+        mvc.perform(patch("/api/settings").header("Authorization", "Bearer " + second)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"Y\"}"))
+                .andExpect(status().isOk());
+        mvc.perform(post("/api/admin/logout")).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/logout").header("Authorization", "Bearer invalid")).andExpect(status().isOk());
+    }
+
     @Test void settingsRequireToken() throws Exception {
         mvc.perform(patch("/api/settings").contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"N\"}"))
                 .andExpect(status().isUnauthorized());

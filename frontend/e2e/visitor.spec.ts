@@ -6,6 +6,7 @@ import caseDocument from '../../tests/cases.json' with { type: 'json' };
 type Scenario = typeof caseDocument.cases[number];
 type Values = Record<string, unknown>;
 const fixtureHeaders={'X-E2E-Key':process.env.VCF_E2E_KEY!};
+const backend=`http://127.0.0.1:${process.env.VCF_BACKEND_PORT||8080}`;
 const ledger=JSON.parse(readFileSync(resolve('../spec/tools/spec_data.json'),'utf8'))['画面台帳'] as string[][];
 async function responseTo(page:Page,path:string,perform:()=>Promise<unknown>){
   const waiting=page.waitForResponse(r=>r.url().includes('/api'+path));
@@ -44,7 +45,7 @@ for(const scenario of caseDocument.cases){
     const c=scenario as Scenario;
     const input=c.inputs as Values;
     const expected=c.expected as Values;
-    const reset=await request.post('http://127.0.0.1:8080/api/e2e/reset',{headers:fixtureHeaders,data:c.setup});
+    const reset=await request.post(`${backend}/api/e2e/reset`,{headers:fixtureHeaders,data:c.setup});
     expect(reset.ok()).toBeTruthy();const before=await reset.json();
     await page.addInitScript(({id,name})=>{
       document.addEventListener('DOMContentLoaded',()=>{
@@ -135,7 +136,7 @@ for(const scenario of caseDocument.cases){
       if(key==='note')continue;
       expect(actual[key],`${c.id} ${key}`).toEqual(value);captured[key]=actual[key];
     }
-    const counts=await request.get('http://127.0.0.1:8080/api/e2e/counts',{headers:fixtureHeaders});
+    const counts=await request.get(`${backend}/api/e2e/counts`,{headers:fixtureHeaders});
     const after=await counts.json();
     expect(after.votes).toBe(before.votes+(c.function==='投票'&&expected.saved===true?1:0));
     expect(after.comments).toBe(before.comments+(c.function==='ゲストブック投稿'&&expected.saved===true?1:0));

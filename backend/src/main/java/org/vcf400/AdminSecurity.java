@@ -71,5 +71,9 @@ public class AdminSecurity {
         }
     }
 
+    public void revoke(String authorization) {
+        if (authorization != null && authorization.startsWith("Bearer ")) tokens.remove(authorization.substring(7));
+    }
+
     public void revokeAll() { tokens.clear(); }
 }

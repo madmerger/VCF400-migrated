@@ -36,6 +36,13 @@ export function App() {
     } catch {setNetworkError('接続できません。接続を確認して再試行してください。');return {};}
     finally {setBusy(false);}
   }
+  async function logout() {
+    try {if(token.current)await request('/admin/logout','POST');}
+    finally {token.current='';setFields({});setCall(undefined);}
+  }
+  async function signOff() {
+    await logout();setView('info');setData({screen:'SIGNOFF',screenTitle:'Sign Off the System'});
+  }
   async function open(next:View, p=profile, c=collection) {
     setCall(undefined);setFields({});setProfile(p);setCollection(c);setView(next);
     const paths:Partial<Record<View,string>>={menu:'/menu',vote:endpoint('/vote',p),post:endpoint('/guestbook/form',p),read:endpoint('/guestbook/1',p),learn:`/learn/${encodeURIComponent(c)}`,kiosk:`/kiosk/${encodeURIComponent(p)}`,exhibits:'/exhibits',settings:'/settings'};
@@ -68,6 +75,9 @@ export function App() {
   }
   async function keypress(key:string){
     if(busy||call)return;
+    if(key==='F3'&&['settings','auth'].includes(view)){
+      await logout();await open(profile==='MM2024'?'menu':'kiosk');return;
+    }
     if(key==='F12'&&['vote','post','read'].includes(view)){await open(profile==='MM2024'?'menu':'kiosk');return;}
     if(view==='learn'&&data.fKeys?.[key]){
       const result=await request(`/learn/${encodeURIComponent(collection)}/resolve`,'POST',{from:data.page||0,action:key,backPage:data.backPage||0});
@@ -95,7 +105,7 @@ export function App() {
       <section className="workspace" aria-busy={busy}><div className="eyebrow">EXPLORE. CONNECT. REMEMBER.</div><h1 data-testid="screen-title">{heading}</h1><div className="intro">コンピューターの歴史を、体験から。展示を巡り、学び、あなたの声を残しましょう。</div>
         <div className="error-row" data-testid="error-row" role="alert" data-row={data.errorPosition?.row} data-column={data.errorPosition?.column} data-length={data.errorPosition?.length}>{displayError||'\u00a0'}</div>
         {view==='menu'&&<div className="menu-grid">{['Start Here','Office Tasks','Entertainment','Exhibit Tasks','System Tasks','Administration'].map(group=><section className="menu-group" key={group}><h2>{group}</h2>{data.items?.filter(item=>item.group===group).map(item=><button className="menu-option" key={item.number} data-testid={`menu-${item.number}`} disabled={!item.implemented} onClick={()=>{
-          if(item.action==='signoff'){setView('info');setData({screen:'SIGNOFF',screenTitle:item.title});return;}
+          if(item.action==='signoff'){void signOff();return;}
           const next:Record<string,View>={learn:'learn',vote:'vote','guestbook-post':'post','guestbook-read':'read'};void open(next[item.action],'MM2024','global');
         }}><span className="option-number">{item.number.toString().padStart(2,'0')}</span><span>{item.title}</span><span className="arrow">↗</span></button>)}</section>)}</div>}
         {view==='exhibits'&&<div className="exhibit-grid">{data.exhibits?.map(exhibit=><article className="exhibit-card" key={exhibit.EXHUSRPRF} data-testid={`exhibit-${exhibit.EXHUSRPRF}`}><div className="eyebrow">{exhibit.EXHUSRPRF}</div><h2>{exhibit.EXHBTITLE}</h2><p>{exhibit.EXHBDESC}</p><small>{exhibit.EXHBITOR}</small><button onClick={()=>void open('kiosk',exhibit.EXHUSRPRF,exhibit.EXHUSRPRF)}>展示を開く ↗</button></article>)}{data.exhibits?.length===0&&<p data-testid="empty">展示はまだありません。</p>}</div>}
@@ -114,7 +124,7 @@ export function App() {
         {['VOTEEND','ENDCMT','ENDOFCON','DAVE'].includes(data.screen||'')&&<div className="panel success-card" data-testid="completion"><span className="success-icon">{data.screen==='ENDOFCON'?'◷':'✓'}</span>{data.CMTID!==undefined&&<h2 data-testid="new-comment-id">{data.CMTID}</h2>}<button onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button></div>}
         {view==='settings'&&<div className="panel"><div className="eyebrow">VOTING PERIOD</div><h2 data-testid="voting-status">{data.ALWVOTE==='Y'?'受付中 / Open':'受付終了 / Closed'}</h2>{token.current?<button data-testid="toggle-voting" disabled={busy} onClick={async()=>{const result=await request('/settings','PATCH',{ALWVOTE:data.ALWVOTE==='Y'?'N':'Y'});if(result.ALWVOTE)setData(result);}}>投票受付を切り替える</button>:<p>変更には展示キオスクでの管理者認証が必要です。</p>}</div>}
         {view==='info'&&data.content&&<article className="panel">{data.content}</article>}
-        <footer className="actions">{Object.entries(data.fKeys||{}).sort().map(([key,label])=><button data-testid={`key-${key}`} key={key} disabled={busy||(view==='learn'&&(data.ended||(key==='F5'&&data.allowForward===false)))} onClick={()=>void keypress(key)}><kbd>{key}</kbd>{label}</button>)}{view!=='menu'&&<button className="quiet" data-testid="return-menu" onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button>}</footer>
+        <footer className="actions">{Object.entries(data.fKeys||{}).sort().map(([key,label])=><button data-testid={`key-${key}`} key={key} disabled={busy||(view==='learn'&&(data.ended||(key==='F5'&&data.allowForward===false)))} onClick={()=>void keypress(key)}><kbd>{key}</kbd>{label}</button>)}{['settings','auth'].includes(view)&&<button data-testid="admin-exit" disabled={busy} onClick={()=>void keypress('F3')}><kbd>F3</kbd>Exit</button>}{view!=='menu'&&<button className="quiet" data-testid="return-menu" onClick={()=>void open(profile==='MM2024'?'menu':'kiosk')}>メニューへ戻る</button>}</footer>
       </section><footer className="page-footer"><span>VCF/400</span><span>Preserving the past. Inspiring what's next.</span></footer>
     </main>
     {call&&<div className="modal-backdrop"><section className="panel modal" role="dialog" aria-modal="true" aria-labelledby="call-title"><div className="eyebrow">LEARN/400 · PROGRAM</div><h2 id="call-title" data-testid="call-title">{call.screenTitle}</h2><p>Vintage Computer Festival · VCF/400</p><button data-testid="call-return" onClick={()=>setCall(undefined)}>LEARN/400へ戻る</button></section></div>}
