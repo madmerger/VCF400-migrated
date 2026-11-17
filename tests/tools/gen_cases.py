@@ -4,6 +4,8 @@ import re
 import sys
 from pathlib import Path
 
+from case_results import current_result
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'spec/tools'))
 from gen_spec import write_book
@@ -147,9 +149,19 @@ for case in cases:
 print(f'画面トレーサビリティ: {len(cases)}ケースのL-IDが対象画面と完全一致、LEARN/400へのVCFMAIN混入0件: PASS')
 
 headers = ['ケースID', '機能', '前提条件', '操作手順', '期待結果', '対象画面', 'トレーサビリティ（仕様書項目ID）']
+headers += ['実施日', '環境', '合否', '動画ファイル名', '備考']
+result_file = ROOT / 'backend/test-results/api_e2e_results.json'
+api_results = {}
+if result_file.exists():
+    api_results = {result['caseId']: result for result in json.loads(result_file.read_text())['results']}
 rows = [headers]
 for case in cases:
-    rows.append([case['id'], case['function'] + '：' + case['name'], case['preconditions'] + '\n基準データはtests/cases.json baseline参照。', '\n'.join(case['steps']) + '\n入力: ' + json.dumps(case['inputs'], ensure_ascii=False), json.dumps(case['expected'], ensure_ascii=False), case['screen'], ', '.join(case['specIds'])])
+    result = current_result(case, api_results, baseline)
+    status = result.get('status', '未実施')
+    case['execution'] = {'status': status}
+    rows.append([case['id'], case['function'] + '：' + case['name'], case['preconditions'] + '\n基準データはtests/cases.json baseline参照。', '\n'.join(case['steps']) + '\n入力: ' + json.dumps(case['inputs'], ensure_ascii=False), json.dumps(case['expected'], ensure_ascii=False), case['screen'], ', '.join(case['specIds']),
+                 result.get('executedAt', '') if status != 'UI専用・フェーズ3/4' else '',
+                 'API (Spring Boot/H2)' if result else '', status, '', result.get('notes', '')])
 write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows})
 (ROOT / 'tests/cases.json').write_text(json.dumps({'schemaVersion': 1, 'baseline': baseline, 'cases': cases}, ensure_ascii=False, indent=2) + '\n')
-print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、未実施)')
+print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、API結果{len(api_results)}件反映)')
