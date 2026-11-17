@@ -21,6 +21,7 @@ import org.vcf400.Requests.*;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 class ApiConcurrencyTest {
@@ -32,6 +33,9 @@ class ApiConcurrencyTest {
     @Autowired ApiController controller;
     @Autowired BaselineSeeder seeder;
     @MockitoSpyBean AdminSecurity security;
+    @MockitoSpyBean Votes votes;
+    @MockitoSpyBean Settings settings;
+    @Autowired VisitorService visitors;
 
     @BeforeEach void reset() { seeder.reset(seeder.baseline()); }
 
@@ -63,6 +67,58 @@ class ApiConcurrencyTest {
         assertFalse((boolean) controller.auth(new AuthInput(PASSWORD)).get("authenticated"));
         String newToken = (String) controller.auth(new AuthInput(replacement)).get("token");
         assertDoesNotThrow(() -> security.require("Bearer " + newToken));
+    }
+
+    @Test void closeWaitsForVoteThatAlreadyReadOpenSetting() throws Exception {
+        String admin = (String) controller.auth(new AuthInput(PASSWORD)).get("token");
+        CountDownLatch checked = new CountDownLatch(1), resume = new CountDownLatch(1);
+        doAnswer(invocation -> {
+            checked.countDown();
+            assertTrue(resume.await(10, TimeUnit.SECONDS));
+            return invocation.callRealMethod();
+        }).when(votes).existsById(1002);
+        Running<Map<String, Object>> vote = start(() -> controller.vote(new VoteInput(1002, "EXH001", 1), "MM2024"));
+        Running<Map<String, Object>> close = null;
+        try {
+            assertTrue(checked.await(5, TimeUnit.SECONDS));
+            close = start(() -> controller.update("Bearer " + admin, new SettingsInput("N", null)));
+            assertBlockedOn(close.thread(), visitors);
+            assertEquals("Y", settings.findById("ALWVOTE").orElseThrow().VALUE);
+        } finally {
+            resume.countDown();
+            vote.result().get(10, TimeUnit.SECONDS);
+            if (close != null) close.result().get(10, TimeUnit.SECONDS);
+        }
+        assertEquals(true, vote.result().get().get("saved"));
+        assertEquals("N", settings.findById("ALWVOTE").orElseThrow().VALUE);
+        long countAtClose = votes.count();
+        assertEquals(2, countAtClose);
+        assertEquals(false, controller.vote(new VoteInput(1003, "EXH001", 1), "MM2024").get("saved"));
+        assertEquals(countAtClose, votes.count());
+    }
+
+    @Test void voteWaitsForCloseAndDoesNotPersistAfterIt() throws Exception {
+        String admin = (String) controller.auth(new AuthInput(PASSWORD)).get("token");
+        CountDownLatch closing = new CountDownLatch(1), resume = new CountDownLatch(1);
+        doAnswer(invocation -> {
+            closing.countDown();
+            assertTrue(resume.await(10, TimeUnit.SECONDS));
+            return invocation.callRealMethod();
+        }).when(settings).saveAndFlush(any(org.vcf400.Models.Setting.class));
+        Running<Map<String, Object>> close = start(() -> controller.update("Bearer " + admin, new SettingsInput("N", null)));
+        Running<Map<String, Object>> vote = null;
+        try {
+            assertTrue(closing.await(5, TimeUnit.SECONDS));
+            vote = start(() -> controller.vote(new VoteInput(1002, "EXH001", 1), "MM2024"));
+            assertBlockedOn(vote.thread(), visitors);
+        } finally {
+            resume.countDown();
+            close.result().get(10, TimeUnit.SECONDS);
+            if (vote != null) vote.result().get(10, TimeUnit.SECONDS);
+        }
+        assertEquals(false, vote.result().get().get("saved"));
+        assertEquals("ENDOFCON", vote.result().get().get("screen"));
+        assertEquals(1, votes.count());
     }
 
     private record Running<T>(Thread thread, FutureTask<T> result) {}

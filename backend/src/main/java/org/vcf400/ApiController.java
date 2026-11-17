@@ -138,8 +138,10 @@ public class ApiController {
         if (input.ALWVOTE() == null && input.ADMPSWRD() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         if (input.ADMPSWRD() != null && input.ADMPSWRD().isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         if (input.ALWVOTE() != null) {
-            Setting setting = new Setting(); setting.SETTING = "ALWVOTE"; setting.VALUE = input.ALWVOTE();
-            settings.saveAndFlush(setting);
+            synchronized (visitors) {
+                Setting setting = new Setting(); setting.SETTING = "ALWVOTE"; setting.VALUE = input.ALWVOTE();
+                settings.saveAndFlush(setting);
+            }
         }
         if (input.ADMPSWRD() != null) {
             Setting password = new Setting(); password.SETTING = "ADMPSWRD"; password.VALUE = security.hash(input.ADMPSWRD());
