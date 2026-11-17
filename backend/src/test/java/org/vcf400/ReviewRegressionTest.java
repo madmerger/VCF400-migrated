@@ -8,18 +8,28 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.DefaultApplicationArguments;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.vcf400.Models.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(properties = {"vcf.seed-admpswrd=", "spring.datasource.url=jdbc:h2:mem:review;MODE=PostgreSQL;DB_CLOSE_DELAY=-1"})
+@AutoConfigureMockMvc(print = org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint.NONE)
 class ReviewRegressionTest {
     private static final List<String> ENTITIES = List.of("Vote", "GuestComment", "LearnPage", "Exhibit", "Award", "Setting", "SecurityOfficer");
     @Autowired EntityManager em;
     @Autowired TransactionTemplate transaction;
     @Autowired BaselineSeeder seeder;
+    @Autowired MockMvc mvc;
+    @MockitoSpyBean Votes votes;
 
     @BeforeEach void clear() {
         transaction.executeWithoutResult(status -> {
@@ -54,5 +64,15 @@ class ReviewRegressionTest {
         seeder.run(new DefaultApplicationArguments());
         long comments = transaction.execute(status -> em.createQuery("select count(c) from GuestComment c", Long.class).getSingleResult());
         assertEquals(3, comments);
+    }
+
+    @Test void concurrentDuplicateInsertReturns409WithoutOverwritingVote() throws Exception {
+        seeder.reset(seeder.baseline());
+        doReturn(false).when(votes).existsById(1001);
+        mvc.perform(post("/api/vote").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"badge\":1001,\"exhibit\":\"EXH001\",\"award\":2}"))
+                .andExpect(status().isConflict()).andExpect(jsonPath("$.validationError").value(true));
+        assertEquals(1, votes.count());
+        assertEquals(1, votes.findById(1001).orElseThrow().AWARDNBR);
     }
 }

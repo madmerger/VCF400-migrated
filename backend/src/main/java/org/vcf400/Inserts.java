@@ -1,10 +1,10 @@
 package org.vcf400;
 
 import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Repository
 public class Inserts {
     private final EntityManager entityManager;
     public Inserts(EntityManager entityManager) { this.entityManager = entityManager; }
