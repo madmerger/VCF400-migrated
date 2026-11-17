@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -14,6 +15,7 @@ import org.vcf400.Models.*;
 
 @Component
 public class BaselineSeeder implements ApplicationRunner {
+    private static final List<String> ENTITIES = List.of("Vote", "GuestComment", "LearnPage", "Exhibit", "Award", "Setting", "SecurityOfficer");
     private final EntityManager em;
     private final ObjectMapper mapper;
     private final TransactionTemplate transaction;
@@ -39,8 +41,7 @@ public class BaselineSeeder implements ApplicationRunner {
         if (!enabled) return;
         JsonNode baseline = baseline();
         transaction.executeWithoutResult(status -> {
-            if (em.createQuery("select count(s) from Setting s", Long.class).getSingleResult() == 0
-                    && em.createQuery("select count(e) from Exhibit e", Long.class).getSingleResult() == 0) {
+            if (ENTITIES.stream().allMatch(entity -> em.createQuery("select count(row) from " + entity + " row", Long.class).getSingleResult() == 0)) {
                 populate(baseline);
             }
         });
@@ -49,7 +50,7 @@ public class BaselineSeeder implements ApplicationRunner {
     public void reset(JsonNode baseline) {
         security.revokeAll();
         transaction.executeWithoutResult(status -> {
-            for (String entity : new String[]{"Vote", "GuestComment", "LearnPage", "Exhibit", "Award", "Setting", "SecurityOfficer"}) {
+            for (String entity : ENTITIES) {
                 em.createQuery("delete from " + entity).executeUpdate();
             }
             em.clear();
