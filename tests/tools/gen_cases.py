@@ -58,7 +58,12 @@ vote('存在しない展示', exhibit='EXH999', expected={'saved': False, 'error
 vote('存在しない賞', award=999, expected={'saved': False, 'error': 'Award does not exist.'}, refs='B-06 B-07')
 vote('全チェック失敗・最後のエラー優先', badge=1001, exhibit='EXH999', award=999, expected={'saved': False, 'error': 'Award does not exist.'}, refs='B-03 B-04 B-05 B-06 B-07')
 vote('重複と不適格・適格性エラー優先', badge=1001, exhibit='EXH002', expected={'saved': False, 'error': 'Exhibit ineligible for award'}, refs='B-03 B-04 B-07')
-vote('投票期間終了・画面スキップ', expected={'saved': False, 'screen': 'ENDOFCON', 'voteFormVisible': False}, refs='B-08', setup={'settings': {'ALWVOTE': 'N'}})
+add('投票', '投票期間終了・画面スキップ', {'selectMenuOption': 11},
+    {'saved': False, 'screen': 'ENDOFCON', 'voteFormVisible': False}, 'B-08', 'ENDOFCON',
+    steps=['VCFMAINで11（またはEXHBMENUで1）を選択する',
+           'バッジ・展示・アワードの入力画面が表示されないことを確認する',
+           'ENDOFCONの The voting period has ended and you can no longer vote. を確認する'],
+    setup={'settings': {'ALWVOTE': 'N'}})
 for name, kwargs, error in [('バッジ未入力', {'badge': 0}, 'Must enter badge number'), ('展示未入力', {'exhibit': ''}, 'Must enter Exhibit ID'), ('賞未入力', {'award': 0}, 'Must enter Award ID'), ('全項目未入力', {'badge': 0, 'exhibit': '', 'award': 0}, 'Must enter Exhibit ID')]:
     vote(name, **kwargs, expected={'saved': False, 'error': error}, refs='B-02')
 add('投票', 'キオスク展示固定', {'profile': 'EXH001', 'open': 'vote'}, {'exhibit': 'EXH001', 'exhibitEditable': False}, 'B-09', 'VOTE1')
