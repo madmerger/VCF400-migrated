@@ -115,12 +115,14 @@ public class ApiController {
 
     @PostMapping("/admin/auth")
     public Map<String, Object> auth(@Valid @RequestBody AuthInput input) {
+        synchronized (security) {
         var result = Screens.response("ADMPSWRD");
         boolean authenticated = security.verify(input.password());
         result.putAll(Map.of("authenticated", authenticated, "exited", authenticated, "passwordNotExposed", true));
         result.put("customError", null);
         if (authenticated) result.putAll(Map.of("token", security.issue(), "expiresInSeconds", 600));
         return result;
+        }
     }
 
     @GetMapping("/settings")
@@ -131,6 +133,7 @@ public class ApiController {
     @PatchMapping("/settings")
     public Map<String, Object> update(@RequestHeader(value = "Authorization", required = false) String authorization,
                                       @Valid @RequestBody SettingsInput input) {
+        synchronized (security) {
         security.require(authorization);
         if (input.ALWVOTE() == null && input.ADMPSWRD() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         if (input.ADMPSWRD() != null && input.ADMPSWRD().isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -144,5 +147,6 @@ public class ApiController {
             security.revokeAll();
         }
         return settings();
+        }
     }
 }
