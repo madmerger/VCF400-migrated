@@ -3,14 +3,15 @@ import hashlib
 import json
 
 
-def fingerprint(case):
+def fingerprint(case, baseline):
     payload = {key: case[key] for key in ('inputs', 'expected')}
+    payload.update(setup=case.get('setup', {}), baseline=baseline)
     canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
     return hashlib.sha256(canonical.encode('utf-8')).hexdigest()
 
 
-def current_result(case, results):
+def current_result(case, results, baseline):
     result = results.get(case['id'], {})
-    if result and result.get('fingerprint') != fingerprint(case):
-        return {'status': '未実施/要再実行', 'notes': 'ケース入力・期待値のfingerprintが結果と不一致（または結果に未記録）'}
+    if result and result.get('fingerprint') != fingerprint(case, baseline):
+        return {'status': '未実施/要再実行', 'notes': 'ケース入力・期待値・setup・baselineのfingerprintが結果と不一致（または結果に未記録）'}
     return result

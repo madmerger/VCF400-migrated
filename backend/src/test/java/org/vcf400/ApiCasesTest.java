@@ -66,7 +66,8 @@ class ApiCasesTest {
         record.put("executedAt", Instant.now().toString());
         record.put("environment", "API (Spring Boot/H2)");
         record.put("expected", scenario.path("expected"));
-        Object canonical = mapper.convertValue(Map.of("inputs", scenario.path("inputs"), "expected", scenario.path("expected")), Object.class);
+        Object canonical = mapper.convertValue(Map.of("inputs", scenario.path("inputs"), "expected", scenario.path("expected"),
+                "setup", scenario.path("setup"), "baseline", document.path("baseline")), Object.class);
         byte[] payload = mapper.writer().with(com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS).writeValueAsBytes(canonical);
         record.put("fingerprint", HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(payload)));
         record.put("video", "");
