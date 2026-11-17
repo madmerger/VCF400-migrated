@@ -1,8 +1,14 @@
 {
+  "summary" : {
+    "passed" : 55,
+    "uiOnly" : 3,
+    "total" : 58,
+    "failed" : 0
+  },
   "results" : [ {
     "caseId" : "E2E-001",
     "name" : "正常投票・Best in Show",
-    "executedAt" : "2026-11-17T16:12:33.195737555Z",
+    "executedAt" : "2026-11-17T16:13:07.615250508Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -19,7 +25,7 @@
   }, {
     "caseId" : "E2E-002",
     "name" : "正常投票・Ed Fair",
-    "executedAt" : "2026-11-17T16:12:33.563736003Z",
+    "executedAt" : "2026-11-17T16:13:07.773892598Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -36,7 +42,7 @@
   }, {
     "caseId" : "E2E-003",
     "name" : "重複バッジ・別賞でも拒否",
-    "executedAt" : "2026-11-17T16:12:33.740098293Z",
+    "executedAt" : "2026-11-17T16:13:07.915097487Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -53,7 +59,7 @@
   }, {
     "caseId" : "E2E-004",
     "name" : "不適格展示",
-    "executedAt" : "2026-11-17T16:12:33.925744286Z",
+    "executedAt" : "2026-11-17T16:13:08.059709086Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -70,7 +76,7 @@
   }, {
     "caseId" : "E2E-005",
     "name" : "存在しない展示",
-    "executedAt" : "2026-11-17T16:12:34.086427789Z",
+    "executedAt" : "2026-11-17T16:13:08.202927039Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -87,7 +93,7 @@
   }, {
     "caseId" : "E2E-006",
     "name" : "存在しない賞",
-    "executedAt" : "2026-11-17T16:12:34.253495526Z",
+    "executedAt" : "2026-11-17T16:13:08.343142261Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -104,7 +110,7 @@
   }, {
     "caseId" : "E2E-007",
     "name" : "全チェック失敗・最後のエラー優先",
-    "executedAt" : "2026-11-17T16:12:34.417709003Z",
+    "executedAt" : "2026-11-17T16:13:08.485611453Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -121,7 +127,7 @@
   }, {
     "caseId" : "E2E-008",
     "name" : "重複と不適格・適格性エラー優先",
-    "executedAt" : "2026-11-17T16:12:34.580120985Z",
+    "executedAt" : "2026-11-17T16:13:08.625256225Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -138,7 +144,7 @@
   }, {
     "caseId" : "E2E-009",
     "name" : "投票期間終了・画面スキップ",
-    "executedAt" : "2026-11-17T16:12:34.736022265Z",
+    "executedAt" : "2026-11-17T16:13:08.764323535Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -157,7 +163,7 @@
   }, {
     "caseId" : "E2E-010",
     "name" : "バッジ未入力",
-    "executedAt" : "2026-11-17T16:12:34.900145719Z",
+    "executedAt" : "2026-11-17T16:13:08.901010102Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -174,7 +180,7 @@
   }, {
     "caseId" : "E2E-011",
     "name" : "展示未入力",
-    "executedAt" : "2026-11-17T16:12:35.056130242Z",
+    "executedAt" : "2026-11-17T16:13:09.037664495Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -191,7 +197,7 @@
   }, {
     "caseId" : "E2E-012",
     "name" : "賞未入力",
-    "executedAt" : "2026-11-17T16:12:35.209669059Z",
+    "executedAt" : "2026-11-17T16:13:09.175487531Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -208,7 +214,7 @@
   }, {
     "caseId" : "E2E-013",
     "name" : "全項目未入力",
-    "executedAt" : "2026-11-17T16:12:35.374527514Z",
+    "executedAt" : "2026-11-17T16:13:09.312717530Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -225,7 +231,7 @@
   }, {
     "caseId" : "E2E-014",
     "name" : "キオスク展示固定",
-    "executedAt" : "2026-11-17T16:12:35.537922263Z",
+    "executedAt" : "2026-11-17T16:13:09.457471373Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exhibit" : "EXH001",
@@ -242,7 +248,7 @@
   }, {
     "caseId" : "E2E-015",
     "name" : "F12取消・書込みなし",
-    "executedAt" : "2026-11-17T16:12:35.699425840Z",
+    "executedAt" : "2026-11-17T16:13:09.593390120Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -256,7 +262,7 @@
   }, {
     "caseId" : "E2E-016",
     "name" : "DAVE隠し画面",
-    "executedAt" : "2026-11-17T16:12:35.700104869Z",
+    "executedAt" : "2026-11-17T16:13:09.593930016Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "screen" : "DAVE",
@@ -273,7 +279,7 @@
   }, {
     "caseId" : "E2E-017",
     "name" : "正常登録・max+1",
-    "executedAt" : "2026-11-17T16:12:35.859473564Z",
+    "executedAt" : "2026-11-17T16:13:09.729915202Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -294,7 +300,7 @@
   }, {
     "caseId" : "E2E-018",
     "name" : "空DBへの初回登録",
-    "executedAt" : "2026-11-17T16:12:36.057823327Z",
+    "executedAt" : "2026-11-17T16:13:09.876517114Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -313,7 +319,7 @@
   }, {
     "caseId" : "E2E-019",
     "name" : "name未入力",
-    "executedAt" : "2026-11-17T16:12:36.210979462Z",
+    "executedAt" : "2026-11-17T16:13:10.013983186Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -330,7 +336,7 @@
   }, {
     "caseId" : "E2E-020",
     "name" : "exhibit未入力",
-    "executedAt" : "2026-11-17T16:12:36.365031234Z",
+    "executedAt" : "2026-11-17T16:13:10.149238226Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -347,7 +353,7 @@
   }, {
     "caseId" : "E2E-021",
     "name" : "comment未入力",
-    "executedAt" : "2026-11-17T16:12:36.537431865Z",
+    "executedAt" : "2026-11-17T16:13:10.284387504Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -364,7 +370,7 @@
   }, {
     "caseId" : "E2E-022",
     "name" : "全項目未入力・最終エラー",
-    "executedAt" : "2026-11-17T16:12:36.690769139Z",
+    "executedAt" : "2026-11-17T16:13:10.419618639Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -381,7 +387,7 @@
   }, {
     "caseId" : "E2E-023",
     "name" : "存在しない展示も原典は登録",
-    "executedAt" : "2026-11-17T16:12:36.844547817Z",
+    "executedAt" : "2026-11-17T16:13:10.554838834Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -398,7 +404,7 @@
   }, {
     "caseId" : "E2E-024",
     "name" : "F12取消",
-    "executedAt" : "2026-11-17T16:12:36.989568015Z",
+    "executedAt" : "2026-11-17T16:13:10.691883997Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
@@ -412,7 +418,7 @@
   }, {
     "caseId" : "E2E-025",
     "name" : "キオスク展示固定",
-    "executedAt" : "2026-11-17T16:12:36.990051474Z",
+    "executedAt" : "2026-11-17T16:13:10.692282521Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exhibit" : "EXH001",
@@ -429,7 +435,7 @@
   }, {
     "caseId" : "E2E-026",
     "name" : "通常閲覧",
-    "executedAt" : "2026-11-17T16:12:37.129268968Z",
+    "executedAt" : "2026-11-17T16:13:10.826639440Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Alice",
@@ -448,7 +454,7 @@
   }, {
     "caseId" : "E2E-027",
     "name" : "非表示は名前・本文を置換",
-    "executedAt" : "2026-11-17T16:12:37.274130119Z",
+    "executedAt" : "2026-11-17T16:13:10.965048523Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Name Hidden",
@@ -465,7 +471,7 @@
   }, {
     "caseId" : "E2E-028",
     "name" : "キオスクから別展示は非公開",
-    "executedAt" : "2026-11-17T16:12:37.414222452Z",
+    "executedAt" : "2026-11-17T16:13:11.101498786Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "",
@@ -484,7 +490,7 @@
   }, {
     "caseId" : "E2E-029",
     "name" : "同展示は公開",
-    "executedAt" : "2026-11-17T16:12:37.555663364Z",
+    "executedAt" : "2026-11-17T16:13:11.238037123Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Alice",
@@ -501,7 +507,7 @@
   }, {
     "caseId" : "E2E-030",
     "name" : "末尾超過は最終レコード",
-    "executedAt" : "2026-11-17T16:12:37.699219286Z",
+    "executedAt" : "2026-11-17T16:13:11.374966235Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "CMTID" : 5,
@@ -520,7 +526,7 @@
   }, {
     "caseId" : "E2E-031",
     "name" : "欠番は次のID",
-    "executedAt" : "2026-11-17T16:12:37.844102068Z",
+    "executedAt" : "2026-11-17T16:13:11.517496743Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "CMTID" : 5,
@@ -537,7 +543,7 @@
   }, {
     "caseId" : "E2E-032",
     "name" : "ID未入力",
-    "executedAt" : "2026-11-17T16:12:37.984393831Z",
+    "executedAt" : "2026-11-17T16:13:11.655550459Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "error" : "Must enter CommentID"
@@ -552,7 +558,7 @@
   }, {
     "caseId" : "E2E-033",
     "name" : "表示件数は最終ID",
-    "executedAt" : "2026-11-17T16:12:38.132597929Z",
+    "executedAt" : "2026-11-17T16:13:11.791631804Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "displayedTotal" : 5
@@ -567,7 +573,7 @@
   }, {
     "caseId" : "E2E-034",
     "name" : "空DB閲覧",
-    "executedAt" : "2026-11-17T16:12:38.271617929Z",
+    "executedAt" : "2026-11-17T16:13:11.929931291Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "empty" : true,
@@ -583,7 +589,7 @@
   }, {
     "caseId" : "E2E-035",
     "name" : "最初のページ",
-    "executedAt" : "2026-11-17T16:12:38.413380207Z",
+    "executedAt" : "2026-11-17T16:13:12.067205487Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1,
@@ -600,7 +606,7 @@
   }, {
     "caseId" : "E2E-036",
     "name" : "通常前進",
-    "executedAt" : "2026-11-17T16:12:38.557761981Z",
+    "executedAt" : "2026-11-17T16:13:12.212334674Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 2,
@@ -617,7 +623,7 @@
   }, {
     "caseId" : "E2E-037",
     "name" : "JUMP分岐",
-    "executedAt" : "2026-11-17T16:12:38.703456967Z",
+    "executedAt" : "2026-11-17T16:13:12.353385715Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "action" : "JUMP",
@@ -638,7 +644,7 @@
   }, {
     "caseId" : "E2E-038",
     "name" : "CALL分岐と復帰",
-    "executedAt" : "2026-11-17T16:12:38.841541144Z",
+    "executedAt" : "2026-11-17T16:13:12.490145142Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "action" : "CALL",
@@ -659,7 +665,7 @@
   }, {
     "caseId" : "E2E-039",
     "name" : "ENDで終了",
-    "executedAt" : "2026-11-17T16:12:38.979615721Z",
+    "executedAt" : "2026-11-17T16:13:12.628035573Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ended" : true
@@ -674,7 +680,7 @@
   }, {
     "caseId" : "E2E-040",
     "name" : "通常戻る",
-    "executedAt" : "2026-11-17T16:12:39.116266302Z",
+    "executedAt" : "2026-11-17T16:13:12.768921826Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1
@@ -689,7 +695,7 @@
   }, {
     "caseId" : "E2E-041",
     "name" : "JUMP後戻る",
-    "executedAt" : "2026-11-17T16:12:39.253692231Z",
+    "executedAt" : "2026-11-17T16:13:12.914101592Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 2
@@ -704,7 +710,7 @@
   }, {
     "caseId" : "E2E-042",
     "name" : "CALL後戻る",
-    "executedAt" : "2026-11-17T16:12:39.393821683Z",
+    "executedAt" : "2026-11-17T16:13:13.050150981Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 5
@@ -719,7 +725,7 @@
   }, {
     "caseId" : "E2E-043",
     "name" : "末尾前進",
-    "executedAt" : "2026-11-17T16:12:39.530011936Z",
+    "executedAt" : "2026-11-17T16:13:13.186771723Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "content" : "",
@@ -736,7 +742,7 @@
   }, {
     "caseId" : "E2E-044",
     "name" : "F3終了",
-    "executedAt" : "2026-11-17T16:12:39.667040359Z",
+    "executedAt" : "2026-11-17T16:13:13.327334295Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ended" : true
@@ -751,7 +757,7 @@
   }, {
     "caseId" : "E2E-045",
     "name" : "展示別ページ",
-    "executedAt" : "2026-11-17T16:12:39.802519966Z",
+    "executedAt" : "2026-11-17T16:13:13.462596804Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1,
@@ -770,7 +776,7 @@
   }, {
     "caseId" : "E2E-046",
     "name" : "ページなし",
-    "executedAt" : "2026-11-17T16:12:39.940746651Z",
+    "executedAt" : "2026-11-17T16:13:13.599257825Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "empty" : true,
@@ -786,7 +792,7 @@
   }, {
     "caseId" : "E2E-047",
     "name" : "不正JUMP引数",
-    "executedAt" : "2026-11-17T16:12:40.082726583Z",
+    "executedAt" : "2026-11-17T16:13:13.735567675Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "validationError" : true,
@@ -802,7 +808,7 @@
   }, {
     "caseId" : "E2E-048",
     "name" : "正しいパスワードで終了",
-    "executedAt" : "2026-11-17T16:12:40.229011466Z",
+    "executedAt" : "2026-11-17T16:13:13.873301497Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : true
@@ -817,7 +823,7 @@
   }, {
     "caseId" : "E2E-049",
     "name" : "誤ったパスワード",
-    "executedAt" : "2026-11-17T16:12:40.507985779Z",
+    "executedAt" : "2026-11-17T16:13:14.142693264Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : false,
@@ -834,7 +840,7 @@
   }, {
     "caseId" : "E2E-050",
     "name" : "空パスワード",
-    "executedAt" : "2026-11-17T16:12:40.775194083Z",
+    "executedAt" : "2026-11-17T16:13:14.411269476Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : false
@@ -849,7 +855,7 @@
   }, {
     "caseId" : "E2E-051",
     "name" : "全項目表示・隠し7は非表示",
-    "executedAt" : "2026-11-17T16:12:41.175930793Z",
+    "executedAt" : "2026-11-17T16:13:14.679845399Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "visibleOptions" : [ 1, 2, 3, 4 ],
@@ -868,7 +874,7 @@
   }, {
     "caseId" : "E2E-052",
     "name" : "不適格・学習無効",
-    "executedAt" : "2026-11-17T16:12:41.314762672Z",
+    "executedAt" : "2026-11-17T16:13:14.816241659Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "visibleOptions" : [ 3, 4 ],
@@ -885,7 +891,7 @@
   }, {
     "caseId" : "E2E-053",
     "name" : "展示データ一覧",
-    "executedAt" : "2026-11-17T16:12:41.449623633Z",
+    "executedAt" : "2026-11-17T16:13:14.952680908Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ids" : [ "EXH001", "EXH002" ],
@@ -902,7 +908,7 @@
   }, {
     "caseId" : "E2E-054",
     "name" : "空一覧",
-    "executedAt" : "2026-11-17T16:12:41.604637134Z",
+    "executedAt" : "2026-11-17T16:13:15.095002871Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ids" : [ ],
@@ -919,7 +925,7 @@
   }, {
     "caseId" : "E2E-055",
     "name" : "投票設定参照",
-    "executedAt" : "2026-11-17T16:12:41.803024425Z",
+    "executedAt" : "2026-11-17T16:13:15.230461895Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ALWVOTE" : "Y",
@@ -936,7 +942,7 @@
   }, {
     "caseId" : "E2E-056",
     "name" : "認証成功",
-    "executedAt" : "2026-11-17T16:12:41.969577989Z",
+    "executedAt" : "2026-11-17T16:13:15.366019407Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "authenticated" : true
@@ -951,7 +957,7 @@
   }, {
     "caseId" : "E2E-057",
     "name" : "認証失敗",
-    "executedAt" : "2026-11-17T16:12:42.363219773Z",
+    "executedAt" : "2026-11-17T16:13:15.632457508Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "authenticated" : false,
@@ -968,7 +974,7 @@
   }, {
     "caseId" : "E2E-058",
     "name" : "メニュー番号・原文タイトル・Fキー・エラー位置照合",
-    "executedAt" : "2026-11-17T16:12:42.822449808Z",
+    "executedAt" : "2026-11-17T16:13:15.897102242Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "matchesAllLedgerElements" : true
@@ -978,11 +984,5 @@
     "status" : "UI専用・フェーズ3/4",
     "actual" : { },
     "notes" : "取消ボタン・全画面配置の照合はUIで実施"
-  } ],
-  "summary" : {
-    "failed" : 0,
-    "total" : 58,
-    "uiOnly" : 3,
-    "passed" : 55
-  }
+  } ]
 }

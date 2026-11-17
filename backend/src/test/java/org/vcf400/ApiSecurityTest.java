@@ -36,6 +36,26 @@ class ApiSecurityTest {
 
     @BeforeEach void reset() throws Exception { seeder.reset(seeder.baseline()); }
 
+    @Test void apiResponsesMustNotBeStored() throws Exception {
+        for (String path : List.of("/api/menu", "/api/exhibits", "/api/vote", "/api/guestbook/1",
+                "/api/guestbook/form", "/api/learn/global/pages/1", "/api/kiosk/EXH001", "/api/settings")) {
+            mvc.perform(get(path)).andExpect(status().isOk())
+                    .andExpect(header().string("Cache-Control", "no-store"));
+        }
+        mvc.perform(get("/api/guestbook/not-a-number")).andExpect(status().isBadRequest())
+                .andExpect(header().string("Cache-Control", "no-store"));
+        mvc.perform(patch("/api/settings").contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"N\"}"))
+                .andExpect(status().isUnauthorized()).andExpect(header().string("Cache-Control", "no-store"));
+        mvc.perform(post("/api/admin/auth").contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(java.util.Map.of("password", PASSWORD))))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.authenticated").value(true))
+                .andExpect(header().string("Cache-Control", "no-store"));
+        mvc.perform(get("/api/missing")).andExpect(status().isNotFound())
+                .andExpect(header().string("Cache-Control", "no-store"));
+        mvc.perform(get("/not-api")).andExpect(status().isNotFound())
+                .andExpect(header().doesNotExist("Cache-Control"));
+    }
+
     private String token() throws Exception {
         var response = mvc.perform(post("/api/admin/auth").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(java.util.Map.of("password", PASSWORD))))

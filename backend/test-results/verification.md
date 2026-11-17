@@ -18,16 +18,16 @@ mvn -s maven-settings-gcs.xml -q test
 org.vcf400.AdminDisabledTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.AdminSecurityTest: Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ApiCasesTest: Tests run: 58, Failures: 0, Errors: 0, Skipped: 0
-org.vcf400.ApiSecurityTest: Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+org.vcf400.ApiSecurityTest: Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ReviewRegressionTest: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ScreensTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-Tests run: 82, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 83, Failures: 0, Errors: 0, Skipped: 0
 API共通ケース: 全58件 / 合格55 / 不合格0 / UI専用3
 ```
 
 JUnitの58件にはUI専用として分類する3件も含む（JUnit上のSkippedではなく、レポート上の明示分類）。
 UI専用: E2E-015、E2E-024（F12取消）、E2E-058（全画面台帳照合）。これらをAPI合格数には算入しない。
-独立した24件で認証なし・不正token、token更新/失効/期限、パスワード未設定、ハッシュ格納、
+独立した25件で認証なし・不正token、token更新/失効/期限、パスワード未設定、ハッシュ格納、
 型・長さ・範囲検証、認証応答の秘匿、CALL許可リスト、メニューとメタデータ等を検証した。
 
 PRレビュー回帰検証:
@@ -35,8 +35,9 @@ PRレビュー回帰検証:
 - 7テーブルそれぞれ単独で既存行がある状態でstartup runnerを実行し、全シードをスキップすることを確認。全テーブル空の場合は初期投入し、再実行でも重複しない。
 - 存在検査の古い結果を再現し、実際のH2一意制約違反がHTTP 409になり既存投票を上書きしないことを確認。
 - Fキー定義10要素を仕様台帳と完全一致で照合。LEARNはFwd/Back、投票・投稿もDDSのCF定義のSubmitを返す。画面下部の説明文は台帳に原文のまま保持。
-- 入力・期待値をキー順正規化したUTF-8 JSONのSHA-256をケース結果に保存。Python/Javaのfingerprintは58/58一致。
-- `python3 -m unittest discover -s tests/tools -p 'test_*.py' -v`: Ran 4 tests / OK。入力変更、期待値変更、fingerprintなしは未実施/要再実行、未実行ケースは未実施、同一定義は結果維持。
+- 入力・期待値・setup・baselineをキー順正規化したUTF-8 JSONのSHA-256をケース結果に保存。Python/Javaのfingerprintは58/58一致。
+- `python3 -m unittest discover -s tests/tools -p 'test_*.py' -v`: Ran 6 tests / OK。E2E-009のsetup.settings.ALWVOTEをNからYへ変更した場合とbaseline変更も未実施/要再実行、未実行ケースは未実施、同一定義は結果維持。
+- `/api`および`/api/**`へ`Cache-Control: no-store`を設定。展示・ゲストブック・キオスク等の成功応答、認証成功応答、400/401/404応答でヘッダーを確認。API外には適用しない。
 
 Excel・JSON再生成と構造検証:
 
