@@ -1,5 +1,6 @@
 """共通ケースをExcelとAPI向けJSONへ生成（テスト実行はしない）。"""
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -115,12 +116,30 @@ add('管理者認証', '認証失敗', {'password': 'wrong'}, {'authenticated': 
 add('画面共通', 'メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger'}, {'matchesAllLedgerElements': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・ADDCMT・READCMT・LRN400・INTERTEST', steps=['仕様書画面台帳の各L-IDを全件照合する', 'VCFMAIN 1/11/12/13/80の経路と表示番号を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、Fキー・エラー位置を照合する', '未定義2～10・90の機能を推測で追加していないことを確認する'])
 
 spec = json.loads((ROOT / 'spec/tools/spec_data.json').read_text())
+def ledger_screen(row):
+    if row[1] == 'EXHBMENU/7（非表示）':
+        return 'ADMPSWRD'
+    return row[1].split(' → ')[-1]
+
+
+def case_screens(case):
+    aliases = {'LRN400 MAIN': 'LEARN/400', 'LRN400': 'LEARN/400', 'INTERTEST': 'NTRSTIT'}
+    return {aliases.get(part, part) for part in re.split(r' → |・', case['screen'])}
+
+
 for case in cases:
-    # 対象画面の行IDも共通ケースに持たせる。
     for row in spec['画面台帳'][1:]:
-        if any(token in row[1] for token in case['screen'].replace(' → ', ' ').split() if len(token) > 3):
+        if ledger_screen(row) in case_screens(case):
             case['specIds'].append(row[0])
     case['specIds'] = list(dict.fromkeys(case['specIds']))
+
+ledger = {row[0]: row for row in spec['画面台帳'][1:]}
+for case in cases:
+    linked = [ledger[item] for item in case['specIds'] if item.startswith('L-')]
+    assert all(ledger_screen(row) in case_screens(case) for row in linked), case['id']
+    if case['function'] == 'LEARN/400':
+        assert linked and all(ledger_screen(row) == 'LEARN/400' for row in linked), case['id']
+print(f'画面トレーサビリティ: {len(cases)}ケースのL-IDが対象画面と完全一致、LEARN/400へのVCFMAIN混入0件: PASS')
 
 headers = ['ケースID', '機能', '前提条件', '操作手順', '期待結果', '対象画面', 'トレーサビリティ（仕様書項目ID）']
 rows = [headers]
