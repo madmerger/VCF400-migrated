@@ -1,0 +1,22 @@
+フェーズ1: 生成物の構造検証（API E2E実行結果ではない）
+Python 3 / openpyxl 3.1.5 / Linux
+生成コマンド:
+python3 spec/tools/extract_source.py /home/ubuntu/repos/VCF400
+python3 spec/tools/gen_spec.py
+python3 tests/tools/gen_cases.py
+
+検証: openpyxlで両Excelを再読込し、シート名・行数、全ケースの参照ID存在、JSON件数・入力・期待値、7 DB、Python構文、固定枠・フィルターをassert。
+出力:
+仕様書 sheets: 概要, 画面台帳, 業務ルール, データモデル, 非対象スコープ
+概要: 8項目 (9行、ヘッダー込み)
+画面台帳: 255項目 (256行、ヘッダー込み)
+業務ルール: 27項目 (28行、ヘッダー込み)
+データモデル: 26項目 (27行、ヘッダー込み)
+非対象スコープ: 7項目 (8行、ヘッダー込み)
+ケース sheets: E2Eテストケース
+E2Eテストケース: 58ケース (59行、ヘッダー込み)
+トレーサビリティ: 全ID存在・欠落0件
+JSON/Excel件数一致、構造化入力・期待値、7 DB、Python構文、Excel書式: PASS
+
+未実施: IBM i実機、API E2E、Web、Windows、ExcelのGUI目視確認、録画。
+対象リポジトリは空で開始したため既存のlint/typecheck/test集約コマンドなし。
