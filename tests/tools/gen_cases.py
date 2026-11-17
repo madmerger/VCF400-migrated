@@ -4,6 +4,8 @@ import re
 import sys
 from pathlib import Path
 
+from case_results import current_result
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'spec/tools'))
 from gen_spec import write_book
@@ -154,7 +156,7 @@ if result_file.exists():
     api_results = {result['caseId']: result for result in json.loads(result_file.read_text())['results']}
 rows = [headers]
 for case in cases:
-    result = api_results.get(case['id'], {})
+    result = current_result(case, api_results)
     status = result.get('status', '未実施')
     case['execution'] = {'status': status}
     rows.append([case['id'], case['function'] + '：' + case['name'], case['preconditions'] + '\n基準データはtests/cases.json baseline参照。', '\n'.join(case['steps']) + '\n入力: ' + json.dumps(case['inputs'], ensure_ascii=False), json.dumps(case['expected'], ensure_ascii=False), case['screen'], ', '.join(case['specIds']),

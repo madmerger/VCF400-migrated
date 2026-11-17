@@ -1,19 +1,14 @@
 {
-  "summary" : {
-    "failed" : 0,
-    "total" : 58,
-    "uiOnly" : 3,
-    "passed" : 55
-  },
   "results" : [ {
     "caseId" : "E2E-001",
     "name" : "正常投票・Best in Show",
-    "executedAt" : "2026-11-17T16:00:23.273786820Z",
+    "executedAt" : "2026-11-17T16:06:54.278735621Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
       "screen" : "VOTEEND"
     },
+    "fingerprint" : "b08815edd4adaa3333852b48475b0e90bc107607fcf3fc56dcf29e00c442bab6",
     "video" : "",
     "actual" : {
       "saved" : true,
@@ -24,12 +19,13 @@
   }, {
     "caseId" : "E2E-002",
     "name" : "正常投票・Ed Fair",
-    "executedAt" : "2026-11-17T16:00:23.443966474Z",
+    "executedAt" : "2026-11-17T16:06:54.587773537Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
       "screen" : "VOTEEND"
     },
+    "fingerprint" : "b23dbc1cdeed76623759a6da4ae45b569ea364f20428860dd48dc32215ed1038",
     "video" : "",
     "actual" : {
       "saved" : true,
@@ -40,12 +36,13 @@
   }, {
     "caseId" : "E2E-003",
     "name" : "重複バッジ・別賞でも拒否",
-    "executedAt" : "2026-11-17T16:00:23.585393390Z",
+    "executedAt" : "2026-11-17T16:06:54.740984722Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "You have already voted."
     },
+    "fingerprint" : "91a886d1496713c8876326fb2f6a7283ed46d43fbe12dabd7016edfc4f88c76b",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -56,12 +53,13 @@
   }, {
     "caseId" : "E2E-004",
     "name" : "不適格展示",
-    "executedAt" : "2026-11-17T16:00:23.725204836Z",
+    "executedAt" : "2026-11-17T16:06:54.897648566Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Exhibit ineligible for award"
     },
+    "fingerprint" : "efc3b63e8b5527ca012502a9a65ef8aab7936f5eaddc5ec73cf79659352a2695",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -72,12 +70,13 @@
   }, {
     "caseId" : "E2E-005",
     "name" : "存在しない展示",
-    "executedAt" : "2026-11-17T16:00:23.864170161Z",
+    "executedAt" : "2026-11-17T16:06:55.048553548Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Exhibit does not exist"
     },
+    "fingerprint" : "676b652ba803e43768f0b19fb531685db3541bc229db26c16bcdd662b966334c",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -88,12 +87,13 @@
   }, {
     "caseId" : "E2E-006",
     "name" : "存在しない賞",
-    "executedAt" : "2026-11-17T16:00:24.003812120Z",
+    "executedAt" : "2026-11-17T16:06:55.203507895Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Award does not exist."
     },
+    "fingerprint" : "11c247b945c704d4f4b820f008bc9e26298702e86e857e2cdbb19a8c420dfa8c",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -104,12 +104,13 @@
   }, {
     "caseId" : "E2E-007",
     "name" : "全チェック失敗・最後のエラー優先",
-    "executedAt" : "2026-11-17T16:00:24.143966231Z",
+    "executedAt" : "2026-11-17T16:06:55.358369106Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Award does not exist."
     },
+    "fingerprint" : "6fb619c5c2514ba59c469c48a048319d66b8d5d4c66b99bacd752d2c9d139700",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -120,12 +121,13 @@
   }, {
     "caseId" : "E2E-008",
     "name" : "重複と不適格・適格性エラー優先",
-    "executedAt" : "2026-11-17T16:00:24.284631027Z",
+    "executedAt" : "2026-11-17T16:06:55.510772784Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Exhibit ineligible for award"
     },
+    "fingerprint" : "7cb9a536871e03df9bc083a51988a0dbec5bf8a161950107052e03dc5ded37d4",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -136,13 +138,14 @@
   }, {
     "caseId" : "E2E-009",
     "name" : "投票期間終了・画面スキップ",
-    "executedAt" : "2026-11-17T16:00:24.425638188Z",
+    "executedAt" : "2026-11-17T16:06:55.662647996Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "screen" : "ENDOFCON",
       "voteFormVisible" : false
     },
+    "fingerprint" : "813f2fe11987eafe9319c9bcc4ade80d1dec66545644c752ca9a9b95c6877e1a",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -154,12 +157,13 @@
   }, {
     "caseId" : "E2E-010",
     "name" : "バッジ未入力",
-    "executedAt" : "2026-11-17T16:00:24.566104921Z",
+    "executedAt" : "2026-11-17T16:06:55.812175325Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Must enter badge number"
     },
+    "fingerprint" : "1fce7865cdef7f960b73e656456ba39ed4a9cd1c7a9bc56eac375b55fc3c7ea6",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -170,12 +174,13 @@
   }, {
     "caseId" : "E2E-011",
     "name" : "展示未入力",
-    "executedAt" : "2026-11-17T16:00:24.711184399Z",
+    "executedAt" : "2026-11-17T16:06:55.958117357Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Must enter Exhibit ID"
     },
+    "fingerprint" : "483c603dacd9e9ce877d7d15865d735914ae046479de977d9615be206af17d66",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -186,12 +191,13 @@
   }, {
     "caseId" : "E2E-012",
     "name" : "賞未入力",
-    "executedAt" : "2026-11-17T16:00:24.849718860Z",
+    "executedAt" : "2026-11-17T16:06:56.103770443Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Must enter Award ID"
     },
+    "fingerprint" : "2b9a60eb3b1bc9d5f2f3406a5fe212f7c330094f75bec4e4fe4d0ea9df0820be",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -202,12 +208,13 @@
   }, {
     "caseId" : "E2E-013",
     "name" : "全項目未入力",
-    "executedAt" : "2026-11-17T16:00:24.988096690Z",
+    "executedAt" : "2026-11-17T16:06:56.257027405Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "error" : "Must enter Exhibit ID"
     },
+    "fingerprint" : "56c0828acaf7d7dd152dc8430077430b0cabe0ac28092be795558e7b2123ea5b",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -218,12 +225,13 @@
   }, {
     "caseId" : "E2E-014",
     "name" : "キオスク展示固定",
-    "executedAt" : "2026-11-17T16:00:25.125919083Z",
+    "executedAt" : "2026-11-17T16:06:56.403443558Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exhibit" : "EXH001",
       "exhibitEditable" : false
     },
+    "fingerprint" : "b874e25147f343fa2b1a6dce9c21a4164fd914815ad97f34743c2d00887220f8",
     "video" : "",
     "actual" : {
       "exhibit" : "EXH001",
@@ -234,12 +242,13 @@
   }, {
     "caseId" : "E2E-015",
     "name" : "F12取消・書込みなし",
-    "executedAt" : "2026-11-17T16:00:25.264742183Z",
+    "executedAt" : "2026-11-17T16:06:56.551465730Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "returned" : true
     },
+    "fingerprint" : "a9ebaaf74a4fee1c155746c08cb5e6f9a54b3fb3e60086cd8a24a79f242c06e1",
     "video" : "",
     "status" : "UI専用・フェーズ3/4",
     "actual" : { },
@@ -247,12 +256,13 @@
   }, {
     "caseId" : "E2E-016",
     "name" : "DAVE隠し画面",
-    "executedAt" : "2026-11-17T16:00:25.264999304Z",
+    "executedAt" : "2026-11-17T16:06:56.551890996Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "screen" : "DAVE",
       "saved" : false
     },
+    "fingerprint" : "82562bf3b1d1ab1429e32bf5c30e8c922dd00417ce25b03c850042ef5a3ec50c",
     "video" : "",
     "actual" : {
       "screen" : "DAVE",
@@ -263,7 +273,7 @@
   }, {
     "caseId" : "E2E-017",
     "name" : "正常登録・max+1",
-    "executedAt" : "2026-11-17T16:00:25.403904552Z",
+    "executedAt" : "2026-11-17T16:06:56.696607492Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
@@ -271,6 +281,7 @@
       "VISIBLE" : "Y",
       "screen" : "ENDCMT"
     },
+    "fingerprint" : "452b412b735362d9b08b55f81ff4dfff108f37e4a73ee65f74be3a3e56a83545",
     "video" : "",
     "actual" : {
       "saved" : true,
@@ -283,13 +294,14 @@
   }, {
     "caseId" : "E2E-018",
     "name" : "空DBへの初回登録",
-    "executedAt" : "2026-11-17T16:00:25.571166713Z",
+    "executedAt" : "2026-11-17T16:06:56.878781050Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
       "CMTID" : 1,
       "VISIBLE" : "Y"
     },
+    "fingerprint" : "47f4a02dab7268ca417c7f102463166a12e9fbc4c4760c380648c3f7dc8341c7",
     "video" : "",
     "actual" : {
       "saved" : true,
@@ -301,12 +313,13 @@
   }, {
     "caseId" : "E2E-019",
     "name" : "name未入力",
-    "executedAt" : "2026-11-17T16:00:25.709232694Z",
+    "executedAt" : "2026-11-17T16:06:57.040238084Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "errorDisplay" : "Must enter your name"
     },
+    "fingerprint" : "fd5cc075cdcfefc712af2c2b84d5d7c208741300624817c95c2fca850fff9690",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -317,12 +330,13 @@
   }, {
     "caseId" : "E2E-020",
     "name" : "exhibit未入力",
-    "executedAt" : "2026-11-17T16:00:25.848197202Z",
+    "executedAt" : "2026-11-17T16:06:57.196644301Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "errorDisplay" : "Must enter Exhibit ID"
     },
+    "fingerprint" : "7b4e6cef26753982e02497dd11285bd7d5f86e948289a3fd9c85475c160614d0",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -333,12 +347,13 @@
   }, {
     "caseId" : "E2E-021",
     "name" : "comment未入力",
-    "executedAt" : "2026-11-17T16:00:25.984307408Z",
+    "executedAt" : "2026-11-17T16:06:57.342392025Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "errorDisplay" : "Must enter a comment"
     },
+    "fingerprint" : "9a915e3fe0732d95e97c677825eb4cb84febe1096a299fb93597a5d82a991063",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -349,12 +364,13 @@
   }, {
     "caseId" : "E2E-022",
     "name" : "全項目未入力・最終エラー",
-    "executedAt" : "2026-11-17T16:00:26.120859160Z",
+    "executedAt" : "2026-11-17T16:06:57.492415320Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "errorDisplay" : "Must enter a comment"
     },
+    "fingerprint" : "1aba6a754b1854033c783f0da825dbf9de28402b5b83c198bc509843d7fd6cda",
     "video" : "",
     "actual" : {
       "saved" : false,
@@ -365,12 +381,13 @@
   }, {
     "caseId" : "E2E-023",
     "name" : "存在しない展示も原典は登録",
-    "executedAt" : "2026-11-17T16:00:26.260062011Z",
+    "executedAt" : "2026-11-17T16:06:57.647895451Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : true,
       "CMTID" : 6
     },
+    "fingerprint" : "7216ed94afc15105093e40f96498dc4091e9d79e04dbc014b956b0aaaab583c1",
     "video" : "",
     "actual" : {
       "saved" : true,
@@ -381,12 +398,13 @@
   }, {
     "caseId" : "E2E-024",
     "name" : "F12取消",
-    "executedAt" : "2026-11-17T16:00:26.399650233Z",
+    "executedAt" : "2026-11-17T16:06:57.798988672Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "saved" : false,
       "returned" : true
     },
+    "fingerprint" : "a9ebaaf74a4fee1c155746c08cb5e6f9a54b3fb3e60086cd8a24a79f242c06e1",
     "video" : "",
     "status" : "UI専用・フェーズ3/4",
     "actual" : { },
@@ -394,12 +412,13 @@
   }, {
     "caseId" : "E2E-025",
     "name" : "キオスク展示固定",
-    "executedAt" : "2026-11-17T16:00:26.399984754Z",
+    "executedAt" : "2026-11-17T16:06:57.799318031Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exhibit" : "EXH001",
       "exhibitEditable" : false
     },
+    "fingerprint" : "78be7fe1ca15546531559b66f508b7be34db5381232b5c497575813f3cf6fc48",
     "video" : "",
     "actual" : {
       "exhibit" : "EXH001",
@@ -410,13 +429,14 @@
   }, {
     "caseId" : "E2E-026",
     "name" : "通常閲覧",
-    "executedAt" : "2026-11-17T16:00:26.535915137Z",
+    "executedAt" : "2026-11-17T16:06:57.937101793Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Alice",
       "comment" : "Great exhibit",
       "title" : "展示一"
     },
+    "fingerprint" : "5f1d803e9bcfc9a891168af24ca4752914c8e636a3d0ec5e3b2d204daf0edbc9",
     "video" : "",
     "actual" : {
       "name" : "Alice",
@@ -428,12 +448,13 @@
   }, {
     "caseId" : "E2E-027",
     "name" : "非表示は名前・本文を置換",
-    "executedAt" : "2026-11-17T16:00:26.684606599Z",
+    "executedAt" : "2026-11-17T16:06:58.097163636Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Name Hidden",
       "comment" : "This comment hidden by an admin - offensive content."
     },
+    "fingerprint" : "e1e57ddf4036362cc11c4258d6e896f5ea849d54a79cfb24787924a228690652",
     "video" : "",
     "actual" : {
       "name" : "Name Hidden",
@@ -444,13 +465,14 @@
   }, {
     "caseId" : "E2E-028",
     "name" : "キオスクから別展示は非公開",
-    "executedAt" : "2026-11-17T16:00:26.821188118Z",
+    "executedAt" : "2026-11-17T16:06:58.240096464Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "",
       "title" : "",
       "comment" : "This comment is not part of this guestbook."
     },
+    "fingerprint" : "b6b1e4fad515c1fa454ba6cd8bb81af838fa04a29d324394d6e13ccddf2ab1db",
     "video" : "",
     "actual" : {
       "name" : "",
@@ -462,12 +484,13 @@
   }, {
     "caseId" : "E2E-029",
     "name" : "同展示は公開",
-    "executedAt" : "2026-11-17T16:00:26.963852225Z",
+    "executedAt" : "2026-11-17T16:06:58.380325394Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "name" : "Alice",
       "comment" : "Great exhibit"
     },
+    "fingerprint" : "3549867efa4248a5500df8940cad33c49c1dbc6416bfd9966fa0bcab9403d464",
     "video" : "",
     "actual" : {
       "name" : "Alice",
@@ -478,13 +501,14 @@
   }, {
     "caseId" : "E2E-030",
     "name" : "末尾超過は最終レコード",
-    "executedAt" : "2026-11-17T16:00:27.105450521Z",
+    "executedAt" : "2026-11-17T16:06:58.524162676Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "CMTID" : 5,
       "name" : "Carol",
       "comment" : "Last comment"
     },
+    "fingerprint" : "8a4d601b4d88273f0030076f8bff9fb15c32882467592db8be9ae3c959387774",
     "video" : "",
     "actual" : {
       "CMTID" : 5,
@@ -496,12 +520,13 @@
   }, {
     "caseId" : "E2E-031",
     "name" : "欠番は次のID",
-    "executedAt" : "2026-11-17T16:00:27.245020364Z",
+    "executedAt" : "2026-11-17T16:06:58.665601474Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "CMTID" : 5,
       "name" : "Carol"
     },
+    "fingerprint" : "249fe58f330f288d7efd1ee5e9567b8d0e85c4cc26edec4d056d03928d0ce3be",
     "video" : "",
     "actual" : {
       "CMTID" : 5,
@@ -512,11 +537,12 @@
   }, {
     "caseId" : "E2E-032",
     "name" : "ID未入力",
-    "executedAt" : "2026-11-17T16:00:27.382899394Z",
+    "executedAt" : "2026-11-17T16:06:58.813868671Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "error" : "Must enter CommentID"
     },
+    "fingerprint" : "2b838acc6e052d66772ea9f3baac6d261cb6bb4c68d394c5b236cea5b0cd5f57",
     "video" : "",
     "actual" : {
       "error" : "Must enter CommentID"
@@ -526,11 +552,12 @@
   }, {
     "caseId" : "E2E-033",
     "name" : "表示件数は最終ID",
-    "executedAt" : "2026-11-17T16:00:27.518937459Z",
+    "executedAt" : "2026-11-17T16:06:58.952812808Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "displayedTotal" : 5
     },
+    "fingerprint" : "1308ecd1bd0d880d831e8b297e841e2d547c1dc7354235b10a1385724b3db9dc",
     "video" : "",
     "actual" : {
       "displayedTotal" : 5
@@ -540,12 +567,13 @@
   }, {
     "caseId" : "E2E-034",
     "name" : "空DB閲覧",
-    "executedAt" : "2026-11-17T16:00:27.656593206Z",
+    "executedAt" : "2026-11-17T16:06:59.108037002Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "empty" : true,
       "note" : "移行API方針。原典未測定、例外や他レコード漏洩なし"
     },
+    "fingerprint" : "132e54d4285f1b35aba09a444825a5503390efe0a0df965051a73490dd41c925",
     "video" : "",
     "actual" : {
       "empty" : true
@@ -555,12 +583,13 @@
   }, {
     "caseId" : "E2E-035",
     "name" : "最初のページ",
-    "executedAt" : "2026-11-17T16:00:27.793352342Z",
+    "executedAt" : "2026-11-17T16:06:59.248200410Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1,
       "content" : "開始"
     },
+    "fingerprint" : "b5a7125d9b78e699aad667ed13304a5cf693a0c469c5bf568bf32e2bba564976",
     "video" : "",
     "actual" : {
       "page" : 1,
@@ -571,12 +600,13 @@
   }, {
     "caseId" : "E2E-036",
     "name" : "通常前進",
-    "executedAt" : "2026-11-17T16:00:27.930635380Z",
+    "executedAt" : "2026-11-17T16:06:59.392531341Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 2,
       "content" : "通常ページ"
     },
+    "fingerprint" : "c483b7fc5b27517542fcf9b196565ba97db25d5daa87344a06132a72daa3c8b4",
     "video" : "",
     "actual" : {
       "page" : 2,
@@ -587,7 +617,7 @@
   }, {
     "caseId" : "E2E-037",
     "name" : "JUMP分岐",
-    "executedAt" : "2026-11-17T16:00:28.070076881Z",
+    "executedAt" : "2026-11-17T16:06:59.539434207Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "action" : "JUMP",
@@ -595,6 +625,7 @@
       "content" : "移動先",
       "backPage" : 2
     },
+    "fingerprint" : "1e544bd32837b6451ac1ce4d5902b15d7fa23a823c76aa444f97b716d666e46c",
     "video" : "",
     "actual" : {
       "action" : "JUMP",
@@ -607,7 +638,7 @@
   }, {
     "caseId" : "E2E-038",
     "name" : "CALL分岐と復帰",
-    "executedAt" : "2026-11-17T16:00:28.204872857Z",
+    "executedAt" : "2026-11-17T16:06:59.677478655Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "action" : "CALL",
@@ -615,6 +646,7 @@
       "pageAfterReturn" : 7,
       "backPage" : 5
     },
+    "fingerprint" : "8c5e2395173edac2680f97273c33a0d16a7c533a7e93760665057ba39923d673",
     "video" : "",
     "actual" : {
       "action" : "CALL",
@@ -627,11 +659,12 @@
   }, {
     "caseId" : "E2E-039",
     "name" : "ENDで終了",
-    "executedAt" : "2026-11-17T16:00:28.340558542Z",
+    "executedAt" : "2026-11-17T16:06:59.816396243Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ended" : true
     },
+    "fingerprint" : "d9383283c7a5240f761adeff6bb9f0d5893b9b7196c492ceeeda90384db405e0",
     "video" : "",
     "actual" : {
       "ended" : true
@@ -641,11 +674,12 @@
   }, {
     "caseId" : "E2E-040",
     "name" : "通常戻る",
-    "executedAt" : "2026-11-17T16:00:28.474299659Z",
+    "executedAt" : "2026-11-17T16:06:59.954874265Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1
     },
+    "fingerprint" : "af34d362ef823fc667517e1bc7dea418cbba9f0cd91c9e14ab1b01b6f56b848e",
     "video" : "",
     "actual" : {
       "page" : 1
@@ -655,11 +689,12 @@
   }, {
     "caseId" : "E2E-041",
     "name" : "JUMP後戻る",
-    "executedAt" : "2026-11-17T16:00:28.608131072Z",
+    "executedAt" : "2026-11-17T16:07:00.097186207Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 2
     },
+    "fingerprint" : "cb4f8c8894dc8c497303c65428c4476b8f1778359def213756e16b8c07185515",
     "video" : "",
     "actual" : {
       "page" : 2
@@ -669,11 +704,12 @@
   }, {
     "caseId" : "E2E-042",
     "name" : "CALL後戻る",
-    "executedAt" : "2026-11-17T16:00:28.742532109Z",
+    "executedAt" : "2026-11-17T16:07:00.235562249Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 5
     },
+    "fingerprint" : "bc1ed15de6de82f62178660ad99e68e44a23b8e279c591ee0d00f4915395c139",
     "video" : "",
     "actual" : {
       "page" : 5
@@ -683,12 +719,13 @@
   }, {
     "caseId" : "E2E-043",
     "name" : "末尾前進",
-    "executedAt" : "2026-11-17T16:00:28.877730911Z",
+    "executedAt" : "2026-11-17T16:07:00.373184942Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "content" : "",
       "allowForward" : false
     },
+    "fingerprint" : "6fdcb35bb347e4d523aaebd058b3885022c47267ef58d99409329ab77be0f1ad",
     "video" : "",
     "actual" : {
       "content" : "",
@@ -699,11 +736,12 @@
   }, {
     "caseId" : "E2E-044",
     "name" : "F3終了",
-    "executedAt" : "2026-11-17T16:00:29.012549467Z",
+    "executedAt" : "2026-11-17T16:07:00.510464813Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ended" : true
     },
+    "fingerprint" : "1eb9feaccd7e655ab114d517812c98fbbe6bad3585dfcb61de8dd9173a4d6687",
     "video" : "",
     "actual" : {
       "ended" : true
@@ -713,13 +751,14 @@
   }, {
     "caseId" : "E2E-045",
     "name" : "展示別ページ",
-    "executedAt" : "2026-11-17T16:00:29.146607444Z",
+    "executedAt" : "2026-11-17T16:07:00.647009806Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "page" : 1,
       "content" : "開始",
       "collection" : "EXH001"
     },
+    "fingerprint" : "d70ec6fd93f1e60fa0a880a742504882017d0a02ddc6073b05ea1eada63bf8ba",
     "video" : "",
     "actual" : {
       "page" : 1,
@@ -731,12 +770,13 @@
   }, {
     "caseId" : "E2E-046",
     "name" : "ページなし",
-    "executedAt" : "2026-11-17T16:00:29.283882102Z",
+    "executedAt" : "2026-11-17T16:07:00.783467211Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "empty" : true,
       "note" : "移行API方針。原典未測定"
     },
+    "fingerprint" : "7ab1740dafc7d4a4e2bee5895028eebb513ab2741560fa01c2b01726f746ed39",
     "video" : "",
     "actual" : {
       "empty" : true
@@ -746,12 +786,13 @@
   }, {
     "caseId" : "E2E-047",
     "name" : "不正JUMP引数",
-    "executedAt" : "2026-11-17T16:00:29.417596916Z",
+    "executedAt" : "2026-11-17T16:07:00.923650182Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "validationError" : true,
       "note" : "移行API方針。原典未測定"
     },
+    "fingerprint" : "442f6f3184e88df1221eb889fb8f277d6200516017c645b6b8aec1e0776f9d81",
     "video" : "",
     "actual" : {
       "validationError" : true
@@ -761,11 +802,12 @@
   }, {
     "caseId" : "E2E-048",
     "name" : "正しいパスワードで終了",
-    "executedAt" : "2026-11-17T16:00:29.553581736Z",
+    "executedAt" : "2026-11-17T16:07:01.067518782Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : true
     },
+    "fingerprint" : "14043035534aec3f1413fab953300277550e290539fcd32743185d2e4912a7a4",
     "video" : "",
     "actual" : {
       "exited" : true
@@ -775,12 +817,13 @@
   }, {
     "caseId" : "E2E-049",
     "name" : "誤ったパスワード",
-    "executedAt" : "2026-11-17T16:00:29.819562788Z",
+    "executedAt" : "2026-11-17T16:07:01.341669565Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : false,
       "customError" : null
     },
+    "fingerprint" : "fccc5fb884045d94d38b8d2ec2b8d2c0a45cd1b5c336a29c727000c3c4acc462",
     "video" : "",
     "actual" : {
       "exited" : false,
@@ -791,11 +834,12 @@
   }, {
     "caseId" : "E2E-050",
     "name" : "空パスワード",
-    "executedAt" : "2026-11-17T16:00:30.086286085Z",
+    "executedAt" : "2026-11-17T16:07:01.614256469Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "exited" : false
     },
+    "fingerprint" : "05a5abf242e6ffad7e3c760bdd1b587016b2cd60ad09e52725e4297e420b8a2d",
     "video" : "",
     "actual" : {
       "exited" : false
@@ -805,13 +849,14 @@
   }, {
     "caseId" : "E2E-051",
     "name" : "全項目表示・隠し7は非表示",
-    "executedAt" : "2026-11-17T16:00:30.350502478Z",
+    "executedAt" : "2026-11-17T16:07:01.889993542Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "visibleOptions" : [ 1, 2, 3, 4 ],
       "hiddenOptions" : [ 7 ],
       "title" : "WELCOME TO..."
     },
+    "fingerprint" : "beceb783b5409696a13e2ec8313155f3bcdc901977becb4ecb88309934f8d330",
     "video" : "",
     "actual" : {
       "visibleOptions" : [ 1, 2, 3, 4 ],
@@ -823,12 +868,13 @@
   }, {
     "caseId" : "E2E-052",
     "name" : "不適格・学習無効",
-    "executedAt" : "2026-11-17T16:00:30.489667434Z",
+    "executedAt" : "2026-11-17T16:07:02.035215667Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "visibleOptions" : [ 3, 4 ],
       "blockedOptions" : [ 1, 2 ]
     },
+    "fingerprint" : "18458919f78d61d4fd2889b046b1b51c11ade22db2090a66ccf3d58c9156a299",
     "video" : "",
     "actual" : {
       "visibleOptions" : [ 3, 4 ],
@@ -839,12 +885,13 @@
   }, {
     "caseId" : "E2E-053",
     "name" : "展示データ一覧",
-    "executedAt" : "2026-11-17T16:00:30.623861506Z",
+    "executedAt" : "2026-11-17T16:07:02.175289137Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ids" : [ "EXH001", "EXH002" ],
       "count" : 2
     },
+    "fingerprint" : "3287375b12c0b7d1119f915128a09477536f6d1b6ed035815ad075cb6194601b",
     "video" : "",
     "actual" : {
       "ids" : [ "EXH001", "EXH002" ],
@@ -855,12 +902,13 @@
   }, {
     "caseId" : "E2E-054",
     "name" : "空一覧",
-    "executedAt" : "2026-11-17T16:00:30.758363512Z",
+    "executedAt" : "2026-11-17T16:07:02.314673569Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ids" : [ ],
       "count" : 0
     },
+    "fingerprint" : "f5eb899fb2118f06f94e34e3302cbd84a1a61771adad12cb20da059398b8026b",
     "video" : "",
     "actual" : {
       "ids" : [ ],
@@ -871,12 +919,13 @@
   }, {
     "caseId" : "E2E-055",
     "name" : "投票設定参照",
-    "executedAt" : "2026-11-17T16:00:30.891767865Z",
+    "executedAt" : "2026-11-17T16:07:02.458096955Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "ALWVOTE" : "Y",
       "passwordNotExposed" : true
     },
+    "fingerprint" : "49616860abb31dcb0514fb674619bfdf4ebe6cf20813ceda8897efdd0cb2b586",
     "video" : "",
     "actual" : {
       "ALWVOTE" : "Y",
@@ -887,11 +936,12 @@
   }, {
     "caseId" : "E2E-056",
     "name" : "認証成功",
-    "executedAt" : "2026-11-17T16:00:31.024600906Z",
+    "executedAt" : "2026-11-17T16:07:02.599788128Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "authenticated" : true
     },
+    "fingerprint" : "a1c70f3334c27f32097190d3478fd143c2f42a3ab6d1781416bd71ee9b60f2c1",
     "video" : "",
     "actual" : {
       "authenticated" : true
@@ -901,12 +951,13 @@
   }, {
     "caseId" : "E2E-057",
     "name" : "認証失敗",
-    "executedAt" : "2026-11-17T16:00:31.286821659Z",
+    "executedAt" : "2026-11-17T16:07:02.872701861Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "authenticated" : false,
       "passwordNotExposed" : true
     },
+    "fingerprint" : "b13b745fa49f3422e96c7e88a2966422c4d51d05102e05a2d7d94a88cc315d53",
     "video" : "",
     "actual" : {
       "authenticated" : false,
@@ -917,14 +968,21 @@
   }, {
     "caseId" : "E2E-058",
     "name" : "メニュー番号・原文タイトル・Fキー・エラー位置照合",
-    "executedAt" : "2026-11-17T16:00:31.550076920Z",
+    "executedAt" : "2026-11-17T16:07:03.145239004Z",
     "environment" : "API (Spring Boot/H2)",
     "expected" : {
       "matchesAllLedgerElements" : true
     },
+    "fingerprint" : "79cb325d9903d3535e02f4e43202166008d81b3e9fe4d815f138c178eaae8a18",
     "video" : "",
     "status" : "UI専用・フェーズ3/4",
     "actual" : { },
     "notes" : "取消ボタン・全画面配置の照合はUIで実施"
-  } ]
+  } ],
+  "summary" : {
+    "total" : 58,
+    "uiOnly" : 3,
+    "passed" : 55,
+    "failed" : 0
+  }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.HexFormat;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DynamicTest;
@@ -64,6 +66,9 @@ class ApiCasesTest {
         record.put("executedAt", Instant.now().toString());
         record.put("environment", "API (Spring Boot/H2)");
         record.put("expected", scenario.path("expected"));
+        Object canonical = mapper.convertValue(Map.of("inputs", scenario.path("inputs"), "expected", scenario.path("expected")), Object.class);
+        byte[] payload = mapper.writer().with(com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS).writeValueAsBytes(canonical);
+        record.put("fingerprint", HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(payload)));
         record.put("video", "");
         JsonNode input = scenario.path("inputs");
         if (input.path("action").asText().equals("F12") || input.path("operation").asText().equals("compareLedger")) {
