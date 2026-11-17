@@ -83,7 +83,7 @@ export function App() {
       const result=await request(`/learn/${encodeURIComponent(collection)}/resolve`,'POST',{from:data.page||0,action:key,backPage:data.backPage||0});
       if(result.message)return;
       if(result.callScreen)setCall(result.callScreen);
-      setData(result);return;
+      setData(result.allowForward===false?{...result,page:data.page}:result);return;
     }
     if(key==='F5'&&data.fKeys?.F5)await submit();
     if(key==='F3'&&view==='menu'){setView('info');setData({screen:'INTERTEST',screenTitle:'VCF/400 - How to Navigate',content:'番号を選んで機能を開き、画面下部のFキーボタンまたはキーボードで操作します。'});}

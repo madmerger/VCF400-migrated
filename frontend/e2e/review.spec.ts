@@ -24,3 +24,11 @@ for(const exit of ['signoff','F3'])test(`Admin ${exit} revokes token and removes
   const response=await request.patch(`${backend}/api/settings`,{headers:{Authorization:`Bearer ${token}`},data:{ALWVOTE:'N'}});
   expect(response.status()).toBe(401);
 });
+
+test('LEARN EOF retains cursor for F8 and restores forward navigation',async({page})=>{
+  await page.goto('/?page=8&collection=global');await expect(page.getByTestId('page-number')).toHaveText('PAGE 08');
+  await page.getByTestId('key-F5').click();await expect(page.getByTestId('learn-eof')).toBeVisible();
+  await expect(page.getByTestId('page-number')).toHaveText('PAGE 08');
+  await page.keyboard.press('F8');await expect(page.getByTestId('page-number')).toHaveText('PAGE 07');
+  await expect(page.getByTestId('error-row')).toHaveText('');await expect(page.getByTestId('key-F5')).toBeEnabled();
+});
