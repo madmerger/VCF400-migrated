@@ -31,10 +31,10 @@ final class Screens {
         }
         result.put("fKeys", switch (screen) {
             case "VCFMAIN" -> Map.of("F3", "メニュー標準");
-            case "VOTE1" -> Map.of("F5", "Submit Vote", "F12", "Cancel");
-            case "ADDCMT" -> Map.of("F5", "Submit Comment", "F12", "Cancel");
+            case "VOTE1" -> Map.of("F5", "Submit", "F12", "Cancel");
+            case "ADDCMT" -> Map.of("F5", "Submit", "F12", "Cancel");
             case "READCMT" -> Map.of("F5", "Submit", "F12", "Cancel");
-            case "MAIN" -> Map.of("F3", "Exit", "F5", "Forwards", "F8", "Backwards");
+            case "MAIN" -> Map.of("F3", "Exit", "F5", "Fwd", "F8", "Back");
             default -> Map.of();
         });
         result.put("inputOrder", switch (screen) {
