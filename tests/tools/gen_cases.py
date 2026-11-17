@@ -120,10 +120,12 @@ add('展示一覧', '空一覧', {'operation': 'listExhibits'}, {'ids': [], 'cou
 add('設定', '投票設定参照', {'operation': 'readSettings'}, {'ALWVOTE': 'Y', 'passwordNotExposed': True}, 'B-08 O-08', 'API')
 add('管理者認証', '認証成功', {'password': '${VCF_SEED_ADMPSWRD}'}, {'authenticated': True}, 'B-24 O-08', 'API')
 add('管理者認証', '認証失敗', {'password': 'wrong'}, {'authenticated': False, 'passwordNotExposed': True}, 'B-24 O-08', 'API')
-add('画面共通', 'メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger'}, {'matchesAllLedgerElements': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・ADDCMT・READCMT・LRN400・INTERTEST', steps=['仕様書画面台帳の各L-IDを全件照合する', 'VCFMAIN 1/11/12/13/80の経路と表示番号を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、Fキー・エラー位置を照合する', '未定義2～10・90の機能を推測で追加していないことを確認する'])
+add('画面共通', '全対象画面・メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger', 'screens': ['VCFMAIN', 'VOTE1', 'ADDCMT', 'READCMT', 'MAIN', 'MENU', 'ADMPSWRD', 'SETTINGS', 'ENDOFCON', 'VOTEEND', 'DAVE', 'ENDCMT', 'CREDITS', 'INTERTEST', 'SIGNOFF']}, {'matchesAllInScopeScreens': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・VOTEEND・DAVE・ENDOFCON・ADDCMT・ENDCMT・READCMT・LRN400・EXHBMENU・ADMPSWRD・INTERTEST・CREDITS・SETTINGS・SIGNOFF', steps=['inputs.screensの全画面へ実際に遷移し、原文タイトルを照合する（DAVEはAPIに本文なし、設定・サインオフは移行UI追加画面）', 'VCFMAINの全表示番号と文言、1/11/12/13/80およびキオスク隠し7の経路を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、全対象Fキー・エラー位置を照合する', '5250装飾・ASCIIアートの模写は対象外。未定義2～10・90の機能を推測で追加していないことを確認する'])
 
 spec = json.loads((ROOT / 'spec/tools/spec_data.json').read_text())
 def ledger_screen(row):
+    if row[1] == 'LEARN/400 CALL候補（直接のメニュー経路なし）':
+        return 'CREDITS'
     if row[1] == 'EXHBMENU/7（非表示）':
         return 'ADMPSWRD'
     return row[1].split(' → ')[-1]

@@ -124,7 +124,7 @@ for(const scenario of caseDocument.cases){
       await expect(page.getByTestId('toggle-voting')).toHaveCount(0);
       await expect(page.locator('body')).not.toContainText(process.env.VCF_SEED_ADMPSWRD!);
     }else if(input.operation==='compareLedger'){
-      actual=await verifyLedger(page);
+      actual=await verifyLedger(page,input.screens as string[]);
     }
     if(actual.screenTitle)expect(ledger.map(row=>row[3])).toContain(actual.screenTitle);
     if(expected.error||expected.errorDisplay)await expect(page.getByTestId('error-row')).toHaveText(String(expected.errorDisplay||expected.error));
@@ -148,7 +148,13 @@ for(const scenario of caseDocument.cases){
   });
 }
 
-async function verifyLedger(page:Page){
+async function verifyLedger(page:Page,requiredScreens:string[]){
+  const visited=new Set<string>();
+  async function checkTitle(screen:string,title:string,source=true){
+    await expect(page.getByTestId('screen-title')).toHaveText(title);
+    if(source)expect(ledger.map(row=>row[3])).toContain(title);
+    visited.add(screen);
+  }
   const menu=await (await page.request.get('/api/menu')).json();
   for(const item of menu.items){
     await expect(page.getByTestId(`menu-${item.number}`)).toContainText(item.title);
@@ -163,6 +169,7 @@ async function verifyLedger(page:Page){
     await open();const info=await (await page.request.get('/api'+api[screen])).json();
     await expect(page.getByTestId('screen-title')).toHaveText(info.screenTitle);
     expect(ledger.map(row=>row[3])).toContain(info.screenTitle);
+    visited.add(screen);
     for(const row of ledger.filter(r=>r[2]==='Fキー')){
       const target=row[1]==='VCFMAIN'?'VCFMAIN':row[1].split(' → ').at(-1)==='LEARN/400'?'MAIN':row[1].split(' → ').at(-1);
       if(target!==screen)continue;
@@ -174,11 +181,43 @@ async function verifyLedger(page:Page){
   }
   await page.getByTestId('nav-menu').click();await expect(page.getByTestId('screen-title')).toHaveText('AS/400 DEMO MENU');
   await page.keyboard.press('F3');await expect(page.getByTestId('screen-title')).toHaveText('VCF/400 - How to Navigate');
+  visited.add('INTERTEST');
+  await kiosk(page,'EXH001');await checkTitle('MENU','WELCOME TO...');
+  for(const n of [1,2,3,4])await expect(page.getByTestId(`kiosk-${n}`)).toBeVisible();
+  await expect(page.getByTestId('kiosk-7')).toHaveCount(0);
+  await page.getByTestId('kiosk-selection').fill('7');await page.getByRole('button',{name:'選択',exact:true}).click();
+  await checkTitle('ADMPSWRD','Are you sure you want to exit the kiosk?');
+  await expect(page.getByTestId('password')).toHaveAttribute('type','password');
+  await page.getByTestId('password').fill(process.env.VCF_SEED_ADMPSWRD!);await page.getByTestId('auth-submit').click();
+  await checkTitle('SETTINGS','Visitor Settings',false);
+  await page.getByTestId('toggle-voting').click();await expect(page.getByTestId('voting-status')).toHaveText('受付終了 / Closed');
+  await page.getByTestId('nav-menu').click();await page.getByTestId('menu-11').click();
+  await checkTitle('ENDOFCON','The voting period has ended and you can no longer vote.');
+  await expect(page.getByTestId('badge')).toHaveCount(0);
+  await page.getByTestId('nav-settings').click();await page.getByTestId('toggle-voting').click();
+  await expect(page.getByTestId('voting-status')).toHaveText('受付中 / Open');
+  await menuPage(page,11);await fill(page,{badge:1002,exhibit:'EXH001',award:1},['badge','exhibit','award']);
+  const vote=await responseTo(page,'/vote',()=>page.getByTestId('key-F5').click());
+  expect(vote.saved).toBe(true);await checkTitle('VOTEEND',String(vote.screenTitle));
+  await menuPage(page,11);await fill(page,{badge:1003,exhibit:'DAVE',award:1},['badge','exhibit','award']);
+  await page.getByTestId('key-F5').click();await checkTitle('DAVE','DAVE',false);
+  await menuPage(page,12);await fill(page,{name:'Ledger',exhibit:'EXH001',comment:'Screen verification'},['name','exhibit','comment']);
+  await page.getByTestId('key-F5').click();await checkTitle('ENDCMT','Thank you for commenting on this exhibit! Your Comment ID Is:');
+  await expect(page.getByTestId('new-comment-id')).toHaveText('6');
+  await page.getByTestId('nav-menu').click();await expect(page.getByTestId('menu-1')).toBeVisible();
+  await learnTo(page,5);await page.getByTestId('key-F5').click();
+  await expect(page.getByTestId('call-title')).toHaveText('VCF/400 - Credits and Copyright');visited.add('CREDITS');
+  expect(ledger.map(row=>row[3])).toContain('VCF/400 - Credits and Copyright');
+  await page.getByTestId('call-return').click();await expect(page.getByTestId('page-number')).toHaveText('PAGE 07');
+  await page.getByTestId('nav-menu').click();await page.getByTestId('menu-80').click();
+  await checkTitle('SIGNOFF',menu.items.find((item:{number:number})=>item.number===80).title,false);
   await page.route('**/api/exhibits',route=>route.abort());
   await page.getByTestId('nav-exhibits').click();
   await expect(page.getByTestId('error-row')).toHaveText('接続できません。接続を確認して再試行してください。');
   await page.unroute('**/api/exhibits');
   await page.getByTestId('nav-menu').click();await expect(page.getByTestId('screen-title')).toHaveText('AS/400 DEMO MENU');
-  return {matchesAllLedgerElements:true};
+  expect([...visited].sort()).toEqual([...requiredScreens].sort());
+  expect((await page.request.post(`${backend}/api/e2e/reset`,{headers:fixtureHeaders,data:{}})).ok()).toBeTruthy();
+  return {matchesAllInScopeScreens:true};
 }
 async function menuPage(page:Page,number:number){await page.getByTestId('nav-menu').click();await expect(page.getByTestId(`menu-${number}`)).toBeVisible();await menu(page,number);}
