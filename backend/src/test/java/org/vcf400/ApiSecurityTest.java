@@ -159,6 +159,29 @@ class ApiSecurityTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test void learnBackAtFirstPageReturnsFirstPageAndPreservesExplicitReturnTarget() throws Exception {
+        for (String collection : List.of("global", "EXH001")) {
+            for (int from : List.of(0, 1)) {
+                mvc.perform(post("/api/learn/" + collection + "/resolve").contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"from\":" + from + ",\"action\":\"F8\"}"))
+                        .andExpect(status().isOk()).andExpect(jsonPath("$.page").value(1))
+                        .andExpect(jsonPath("$.allowForward").value(true));
+            }
+        }
+        mvc.perform(post("/api/learn/global/resolve").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"from\":1,\"backPage\":2,\"action\":\"F8\"}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.page").value(2));
+    }
+
+    @Test void learnBackDoesNotInventPagesForMissingCollectionsOrAcceptNegativeFrom() throws Exception {
+        mvc.perform(post("/api/learn/missing/resolve").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"from\":1,\"action\":\"F8\"}"))
+                .andExpect(status().isNotFound());
+        mvc.perform(post("/api/learn/global/resolve").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"from\":-1,\"action\":\"F8\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
     @Test void learnCannotExecuteArbitraryProgramsOrMissingTargets() throws Exception {
         var page = pages.findById(new Models.PageKey("global", 6)).orElseThrow();
         page.EXTRA = "SHELL"; pages.saveAndFlush(page);

@@ -21,6 +21,7 @@ import org.vcf400.Requests.*;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
@@ -37,7 +38,7 @@ class ApiConcurrencyTest {
     @MockitoSpyBean Settings settings;
     @Autowired VisitorService visitors;
 
-    @BeforeEach void reset() { seeder.reset(seeder.baseline()); }
+    @BeforeEach void reset() throws Exception { seeder.reset(seeder.baseline()); }
 
     @Test void passwordChangeCannotOvertakeVerifiedLoginAndLeaveItsTokenValid() throws Exception {
         String admin = (String) controller.auth(new AuthInput(PASSWORD)).get("token");
@@ -75,7 +76,7 @@ class ApiConcurrencyTest {
         doAnswer(invocation -> {
             checked.countDown();
             assertTrue(resume.await(10, TimeUnit.SECONDS));
-            return invocation.callRealMethod();
+            return mockingDetails(votes).getMockCreationSettings().getDefaultAnswer().answer(invocation);
         }).when(votes).existsById(1002);
         Running<Map<String, Object>> vote = start(() -> controller.vote(new VoteInput(1002, "EXH001", 1), "MM2024"));
         Running<Map<String, Object>> close = null;
@@ -103,7 +104,7 @@ class ApiConcurrencyTest {
         doAnswer(invocation -> {
             closing.countDown();
             assertTrue(resume.await(10, TimeUnit.SECONDS));
-            return invocation.callRealMethod();
+            return mockingDetails(settings).getMockCreationSettings().getDefaultAnswer().answer(invocation);
         }).when(settings).saveAndFlush(any(org.vcf400.Models.Setting.class));
         Running<Map<String, Object>> close = start(() -> controller.update("Bearer " + admin, new SettingsInput("N", null)));
         Running<Map<String, Object>> vote = null;

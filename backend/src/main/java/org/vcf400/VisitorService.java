@@ -131,7 +131,7 @@ public class VisitorService {
         }
         if (input.from() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "開始ページが必要です");
         if (input.action().equals("F8")) {
-            int target = input.backPage() != null && input.backPage() != 0 ? input.backPage() : Math.max(0, input.from() - 1);
+            int target = input.backPage() != null && input.backPage() != 0 ? input.backPage() : Math.max(1, input.from() - 1);
             return fetchPage(collection, target);
         }
         LearnPage next = pages.findById(new PageKey(collection, input.from() + 1)).orElse(null);
