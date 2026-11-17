@@ -1,4 +1,5 @@
 {
+  "runId": "88ef6ad1-6718-421d-816f-b55e014a93dd",
   "summary": {
     "total": 58,
     "passed": 58,
@@ -9,7 +10,7 @@
       "caseId": "E2E-001",
       "name": "正常投票・Best in Show",
       "fingerprint": "950ef8071779125eea2768f9e49c77d2fcb05c1df2bf9fee1ef49abc16fa9599",
-      "executedAt": "2026-11-17T16:45:01.843Z",
+      "executedAt": "2026-11-17T16:58:43.781Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -28,7 +29,7 @@
       "caseId": "E2E-002",
       "name": "正常投票・Ed Fair",
       "fingerprint": "979466a66ebf65bc9982b3d0b3bf4b70d011501954169adb81b10dd551ce628d",
-      "executedAt": "2026-11-17T16:45:03.199Z",
+      "executedAt": "2026-11-17T16:58:44.919Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -47,7 +48,7 @@
       "caseId": "E2E-003",
       "name": "重複バッジ・別賞でも拒否",
       "fingerprint": "41d1f8d0b7a4a2a8953eb94bcf448faa68ed72a9f48bb507670bc40c58a17293",
-      "executedAt": "2026-11-17T16:45:04.228Z",
+      "executedAt": "2026-11-17T16:58:45.956Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -66,7 +67,7 @@
       "caseId": "E2E-004",
       "name": "不適格展示",
       "fingerprint": "c0f55754b3ee711d116c0e05d942bb20dc216ffae60f61aee8e94922c7b54484",
-      "executedAt": "2026-11-17T16:45:05.306Z",
+      "executedAt": "2026-11-17T16:58:47.000Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -85,7 +86,7 @@
       "caseId": "E2E-005",
       "name": "存在しない展示",
       "fingerprint": "a577cdd0adbe33fa11c06bdc0f8eaadd2e5392312ea28bf6332f4f125b74dbcd",
-      "executedAt": "2026-11-17T16:45:06.211Z",
+      "executedAt": "2026-11-17T16:58:47.908Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -104,7 +105,7 @@
       "caseId": "E2E-006",
       "name": "存在しない賞",
       "fingerprint": "26e30224e409f336a1674e5c5f71355a2002efd6e1fcbaa7203c36653230c3a9",
-      "executedAt": "2026-11-17T16:45:07.139Z",
+      "executedAt": "2026-11-17T16:58:48.812Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -123,7 +124,7 @@
       "caseId": "E2E-007",
       "name": "全チェック失敗・最後のエラー優先",
       "fingerprint": "8601e6b51b448e8dde2008585a57a536a7eca61268d85d6aca148915174f7209",
-      "executedAt": "2026-11-17T16:45:08.113Z",
+      "executedAt": "2026-11-17T16:58:49.691Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -142,7 +143,7 @@
       "caseId": "E2E-008",
       "name": "重複と不適格・適格性エラー優先",
       "fingerprint": "1283e96a7375eae16861769f45402d286dd2f9c21aff6962f39225fa0f3b9edc",
-      "executedAt": "2026-11-17T16:45:09.047Z",
+      "executedAt": "2026-11-17T16:58:50.561Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -161,7 +162,7 @@
       "caseId": "E2E-009",
       "name": "投票期間終了・画面スキップ",
       "fingerprint": "d7701e8003451880e27d7b155f9c29c935e5d148b2df019d79fdb8b64f4e4c1f",
-      "executedAt": "2026-11-17T16:45:09.980Z",
+      "executedAt": "2026-11-17T16:58:51.429Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -182,7 +183,7 @@
       "caseId": "E2E-010",
       "name": "バッジ未入力",
       "fingerprint": "dcdfa6f7a5dc52d22d7f9a8dce527f46022284b75eeb7e6ec1d7d3dc151ef084",
-      "executedAt": "2026-11-17T16:45:10.884Z",
+      "executedAt": "2026-11-17T16:58:52.279Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -201,7 +202,7 @@
       "caseId": "E2E-011",
       "name": "展示未入力",
       "fingerprint": "853fdafc924fe448c7b7f217e172c66444ddce330855c9d682ea1ddda84a2a1e",
-      "executedAt": "2026-11-17T16:45:11.839Z",
+      "executedAt": "2026-11-17T16:58:53.170Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -220,7 +221,7 @@
       "caseId": "E2E-012",
       "name": "賞未入力",
       "fingerprint": "7e4c39607048802af06a035188276b574d110a97ddc140cf4e269a75dc1170ab",
-      "executedAt": "2026-11-17T16:45:12.803Z",
+      "executedAt": "2026-11-17T16:58:54.076Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -239,7 +240,7 @@
       "caseId": "E2E-013",
       "name": "全項目未入力",
       "fingerprint": "f7e426a6f77f3daa748b715cabfb26889c7db05fce9ecd0ab93d8ba51552edac",
-      "executedAt": "2026-11-17T16:45:13.731Z",
+      "executedAt": "2026-11-17T16:58:54.953Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -258,7 +259,7 @@
       "caseId": "E2E-014",
       "name": "キオスク展示固定",
       "fingerprint": "21bc52229af53fee753e83be4eb99c99b6ebfa9813fdfe3135e1b2937742de1e",
-      "executedAt": "2026-11-17T16:45:14.626Z",
+      "executedAt": "2026-11-17T16:58:55.836Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -277,7 +278,7 @@
       "caseId": "E2E-015",
       "name": "F12取消・書込みなし",
       "fingerprint": "a9c7043621766fcf78b0c6fc645d233ab7b06e28b94759aeec2edf38c5537f49",
-      "executedAt": "2026-11-17T16:45:15.666Z",
+      "executedAt": "2026-11-17T16:58:56.808Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -296,7 +297,7 @@
       "caseId": "E2E-016",
       "name": "DAVE隠し画面",
       "fingerprint": "3256dca942551cc49d4cbe6cb2ef09f42c0cca31e50db67bffeaaa0f5123b1ef",
-      "executedAt": "2026-11-17T16:45:16.620Z",
+      "executedAt": "2026-11-17T16:58:57.727Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -315,7 +316,7 @@
       "caseId": "E2E-017",
       "name": "正常登録・max+1",
       "fingerprint": "fb8a5e02cf4ee86702785210c6a37a3e5a0cd35ed6d5190e9770626618b35ae3",
-      "executedAt": "2026-11-17T16:45:17.567Z",
+      "executedAt": "2026-11-17T16:58:58.609Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -338,7 +339,7 @@
       "caseId": "E2E-018",
       "name": "空DBへの初回登録",
       "fingerprint": "8dfe35dc6e1b1a8c1ee80c15e46c6cda6ec57fca1b62f112066c24c2b44c6091",
-      "executedAt": "2026-11-17T16:45:18.518Z",
+      "executedAt": "2026-11-17T16:58:59.557Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -359,7 +360,7 @@
       "caseId": "E2E-019",
       "name": "name未入力",
       "fingerprint": "d6a79e96a29337e68794200ce05fa9b84bbaf63087282fec29ec39b27dcf2bb5",
-      "executedAt": "2026-11-17T16:45:19.571Z",
+      "executedAt": "2026-11-17T16:59:00.515Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -378,7 +379,7 @@
       "caseId": "E2E-020",
       "name": "exhibit未入力",
       "fingerprint": "84a933d71f919989286c8eaa4d5c51cde5ff274212b30003afb13bc3a93131a1",
-      "executedAt": "2026-11-17T16:45:20.535Z",
+      "executedAt": "2026-11-17T16:59:01.533Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -397,7 +398,7 @@
       "caseId": "E2E-021",
       "name": "comment未入力",
       "fingerprint": "084d0369f77063e404637010b62770422ae2c4d0a39f080a0956251eb59d2071",
-      "executedAt": "2026-11-17T16:45:21.457Z",
+      "executedAt": "2026-11-17T16:59:02.551Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -416,7 +417,7 @@
       "caseId": "E2E-022",
       "name": "全項目未入力・最終エラー",
       "fingerprint": "fcf26d6ac00f930c43e1df829cef56e26e31bd2cbad5868a66ea80db5de00ef4",
-      "executedAt": "2026-11-17T16:45:22.405Z",
+      "executedAt": "2026-11-17T16:59:03.589Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -435,7 +436,7 @@
       "caseId": "E2E-023",
       "name": "存在しない展示も原典は登録",
       "fingerprint": "5c942f47ea75f96128704a20ae3d525a1c5fa5149956c423acc525a2f85f2fe9",
-      "executedAt": "2026-11-17T16:45:23.381Z",
+      "executedAt": "2026-11-17T16:59:04.604Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -454,7 +455,7 @@
       "caseId": "E2E-024",
       "name": "F12取消",
       "fingerprint": "a9c7043621766fcf78b0c6fc645d233ab7b06e28b94759aeec2edf38c5537f49",
-      "executedAt": "2026-11-17T16:45:24.340Z",
+      "executedAt": "2026-11-17T16:59:05.670Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -473,7 +474,7 @@
       "caseId": "E2E-025",
       "name": "キオスク展示固定",
       "fingerprint": "d74137a3ea95354954938d113b79cf64c40e7c5fcb64151bb4c77f5f177d13d6",
-      "executedAt": "2026-11-17T16:45:25.297Z",
+      "executedAt": "2026-11-17T16:59:06.753Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -492,7 +493,7 @@
       "caseId": "E2E-026",
       "name": "通常閲覧",
       "fingerprint": "f12c552eb3435d06971e924fd129de38cc67817fb775c239f7ecca4deea3e39a",
-      "executedAt": "2026-11-17T16:45:26.289Z",
+      "executedAt": "2026-11-17T16:59:07.799Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -513,7 +514,7 @@
       "caseId": "E2E-027",
       "name": "非表示は名前・本文を置換",
       "fingerprint": "4868515c0a730adc5ea6faf2329febcd7e8594df00441a2244fd420b47b1fc9f",
-      "executedAt": "2026-11-17T16:45:27.185Z",
+      "executedAt": "2026-11-17T16:59:08.871Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -532,7 +533,7 @@
       "caseId": "E2E-028",
       "name": "キオスクから別展示は非公開",
       "fingerprint": "ea6f7ef6411ee28c10fb682295dba1a0258cc6453a6e6bccba2f878510b1969e",
-      "executedAt": "2026-11-17T16:45:28.159Z",
+      "executedAt": "2026-11-17T16:59:10.169Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -553,7 +554,7 @@
       "caseId": "E2E-029",
       "name": "同展示は公開",
       "fingerprint": "948a9d931b7fd576f74e90b3c4e7465bcbe36a47bd03f13dab33001570e5495e",
-      "executedAt": "2026-11-17T16:45:29.152Z",
+      "executedAt": "2026-11-17T16:59:11.396Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -572,7 +573,7 @@
       "caseId": "E2E-030",
       "name": "末尾超過は最終レコード",
       "fingerprint": "d01165919c71f6cbd2a427110e4c6085a53d3d8372f59829004062261cb682d9",
-      "executedAt": "2026-11-17T16:45:30.128Z",
+      "executedAt": "2026-11-17T16:59:12.460Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -593,7 +594,7 @@
       "caseId": "E2E-031",
       "name": "欠番は次のID",
       "fingerprint": "2a709c0e4356bbf13c66cf6ec352c50da72c686aac288d6e2543a940679fd814",
-      "executedAt": "2026-11-17T16:45:31.021Z",
+      "executedAt": "2026-11-17T16:59:13.907Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -612,7 +613,7 @@
       "caseId": "E2E-032",
       "name": "ID未入力",
       "fingerprint": "647e8c1cc927432a6979289cbfffb85f9262c6dc9712bbc847dc94c466426a65",
-      "executedAt": "2026-11-17T16:45:31.901Z",
+      "executedAt": "2026-11-17T16:59:14.947Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -629,7 +630,7 @@
       "caseId": "E2E-033",
       "name": "表示件数は最終ID",
       "fingerprint": "66554166930d294cffdc6e526edb9d24ed0037e05c31d0d3070b6800ab18fb74",
-      "executedAt": "2026-11-17T16:45:32.766Z",
+      "executedAt": "2026-11-17T16:59:15.866Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -646,7 +647,7 @@
       "caseId": "E2E-034",
       "name": "空DB閲覧",
       "fingerprint": "6c0ab30432de80e10d527db0a3a46ba4fd83aa8a710b80e0d39dd64e7b6c1397",
-      "executedAt": "2026-11-17T16:45:33.625Z",
+      "executedAt": "2026-11-17T16:59:16.719Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -664,7 +665,7 @@
       "caseId": "E2E-035",
       "name": "最初のページ",
       "fingerprint": "f27ff3cbe9e0f89323aaae4ebc9d15217bbc7ea4bdd3ac2a4407297d5864f3ac",
-      "executedAt": "2026-11-17T16:45:34.486Z",
+      "executedAt": "2026-11-17T16:59:17.549Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -683,7 +684,7 @@
       "caseId": "E2E-036",
       "name": "通常前進",
       "fingerprint": "bbe13dab9ceb6ff693dce880676c2ceac71212d9e4d325f35e411621d1bedea4",
-      "executedAt": "2026-11-17T16:45:35.328Z",
+      "executedAt": "2026-11-17T16:59:18.378Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -702,7 +703,7 @@
       "caseId": "E2E-037",
       "name": "JUMP分岐",
       "fingerprint": "2c066f5688699ed69cd0c68ebd44cc48fe58a453d74e7e9178777e9dd63dfb4e",
-      "executedAt": "2026-11-17T16:45:36.153Z",
+      "executedAt": "2026-11-17T16:59:19.291Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -725,7 +726,7 @@
       "caseId": "E2E-038",
       "name": "CALL分岐と復帰",
       "fingerprint": "72a2ad0d03b9ab52336c91936b232b877d4adadc9974ca382fbaad8367a7c48d",
-      "executedAt": "2026-11-17T16:45:37.153Z",
+      "executedAt": "2026-11-17T16:59:20.354Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -748,7 +749,7 @@
       "caseId": "E2E-039",
       "name": "ENDで終了",
       "fingerprint": "f315a4057b5a14cd03f9cd480daa46791bb33b3a8e1e6e5b423ed124fdce00c5",
-      "executedAt": "2026-11-17T16:45:38.083Z",
+      "executedAt": "2026-11-17T16:59:21.356Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -765,7 +766,7 @@
       "caseId": "E2E-040",
       "name": "通常戻る",
       "fingerprint": "6c7eddf2bf52680d58cdcdcd8ccd745307f5df8f83c8c135fe06461e630f11f7",
-      "executedAt": "2026-11-17T16:45:39.037Z",
+      "executedAt": "2026-11-17T16:59:22.476Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -782,7 +783,7 @@
       "caseId": "E2E-041",
       "name": "JUMP後戻る",
       "fingerprint": "30d72f972a8fcba2ac2df327d86ffb2ed303ffd5ac9d5bdef4ea69fcd21cb7f7",
-      "executedAt": "2026-11-17T16:45:39.862Z",
+      "executedAt": "2026-11-17T16:59:23.399Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -799,7 +800,7 @@
       "caseId": "E2E-042",
       "name": "CALL後戻る",
       "fingerprint": "2218402b16ea183f9e8a99b918df83442eccf5b26184bf876bac8c272f9d9cf4",
-      "executedAt": "2026-11-17T16:45:40.741Z",
+      "executedAt": "2026-11-17T16:59:24.343Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -816,7 +817,7 @@
       "caseId": "E2E-043",
       "name": "末尾前進",
       "fingerprint": "d1acee2461e98cacc0a37036bb6083d2989bba715b329330c84fd0b5d93760fb",
-      "executedAt": "2026-11-17T16:45:41.695Z",
+      "executedAt": "2026-11-17T16:59:25.311Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -835,7 +836,7 @@
       "caseId": "E2E-044",
       "name": "F3終了",
       "fingerprint": "03731aed5e1e77bcd30f4d46112d536187b87468818e460ef7301346c9ba3028",
-      "executedAt": "2026-11-17T16:45:42.565Z",
+      "executedAt": "2026-11-17T16:59:26.162Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -852,7 +853,7 @@
       "caseId": "E2E-045",
       "name": "展示別ページ",
       "fingerprint": "710ccec5b3a5862111f84565e93b217da292b6b6c79c71d31083075bb3b29969",
-      "executedAt": "2026-11-17T16:45:43.445Z",
+      "executedAt": "2026-11-17T16:59:27.137Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -873,7 +874,7 @@
       "caseId": "E2E-046",
       "name": "ページなし",
       "fingerprint": "ab814dea1ed42520edccedd5365f6bf7af6064fc42a926a0c8aa22aede2bab12",
-      "executedAt": "2026-11-17T16:45:44.444Z",
+      "executedAt": "2026-11-17T16:59:28.123Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -891,7 +892,7 @@
       "caseId": "E2E-047",
       "name": "不正JUMP引数",
       "fingerprint": "7ea9a16435886968fa2bc16ced045418f588b4166845208dde33845640456826",
-      "executedAt": "2026-11-17T16:45:45.264Z",
+      "executedAt": "2026-11-17T16:59:29.002Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -909,7 +910,7 @@
       "caseId": "E2E-048",
       "name": "正しいパスワードで終了",
       "fingerprint": "a39c9e60bc8ec39505aff797ecf2b9c196d7dc7788e3ce4d626d2ae617444280",
-      "executedAt": "2026-11-17T16:45:46.114Z",
+      "executedAt": "2026-11-17T16:59:29.888Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -926,7 +927,7 @@
       "caseId": "E2E-049",
       "name": "誤ったパスワード",
       "fingerprint": "601aa37fec4ee9b248c1af1a5db4a14781f90b225ffac5469793962fc42bff19",
-      "executedAt": "2026-11-17T16:45:47.731Z",
+      "executedAt": "2026-11-17T16:59:31.592Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -945,7 +946,7 @@
       "caseId": "E2E-050",
       "name": "空パスワード",
       "fingerprint": "6b7f06b342eaacc2ca2f93cc13b6c7c60461e38c644e3c098a5f57c5d84e8484",
-      "executedAt": "2026-11-17T16:45:49.152Z",
+      "executedAt": "2026-11-17T16:59:33.073Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -962,7 +963,7 @@
       "caseId": "E2E-051",
       "name": "全項目表示・隠し7は非表示",
       "fingerprint": "b9b6c26aef199291abc3d2c6affeebfdcad2ec4b9f64a11bac397f965290b022",
-      "executedAt": "2026-11-17T16:45:50.568Z",
+      "executedAt": "2026-11-17T16:59:34.570Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -997,7 +998,7 @@
       "caseId": "E2E-052",
       "name": "不適格・学習無効",
       "fingerprint": "8af2f151a2c4d83a31f4486a7efb270585e68ea193c2fbddb773db945e0b23e4",
-      "executedAt": "2026-11-17T16:45:51.470Z",
+      "executedAt": "2026-11-17T16:59:35.484Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1028,7 +1029,7 @@
       "caseId": "E2E-053",
       "name": "展示データ一覧",
       "fingerprint": "6b2c779f0af41bd1132372db8d1dc32d77da9992a5cfc34fccbccc70f11621b1",
-      "executedAt": "2026-11-17T16:45:52.365Z",
+      "executedAt": "2026-11-17T16:59:36.361Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1053,7 +1054,7 @@
       "caseId": "E2E-054",
       "name": "空一覧",
       "fingerprint": "2586fe1808567c4177eed1c888136bfe132a58ae215599b2a0ca4f09b5dd672e",
-      "executedAt": "2026-11-17T16:45:53.188Z",
+      "executedAt": "2026-11-17T16:59:37.243Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1072,7 +1073,7 @@
       "caseId": "E2E-055",
       "name": "投票設定参照",
       "fingerprint": "93d183b8b55e9f3ef40cf93a8c61bd3a10072038f50f53242a976c600fc08b27",
-      "executedAt": "2026-11-17T16:45:53.991Z",
+      "executedAt": "2026-11-17T16:59:38.100Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1091,7 +1092,7 @@
       "caseId": "E2E-056",
       "name": "認証成功",
       "fingerprint": "8f6a59cecd9b2d7996c836e0f200750fe3fae3908648bb52faa846157bd1022e",
-      "executedAt": "2026-11-17T16:45:54.792Z",
+      "executedAt": "2026-11-17T16:59:39.011Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1108,7 +1109,7 @@
       "caseId": "E2E-057",
       "name": "認証失敗",
       "fingerprint": "e1a073bac40bf2dfb13c5f51651600d0a3ce31dfa01bad2e835d8261934bce6c",
-      "executedAt": "2026-11-17T16:45:56.334Z",
+      "executedAt": "2026-11-17T16:59:40.648Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
@@ -1125,20 +1126,21 @@
     },
     {
       "caseId": "E2E-058",
-      "name": "メニュー番号・原文タイトル・Fキー・エラー位置照合",
-      "fingerprint": "3811930ce3ee1bfaf272138ce45563066054b66aeaa437896577582a11d214b0",
-      "executedAt": "2026-11-17T16:45:57.694Z",
+      "name": "全対象画面・メニュー番号・原文タイトル・Fキー・エラー位置照合",
+      "fingerprint": "4c7e77b19e6c59c85da966dc77b9d62f2e505843ef1e83fc774cceca91cbd04e",
+      "executedAt": "2026-11-17T16:59:42.178Z",
       "environment": "Web (React/Chromium)",
       "status": "合格",
       "expected": {
-        "matchesAllLedgerElements": true
+        "matchesAllInScopeScreens": true
       },
       "actual": {
-        "matchesAllLedgerElements": true
+        "matchesAllInScopeScreens": true
       },
       "video": "video/2_Web_React.mp4",
-      "recording": "frontend/test-results/artifacts/visitor-E2E-058-メニュー番号・原文タイトル・Fキー・エラー位置照合/video.webm",
+      "recording": "frontend/test-results/artifacts/visitor-E2E-058-全対象画面・メニュー番号・原文タイトル・Fキー・エラー位置照合/video.webm",
       "notes": "Chromium UI・実H2・画面操作と保存件数を検証"
     }
-  ]
+  ],
+  "videoGeneratedAt": "2026-11-17T17:00:02.533Z"
 }

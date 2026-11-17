@@ -22,7 +22,7 @@ org.vcf400.ApiSecurityTest: Tests run: 13, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.E2eFixturesTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ReviewRegressionTest: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ScreensTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-Tests run: 85, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 86, Failures: 0, Errors: 0, Skipped: 0
 API共通ケース: 全58件 / 合格55 / 不合格0 / UI専用3
 ```
 

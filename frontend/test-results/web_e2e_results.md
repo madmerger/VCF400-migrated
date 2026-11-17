@@ -61,4 +61,4 @@
 |E2E-055|合格|{"ALWVOTE":"Y","passwordNotExposed":true}|{"ALWVOTE":"Y","passwordNotExposed":true}|video/2_Web_React.mp4|
 |E2E-056|合格|{"authenticated":true}|{"authenticated":true}|video/2_Web_React.mp4|
 |E2E-057|合格|{"authenticated":false,"passwordNotExposed":true}|{"authenticated":false,"passwordNotExposed":true}|video/2_Web_React.mp4|
-|E2E-058|合格|{"matchesAllLedgerElements":true}|{"matchesAllLedgerElements":true}|video/2_Web_React.mp4|
+|E2E-058|合格|{"matchesAllInScopeScreens":true}|{"matchesAllInScopeScreens":true}|video/2_Web_React.mp4|

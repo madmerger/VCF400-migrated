@@ -11,7 +11,8 @@ async function authenticate(page:Page){
   const response=page.waitForResponse(r=>r.url().endsWith('/admin/auth'));
   await page.getByTestId('auth-submit').click();
   const token=(await (await response).json()).token as string;
-  await expect(page.getByTestId('toggle-voting')).toBeVisible();return token;
+  await expect(page.getByTestId('toggle-voting')).toBeVisible();
+  await expect(page.locator('.workspace')).toHaveAttribute('aria-busy','false');return token;
 }
 for(const exit of ['signoff','F3'])test(`Admin ${exit} revokes token and removes next visitor privileges`,async({page,request})=>{
   const token=await authenticate(page);
@@ -20,9 +21,11 @@ for(const exit of ['signoff','F3'])test(`Admin ${exit} revokes token and removes
     await expect(page.getByTestId('screen-title')).toHaveText('Sign Off the System');
   }else {await page.keyboard.press('F3');await expect(page.getByTestId('kiosk-selection')).toBeVisible();}
   await page.getByTestId('nav-settings').click();await expect(page.getByTestId('voting-status')).toBeVisible();
+  await expect(page.locator('.workspace')).toHaveAttribute('aria-busy','false');
   await expect(page.getByTestId('toggle-voting')).toHaveCount(0);
   const response=await request.patch(`${backend}/api/settings`,{headers:{Authorization:`Bearer ${token}`},data:{ALWVOTE:'N'}});
   expect(response.status()).toBe(401);
+  await page.screenshot({path:`test-results/screenshots/review-admin-${exit}.png`});
 });
 
 test('LEARN EOF retains cursor for F8 and restores forward navigation',async({page})=>{
@@ -31,6 +34,7 @@ test('LEARN EOF retains cursor for F8 and restores forward navigation',async({pa
   await expect(page.getByTestId('page-number')).toHaveText('PAGE 08');
   await page.keyboard.press('F8');await expect(page.getByTestId('page-number')).toHaveText('PAGE 07');
   await expect(page.getByTestId('error-row')).toHaveText('');await expect(page.getByTestId('key-F5')).toBeEnabled();
+  await page.screenshot({path:'test-results/screenshots/review-learn-back.png'});
 });
 
 test('LEARN first page disables F8 and physical F8 sends no resolve request',async({page})=>{
@@ -38,6 +42,7 @@ test('LEARN first page disables F8 and physical F8 sends no resolve request',asy
   await expect(page.getByTestId('key-F8')).toBeDisabled();
   const requests:string[]=[];page.on('request',r=>{if(r.url().includes('/resolve'))requests.push(r.url());});
   await page.keyboard.press('F8');
+  await page.screenshot({path:'test-results/screenshots/review-first-page.png'});
   await page.keyboard.press('F5');await expect(page.getByTestId('page-number')).toHaveText('PAGE 02');
   expect(requests).toHaveLength(1);await expect(page.getByTestId('key-F8')).toBeEnabled();
   await page.getByTestId('key-F8').click();await expect(page.getByTestId('page-number')).toHaveText('PAGE 01');
