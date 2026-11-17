@@ -6,3 +6,5 @@ frontend/test-results/artifacts/
 frontend/.e2e/
 **/__pycache__/
 video/*.mp4
+windows/**/bin/
+windows/**/obj/
