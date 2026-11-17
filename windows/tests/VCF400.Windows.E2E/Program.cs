@@ -15,6 +15,8 @@ internal static class Program
     {
         var root = Directory.GetCurrentDirectory();
         if (!File.Exists(Path.Combine(root, "tests/cases.json"))) throw new InvalidOperationException("Run from repository root");
+        ConfigurationChecks.Run(root);
+        if (args.SequenceEqual(new[] { "--check-options" })) return 0;
         if (args.Length == 2 && args[0] == "--finalize")
         {
             var existing = JsonNode.Parse(File.ReadAllText(Path.Combine(root, "windows/test-results/windows_e2e_results.json")))!.AsObject();

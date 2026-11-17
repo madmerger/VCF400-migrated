@@ -21,6 +21,8 @@ internal sealed record Options(Uri ApiBase, string Collection, int? Page, string
         var address = values.GetValueOrDefault("--api") ?? Environment.GetEnvironmentVariable("VCF_API_BASE") ?? config?["ApiBase"]?.GetValue<string>() ?? "http://127.0.0.1:8080";
         if (!Uri.TryCreate(address.TrimEnd('/') + "/", UriKind.Absolute, out var uri) || (uri.Scheme != "http" && uri.Scheme != "https") || !string.IsNullOrEmpty(uri.UserInfo) || uri.Query.Length != 0 || uri.Fragment.Length != 0)
             throw new ArgumentException("API URLには認証情報・クエリー・フラグメントを含めずhttp(s) URLを指定してください。");
+        if (uri.Scheme == "http" && !uri.IsLoopback)
+            throw new ArgumentException("ループバック以外のAPI URLにはHTTPSが必要です。HTTPは127.0.0.1・localhost・::1などのループバックにのみ使用できます。");
         int? page = values.TryGetValue("--page", out var p) ? int.Parse(p, CultureInfo.InvariantCulture) : null;
         double Dimension(string key, double fallback, double minimum)
         {
