@@ -154,7 +154,7 @@ internal sealed class MainWindow : Window
         if (busy) return;
         await Run(Logout);
         closing = true;
-        Close();
+        _ = Dispatcher.BeginInvoke(Close);
     }
 
     private async Task Submit()

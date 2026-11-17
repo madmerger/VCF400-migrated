@@ -153,6 +153,7 @@ print(f'画面トレーサビリティ: {len(cases)}ケースのL-IDが対象画
 headers = ['ケースID', '機能', '前提条件', '操作手順', '期待結果', '対象画面', 'トレーサビリティ（仕様書項目ID）']
 headers += ['実施日', '環境', '合否', '動画ファイル名', '備考']
 headers += ['Web 実施日', 'Web 環境', 'Web 合否', 'Web 動画ファイル名', 'Web 備考']
+headers += ['Windows 実施日', 'Windows 環境', 'Windows 合否', 'Windows 動画ファイル名', 'Windows 備考']
 result_file = ROOT / 'backend/test-results/api_e2e_results.json'
 api_results = {}
 if result_file.exists():
@@ -161,6 +162,10 @@ web_result_file = ROOT / 'frontend/test-results/web_e2e_results.json'
 web_results = {}
 if web_result_file.exists():
     web_results = {result['caseId']: result for result in json.loads(web_result_file.read_text())['results']}
+windows_result_file = ROOT / 'windows/test-results/windows_e2e_results.json'
+windows_results = {}
+if windows_result_file.exists():
+    windows_results = {result['caseId']: result for result in json.loads(windows_result_file.read_text(encoding='utf-8'))['results']}
 rows = [headers]
 for case in cases:
     result = current_result(case, api_results, baseline)
@@ -172,6 +177,9 @@ for case in cases:
     web = current_result(case, web_results, baseline)
     rows[-1] += [web.get('executedAt', ''), 'Web (React/Chromium)' if web else '', web.get('status', '未実施'),
                  web.get('video', ''), web.get('notes', '')]
+    windows = current_result(case, windows_results, baseline)
+    rows[-1] += [windows.get('executedAt', ''), 'Windows (.NET 8 WPF)' if windows else '', windows.get('status', '未実施'),
+                 windows.get('video', ''), windows.get('notes', '')]
 write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows})
 (ROOT / 'tests/cases.json').write_text(json.dumps({'schemaVersion': 1, 'baseline': baseline, 'cases': cases}, ensure_ascii=False, indent=2) + '\n')
 print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、API結果{len(api_results)}件反映)')

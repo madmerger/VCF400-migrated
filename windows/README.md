@@ -1,3 +1,30 @@
+# Windows E2E（FlaUI.UIA3）
+
+対話デスクトップのロックを解除し、1280×800以上のウィンドウを収められる解像度で実行します。他のウィンドウを前面に出したり、テスト中にキーボード・マウスを操作しないでください。.NET 8 SDK、Java 17、Maven、Python（pytest/openpyxl）、ffmpeg/ffprobeをPATHへ追加します。NuGetのnuget.orgソースが必要です。
+
+リポジトリルートで実行:
+
+```powershell
+$env:PYTHONUTF8 = '1'
+dotnet restore windows/VCF400.Windows.sln
+dotnet build windows/VCF400.Windows.sln -c Release
+dotnet run --project windows/tests/VCF400.Windows.E2E -c Release --no-build
+python tests/tools/gen_cases.py
+python -m pytest tests/tools
+ffprobe -v error -show_entries stream=codec_name,width,height,pix_fmt -show_entries format=duration,size -of json video/3_Windows.mp4
+```
+
+WindowsのPython既定文字コードがcp1252の場合も日本語仕様JSONを正しく読めるよう、上記UTF-8設定を同じシェルで有効にしてください。結合だけの障害から再開する場合は`dotnet run --project windows/tests/VCF400.Windows.E2E -c Release --no-build -- --finalize <結果JSONのrunId>`を使用できます。現在のfingerprint、58件と4回帰フローの全合格、同runIdの録画を再検証し、検証失敗時は動画名を空欄にします。
+
+ランナーは毎回専用ポートでe2e backendを起動し、ランダムな`VCF_SEED_ADMPSWRD`/`VCF_E2E_KEY`を子プロセスの環境にのみ渡します。既存backendを再利用しません。認証付きcountsがbaselineになるまで最大180秒待ち、各ケース前にresetします。終了時はbackendの子プロセスも停止します。パスワードはPasswordBoxに入力し、tokenはメモリーだけで保持します。
+
+`tests/cases.json`全58件と`frontend/e2e/review.spec.ts`の4回帰フローを実UIで操作します。画面表示とAPI応答、DB件数を照合します。E2E-058では仕様台帳とタイトル・Fキー・入力順・エラー位置を照合し、対象画面へ実遷移します。診断時のみ末尾に`-- --case E2E-001`を付けて単独実行できます（全件結果を置き換え、結合動画を生成しません）。
+
+結果は`windows/test-results/windows_e2e_results.json`/`.md`、主要画面は`windows/test-results/screenshots/`です。fingerprintは`tests/tools/case_results.py`を直接使用します。Excelには既存API/Web列の右にWindows結果を追加し、fingerprint不一致時は日時・動画を引き継ぎません。
+
+ffmpegのgdigrabでウィンドウの画面上の矩形領域だけを15fps/H.264/yuv420pで録画します。アプリ準備完了後に開始し、アプリ終了前に停止するため、ビルド・端末ログは映しません。ケースID・名称はアプリ内バナーに常時表示します。ケース別録画は`windows/test-results/recordings/<runId>/`（gitignore）、backendログ・結合リストは`~/artifacts/<runId>/`に保存します。`~/memory`は使用しません。
+
+58件および4回帰フローの全合格、同じrunIdの58録画の存在を確認した場合のみ`video/3_Windows.mp4`を生成して結果の動画名を設定します。失敗・録画欠落・結合失敗時は動画名が空欄となり、以前の動画を結果に紐付けません。動画が100MBを超える場合はGit LFS設定が必要です。録画は通常ignoreされるため、成果物の動画をコミットする際はサイズ確認後にファイルを明示指定して追加してください。
 # VCF/400 Windows — .NET 8 WPF
 
 Windows ネイティブの Visitor Studio。`frontend/src/App.tsx` の画面状態、REST 呼び出し、遷移を WPF に移植した。業務判定・必須チェック・画面表示可否・LEARN の分岐は既存 backend に任せる。グリーンスクリーンのピクセル模写ではない。
