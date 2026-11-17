@@ -36,6 +36,11 @@ class ApiSecurityTest {
 
     @BeforeEach void reset() throws Exception { seeder.reset(seeder.baseline()); }
 
+    @Test void resetEndpointIsAbsentOutsideE2eProfile() throws Exception {
+        mvc.perform(post("/api/e2e/reset").contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isNotFound());
+    }
+
     @Test void apiResponsesMustNotBeStored() throws Exception {
         for (String path : List.of("/api/menu", "/api/exhibits", "/api/vote", "/api/guestbook/1",
                 "/api/guestbook/form", "/api/learn/global/pages/1", "/api/kiosk/EXH001", "/api/settings")) {

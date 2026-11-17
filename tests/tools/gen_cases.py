@@ -150,10 +150,15 @@ print(f'画面トレーサビリティ: {len(cases)}ケースのL-IDが対象画
 
 headers = ['ケースID', '機能', '前提条件', '操作手順', '期待結果', '対象画面', 'トレーサビリティ（仕様書項目ID）']
 headers += ['実施日', '環境', '合否', '動画ファイル名', '備考']
+headers += ['Web 実施日', 'Web 環境', 'Web 合否', 'Web 動画ファイル名', 'Web 備考']
 result_file = ROOT / 'backend/test-results/api_e2e_results.json'
 api_results = {}
 if result_file.exists():
     api_results = {result['caseId']: result for result in json.loads(result_file.read_text())['results']}
+web_result_file = ROOT / 'frontend/test-results/web_e2e_results.json'
+web_results = {}
+if web_result_file.exists():
+    web_results = {result['caseId']: result for result in json.loads(web_result_file.read_text())['results']}
 rows = [headers]
 for case in cases:
     result = current_result(case, api_results, baseline)
@@ -162,6 +167,9 @@ for case in cases:
     rows.append([case['id'], case['function'] + '：' + case['name'], case['preconditions'] + '\n基準データはtests/cases.json baseline参照。', '\n'.join(case['steps']) + '\n入力: ' + json.dumps(case['inputs'], ensure_ascii=False), json.dumps(case['expected'], ensure_ascii=False), case['screen'], ', '.join(case['specIds']),
                  result.get('executedAt', '') if status != 'UI専用・フェーズ3/4' else '',
                  'API (Spring Boot/H2)' if result else '', status, '', result.get('notes', '')])
+    web = current_result(case, web_results, baseline)
+    rows[-1] += [web.get('executedAt', ''), 'Web (React/Chromium)' if web else '', web.get('status', '未実施'),
+                 web.get('video', ''), web.get('notes', '')]
 write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows})
 (ROOT / 'tests/cases.json').write_text(json.dumps({'schemaVersion': 1, 'baseline': baseline, 'cases': cases}, ensure_ascii=False, indent=2) + '\n')
 print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、API結果{len(api_results)}件反映)')

@@ -19,8 +19,10 @@ Maven Centralが429の場合は `mvn -s maven-settings-gcs.xml -q test`（GCSミ
 既定は127.0.0.1バインド。公開する場合はTLS終端・認証試行レート制限・適切なプロキシを別途用意する。
 フロントエンド開発時は同一オリジンの `/api` プロキシを使う（無制限CORSは有効化しない）。
 H2をローカルファイルに保存する場合: `SPRING_DATASOURCE_URL='jdbc:h2:file:./data/vcf400;MODE=PostgreSQL' mvn spring-boot:run`。
-初回の空DBにのみ `tests/cases.json` のbaselineを投入する。既存DBの上書きリセット用HTTPエンドポイントは提供しない。
+初回の空DBにのみ `tests/cases.json` のbaselineを投入する。通常プロファイルでは既存DBの上書きリセット用HTTPエンドポイントは提供しない。
 テストは `BaselineSeeder.reset` をJava内部から呼び、毎ケース実DBを初期化する。
+Web E2Eでは`e2e`プロファイル限定・非空`VCF_E2E_KEY`認証付きの`/api/e2e/reset`と`/api/e2e/counts`を使う。
+これは隔離されたローカルH2用であり、本番・共有DBで有効にしない。起動・録画手順は`frontend/README.md`を参照。
 
 ## PostgreSQL
 
