@@ -33,7 +33,7 @@
     [
       "O-05",
       "基準データ",
-      "tests/cases.json の baseline を使用。展示・コメント・ページはテスト専用の仮定。AWARD 001=Best in Show、002=Ed Fair、管理者パスワードの基準値 VCF2024 は確定前提。実運用の認証情報ではない。",
+      "tests/cases.json の baseline を使用。展示・コメント・ページはテスト専用の仮定。AWARD 001=Best in Show、002=Ed Fair。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。未設定時は管理者ログイン無効。",
       "依頼の確定前提・原典読解"
     ],
     [

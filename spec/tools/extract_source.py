@@ -18,7 +18,7 @@ for title, content in [
     ('原典', 'madmerger/VCF400 master 30bfc334b99c75d28091c7815e4617cb456dd7f4。原典は読み取り専用。README、Operator’s Guide、Page Programming Guideも参照。'),
     ('保持事項', 'メニュー階層・番号、入力順、Fキーの番号と役割、タイトル原文、エラー位置と文言、業務ルールを保持。台帳の行・列は旧画面上の位置。'),
     ('検証状況', '本書はソース静的解析。実機未実行、Excelケースは未実施。空DB・ページ欠損・型変換エラーの原典挙動は未測定。移行APIでは検証エラーとし、500やデータ破壊を防ぐ方針（要実装時確認）。'),
-    ('基準データ', 'tests/cases.json の baseline を使用。展示・コメント・ページはテスト専用の仮定。AWARD 001=Best in Show、002=Ed Fair、管理者パスワードの基準値 VCF2024 は確定前提。実運用の認証情報ではない。'),
+    ('基準データ', 'tests/cases.json の baseline を使用。展示・コメント・ページはテスト専用の仮定。AWARD 001=Best in Show、002=Ed Fair。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。未設定時は管理者ログイン無効。'),
     ('原典差異', 'VCFMAINの表示1はLearn AS/400 NavigationだがコマンドはLRN400。表示2～10、90にはVCFMAINQQ内の実行定義なし。欠落機能を推測して実装しない。CREDITSは直接呼出しなし、CALLページによる呼出し候補としてのみ収録。'),
     ('分岐表記補正', "ユーザー前提の EXTRA='CALL'/'JUMP' は原典では CONTENT='CALL'/'JUMP'、EXTRAが引数。ENDのみEXTRA。EXHBMENUは原典でSETTINGS先頭レコードを読むが、確定前提に従いADMPSWRDをキー指定する。"),
     ('安全性', 'ADMPSWRDは管理者認証用。移行先APIで平文返却しない。動的CALLは任意のOSコマンド実行にせず許可済み機能を解決する。認証方式・HTTP契約はフェーズ2で確定。'),

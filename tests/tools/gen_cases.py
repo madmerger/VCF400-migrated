@@ -9,8 +9,8 @@ sys.path.insert(0, str(ROOT / 'spec/tools'))
 from gen_spec import write_book
 
 baseline = {
-    '説明': '各ケース前に独立リセット。特記なき利用者はMM2024。展示・コメント・ページは検証専用の仮定でありSAVF実測ではない。パスワードは公開テスト用基準値のみ。APIのURL/HTTPステータスは実装時に決定。',
-    'settings': {'ALWVOTE': 'Y', 'ADMPSWRD': 'VCF2024'},
+    '説明': '各ケース前に独立リセット。特記なき利用者はMM2024。展示・コメント・ページは検証専用の仮定でありSAVF実測ではない。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。APIのURL/HTTPステータスは実装時に決定。',
+    'settings': {'ALWVOTE': 'Y', 'ADMPSWRD': '${VCF_SEED_ADMPSWRD}'},
     'exhibits': [
         {'EXHBDBID': 1, 'EXHUSRPRF': 'EXH001', 'EXHBITOR': '展示者一', 'EXHBCITY': 'Atlanta', 'EXHBSTATE': 'GA', 'EXHBTITLE': '展示一', 'EXHBDESC': '展示説明一', 'ELIGIBLE': 1, 'ENLRN400': 1},
         {'EXHBDBID': 2, 'EXHUSRPRF': 'EXH002', 'EXHBITOR': '展示者二', 'EXHBCITY': 'Atlanta', 'EXHBSTATE': 'GA', 'EXHBTITLE': '展示二', 'EXHBDESC': '展示説明二', 'ELIGIBLE': 0, 'ENLRN400': 0},
@@ -108,7 +108,7 @@ for name, inputs, expected, ref in [
 ]:
     setup = {'pages': []} if name == 'ページなし' else ({'replacePage': {'PAGENBR': 3, 'CONTENT': 'JUMP', 'EXTRA': 'INVALID'}} if name == '不正JUMP引数' else None)
     add('LEARN/400', name, inputs, expected, ref, 'LRN400 MAIN', setup=setup)
-add('キオスク', '正しいパスワードで終了', {'profile': 'EXH001', 'option': 7, 'password': 'VCF2024'}, {'exited': True}, 'B-24', 'EXHBMENU → ADMPSWRD')
+add('キオスク', '正しいパスワードで終了', {'profile': 'EXH001', 'option': 7, 'password': '${VCF_SEED_ADMPSWRD}'}, {'exited': True}, 'B-24', 'EXHBMENU → ADMPSWRD')
 add('キオスク', '誤ったパスワード', {'profile': 'EXH001', 'option': 7, 'password': 'wrong'}, {'exited': False, 'customError': None}, 'B-24', 'EXHBMENU → ADMPSWRD')
 add('キオスク', '空パスワード', {'profile': 'EXH001', 'option': 7, 'password': ''}, {'exited': False}, 'B-24', 'ADMPSWRD')
 add('キオスク', '全項目表示・隠し7は非表示', {'profile': 'EXH001'}, {'visibleOptions': [1, 2, 3, 4], 'hiddenOptions': [7], 'title': 'WELCOME TO...'}, 'B-23', 'EXHBMENU')
@@ -116,7 +116,7 @@ add('キオスク', '不適格・学習無効', {'profile': 'EXH002'}, {'visible
 add('展示一覧', '展示データ一覧', {'operation': 'listExhibits'}, {'ids': ['EXH001', 'EXH002'], 'count': 2}, 'D-02', 'API（旧画面に一覧なし）')
 add('展示一覧', '空一覧', {'operation': 'listExhibits'}, {'ids': [], 'count': 0}, 'D-02', 'API（旧画面に一覧なし）', setup={'exhibits': []})
 add('設定', '投票設定参照', {'operation': 'readSettings'}, {'ALWVOTE': 'Y', 'passwordNotExposed': True}, 'B-08 O-08', 'API')
-add('管理者認証', '認証成功', {'password': 'VCF2024'}, {'authenticated': True}, 'B-24 O-08', 'API')
+add('管理者認証', '認証成功', {'password': '${VCF_SEED_ADMPSWRD}'}, {'authenticated': True}, 'B-24 O-08', 'API')
 add('管理者認証', '認証失敗', {'password': 'wrong'}, {'authenticated': False, 'passwordNotExposed': True}, 'B-24 O-08', 'API')
 add('画面共通', 'メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger'}, {'matchesAllLedgerElements': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・ADDCMT・READCMT・LRN400・INTERTEST', steps=['仕様書画面台帳の各L-IDを全件照合する', 'VCFMAIN 1/11/12/13/80の経路と表示番号を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、Fキー・エラー位置を照合する', '未定義2～10・90の機能を推測で追加していないことを確認する'])
 

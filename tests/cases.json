@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "baseline": {
-    "説明": "各ケース前に独立リセット。特記なき利用者はMM2024。展示・コメント・ページは検証専用の仮定でありSAVF実測ではない。パスワードは公開テスト用基準値のみ。APIのURL/HTTPステータスは実装時に決定。",
+    "説明": "各ケース前に独立リセット。特記なき利用者はMM2024。展示・コメント・ページは検証専用の仮定でありSAVF実測ではない。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。APIのURL/HTTPステータスは実装時に決定。",
     "settings": {
       "ALWVOTE": "Y",
-      "ADMPSWRD": "VCF2024"
+      "ADMPSWRD": "${VCF_SEED_ADMPSWRD}"
     },
     "exhibits": [
       {
@@ -2699,7 +2699,7 @@
       "inputs": {
         "profile": "EXH001",
         "option": 7,
-        "password": "VCF2024"
+        "password": "${VCF_SEED_ADMPSWRD}"
       },
       "expected": {
         "exited": true
@@ -3006,7 +3006,7 @@
       "preconditions": "baselineを毎回リセット。追加条件なし。",
       "setup": {},
       "inputs": {
-        "password": "VCF2024"
+        "password": "${VCF_SEED_ADMPSWRD}"
       },
       "expected": {
         "authenticated": true
