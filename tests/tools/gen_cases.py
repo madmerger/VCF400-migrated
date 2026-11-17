@@ -4,7 +4,7 @@ import re
 import sys
 from pathlib import Path
 
-from case_results import current_result
+from case_results import current_result, result_summary
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'spec/tools'))
@@ -180,6 +180,15 @@ for case in cases:
     windows = current_result(case, windows_results, baseline)
     rows[-1] += [windows.get('executedAt', ''), 'Windows (.NET 8 WPF)' if windows else '', windows.get('status', '未実施'),
                  windows.get('video', ''), windows.get('notes', '')]
-write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows})
+summary = [['環境', '全ケース', '合格', '不合格', 'UI専用', '未実施', 'うち要再実行', '動画ファイル名', '実施日（最終）', '備考']]
+for environment, results, notes in [
+    ('API (Spring Boot/H2)', api_results, 'API用JUnit結果。UI専用は合格に算入しない。動画なし。'),
+    ('Web (React/Chromium)', web_results, 'Web用Playwright結果。fingerprint一致分のみ集計。'),
+    ('Windows (.NET 8 WPF)', windows_results, '元のWindows実施結果。fingerprint一致はケース定義の整合性であり、統合backendでの再実行を保証しない。'),
+]:
+    counts = result_summary(cases, results, baseline)
+    summary.append([environment, *[counts[key] for key in ('total', 'passed', 'failed', 'uiOnly', 'unexecuted', 'stale')],
+                    counts['video'] if results is not api_results else '', counts['executedAt'], notes])
+write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows, '結果サマリ': summary})
 (ROOT / 'tests/cases.json').write_text(json.dumps({'schemaVersion': 1, 'baseline': baseline, 'cases': cases}, ensure_ascii=False, indent=2) + '\n')
 print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、API結果{len(api_results)}件反映)')
