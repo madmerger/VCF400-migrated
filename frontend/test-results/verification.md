@@ -9,7 +9,7 @@
 
 ```text
 ✓ 29 modules transformed.
-✓ built in 780ms
+✓ built in 752ms
 ```
 
 独立したlintスクリプトは未設定。
@@ -17,7 +17,7 @@
 `npm run test:e2e`:
 
 ```text
-63 passed (1.3m)
+63 passed (1.2m)
 ```
 
 共通58ケースすべてUIで実行。F12取消2件と画面台帳照合も合格。
@@ -54,7 +54,7 @@ Excel: 58 cases, API + Web result groups (17 columns): PASS
 Python/Java/Web fingerprints: 58/58 identical PASS
 API cells: {'合格': 55, 'UI専用・フェーズ3/4': 3}
 Web cells: {'合格': 58}
-Current-run video evidence: 58/58 PASS; runId=abd4f86b-9459-4d48-bb5d-e4010c2b657d
+Current-run video evidence: 58/58 PASS; runId=6313614d-af3c-408e-9c69-7243de1fb088
 ```
 
 ## 視覚・動画確認
@@ -77,8 +77,8 @@ codec_name: h264
 width: 1280
 height: 720
 pix_fmt: yuv420p
-duration: 93.920000
-size: 4322449
+duration: 94.160000
+size: 4224373
 ```
 
 `video/2_Web_React.mp4`へ58件をケース順に結合。100MB未満のため通常Gitへ格納。

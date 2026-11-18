@@ -122,7 +122,8 @@ for(const scenario of caseDocument.cases){
       actual=await responseTo(page,'/settings',()=>page.getByTestId('nav-settings').click());
       await expect(page.getByTestId('voting-status')).toHaveText('受付中 / Open');
       await expect(page.getByTestId('toggle-voting')).toHaveCount(0);
-      await expect(page.locator('body')).not.toContainText(process.env.VCF_SEED_ADMPSWRD!);
+      const passwordExposed=(await page.locator('body').innerText()).includes(process.env.VCF_SEED_ADMPSWRD!);
+      expect(passwordExposed).toBe(false);
     }else if(input.operation==='compareLedger'){
       actual=await verifyLedger(page,input.screens as string[]);
     }
