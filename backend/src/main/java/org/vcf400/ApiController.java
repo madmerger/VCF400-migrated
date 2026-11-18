@@ -115,12 +115,14 @@ public class ApiController {
 
     @PostMapping("/admin/auth")
     public Map<String, Object> auth(@Valid @RequestBody AuthInput input) {
-        var result = Screens.response("ADMPSWRD");
-        boolean authenticated = security.verify(input.password());
-        result.putAll(Map.of("authenticated", authenticated, "exited", authenticated, "passwordNotExposed", true));
-        result.put("customError", null);
-        if (authenticated) result.putAll(Map.of("token", security.issue(), "expiresInSeconds", 600));
-        return result;
+        synchronized (security) {
+            var result = Screens.response("ADMPSWRD");
+            boolean authenticated = security.verify(input.password());
+            result.putAll(Map.of("authenticated", authenticated, "exited", authenticated, "passwordNotExposed", true));
+            result.put("customError", null);
+            if (authenticated) result.putAll(Map.of("token", security.issue(), "expiresInSeconds", 600));
+            return result;
+        }
     }
 
     @PostMapping("/admin/logout")
@@ -137,18 +139,22 @@ public class ApiController {
     @PatchMapping("/settings")
     public Map<String, Object> update(@RequestHeader(value = "Authorization", required = false) String authorization,
                                       @Valid @RequestBody SettingsInput input) {
-        security.require(authorization);
-        if (input.ALWVOTE() == null && input.ADMPSWRD() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        if (input.ADMPSWRD() != null && input.ADMPSWRD().isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        if (input.ALWVOTE() != null) {
-            Setting setting = new Setting(); setting.SETTING = "ALWVOTE"; setting.VALUE = input.ALWVOTE();
-            settings.saveAndFlush(setting);
+        synchronized (security) {
+            security.require(authorization);
+            if (input.ALWVOTE() == null && input.ADMPSWRD() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            if (input.ADMPSWRD() != null && input.ADMPSWRD().isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            if (input.ALWVOTE() != null) {
+                synchronized (visitors) {
+                    Setting setting = new Setting(); setting.SETTING = "ALWVOTE"; setting.VALUE = input.ALWVOTE();
+                    settings.saveAndFlush(setting);
+                }
+            }
+            if (input.ADMPSWRD() != null) {
+                Setting password = new Setting(); password.SETTING = "ADMPSWRD"; password.VALUE = security.hash(input.ADMPSWRD());
+                settings.saveAndFlush(password);
+                security.revokeAll();
+            }
+            return settings();
         }
-        if (input.ADMPSWRD() != null) {
-            Setting password = new Setting(); password.SETTING = "ADMPSWRD"; password.VALUE = security.hash(input.ADMPSWRD());
-            settings.saveAndFlush(password);
-            security.revokeAll();
-        }
-        return settings();
     }
 }
