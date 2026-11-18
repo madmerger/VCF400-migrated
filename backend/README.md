@@ -53,6 +53,7 @@ PostgreSQL実サーバーとの接続検証は未実施。
 | POST | /learn/{collection}/resolve | `{ "from": 2, "action": "F5", "backPage": 0 }`。F3/F5/F8を解決 |
 | GET | /kiosk/{profile} | 展示キオスクの表示可能番号、隠し7の契約 |
 | POST | /admin/auth | `{ "password": "環境変数で注入した値" }`。正しい場合のみtokenを返す |
+| POST | /admin/logout | Bearer認証ヘッダーは任意。指定したtokenだけを失効し、200 `{ "loggedOut": true }` を返す |
 | GET | /settings | ALWVOTEのみ。ADMPSWRDやハッシュは絶対に返さない |
 | PATCH | /settings | `Authorization: Bearer <token>` と `{ "ALWVOTE": "N" }` |
 
