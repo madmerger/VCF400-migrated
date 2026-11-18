@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import unittest
 
-from case_results import current_result, fingerprint
+from case_results import current_result, fingerprint, result_summary
 
 
 class CaseResultsTest(unittest.TestCase):
@@ -48,6 +48,23 @@ class CaseResultsTest(unittest.TestCase):
         result = current_result(self.case, {self.case['id']: self.result}, changed)
         self.assertEqual('未実施/要再実行', result['status'])
         self.assertNotIn('executedAt', result)
+
+    def test_summary_counts_current_failed_ui_missing_stale_and_legacy_results(self):
+        cases = [dict(self.case, id=f'E2E-{i}') for i in range(6)]
+        results = {case['id']: dict(self.result, caseId=case['id'], video='current.mp4') for case in cases}
+        results[cases[1]['id']].update(status='不合格', video='failed.mp4')
+        results[cases[2]['id']]['status'] = 'UI専用・フェーズ3/4'
+        results[cases[3]['id']].update(fingerprint='old', video='stale.mp4')
+        del results[cases[4]['id']]
+        del results[cases[5]['id']]['fingerprint']
+        summary = result_summary(cases, results, self.baseline)
+        self.assertEqual({'total': 6, 'passed': 1, 'failed': 1, 'uiOnly': 1, 'unexecuted': 3,
+                          'stale': 2, 'video': 'current.mp4', 'executedAt': '2026-01-01'}, summary)
+
+    def test_empty_summary_has_no_results_or_video(self):
+        summary = result_summary([], {}, {})
+        self.assertEqual({'total': 0, 'passed': 0, 'failed': 0, 'uiOnly': 0, 'unexecuted': 0,
+                          'stale': 0, 'video': '', 'executedAt': ''}, summary)
 
 
 if __name__ == '__main__':
