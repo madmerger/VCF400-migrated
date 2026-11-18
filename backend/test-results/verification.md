@@ -38,7 +38,7 @@ PRレビュー回帰検証:
 - ALWVOTE更新はvote()と同じVisitorServiceインスタンスのモニターを使用。DB保存・コミットまでロックを保持する。
 - 実H2と2スレッドで、旧パスワード検証中の変更待機、投票中の締切待機、締切中の投票待機を検証。ラッチで停止点を制御し、ThreadMXBeanで待機モニターの一致を確認。締切後は投票を保存せず、変更後は旧ログインtokenを拒否する。
 - 先頭F8はページ1へクランプ。from=0/1、global/EXH001、明示的backPageの優先、未存在コレクション404・負数400を確認。原典PAGEBACKは0未満へ減算せず、1→0の位置決め後CHAIN/READEで読み直す。IBM i実機は未検証。
-- Phase 3 frontendのF8先頭ガード・backPage送信・応答利用を静的確認。レスポンス形式は変更せず互換。frontendブランチは変更・再実行していない。
+- Phase 3 frontendのF8先頭ガード・backPage送信・応答利用と互換。main統合後にWeb全63件を実行し合格。
 - POST /api/vote・/api/guestbookはprofileクエリーをサポートし、本文の展示よりprofileを優先する。ただし共通ケースでprofileがあるのはE2E-014/025のフォーム取得のみで、固定展示の保存を期待するケースはない。指摘4に対応するrunner変更は不要として未変更（固定展示POSTの共通ケース検証は未実施）。
 - 追加テスト初回の例外宣言不足と、JDK repository spyでcallRealMethodを使えない問題を修正。repository spy既定の実JPA委譲を使い、最終全88件が合格。
 - 7テーブルそれぞれ単独で既存行がある状態でstartup runnerを実行し、全シードをスキップすることを確認。全テーブル空の場合は初期投入し、再実行でも重複しない。
