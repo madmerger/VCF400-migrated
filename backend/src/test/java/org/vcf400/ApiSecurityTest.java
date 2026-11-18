@@ -36,6 +36,11 @@ class ApiSecurityTest {
 
     @BeforeEach void reset() throws Exception { seeder.reset(seeder.baseline()); }
 
+    @Test void resetEndpointIsAbsentOutsideE2eProfile() throws Exception {
+        mvc.perform(post("/api/e2e/reset").contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isNotFound());
+    }
+
     @Test void apiResponsesMustNotBeStored() throws Exception {
         for (String path : List.of("/api/menu", "/api/exhibits", "/api/vote", "/api/guestbook/1",
                 "/api/guestbook/form", "/api/learn/global/pages/1", "/api/kiosk/EXH001", "/api/settings")) {
@@ -62,6 +67,21 @@ class ApiSecurityTest {
                 .andExpect(status().isOk()).andExpect(jsonPath("$.authenticated").value(true))
                 .andExpect(jsonPath("$.expiresInSeconds").value(600)).andReturn();
         return mapper.readTree(response.getResponse().getContentAsByteArray()).path("token").asText();
+    }
+
+    @Test void logoutRevokesOnlySuppliedTokenAndIsIdempotent() throws Exception {
+        String first = token();
+        String second = token();
+        mvc.perform(post("/api/admin/logout").header("Authorization", "Bearer " + first))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.loggedOut").value(true));
+        mvc.perform(patch("/api/settings").header("Authorization", "Bearer " + first)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"N\"}"))
+                .andExpect(status().isUnauthorized());
+        mvc.perform(patch("/api/settings").header("Authorization", "Bearer " + second)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"ALWVOTE\":\"Y\"}"))
+                .andExpect(status().isOk());
+        mvc.perform(post("/api/admin/logout")).andExpect(status().isOk());
+        mvc.perform(post("/api/admin/logout").header("Authorization", "Bearer invalid")).andExpect(status().isOk());
     }
 
     @Test void settingsRequireToken() throws Exception {

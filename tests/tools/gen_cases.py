@@ -120,10 +120,12 @@ add('展示一覧', '空一覧', {'operation': 'listExhibits'}, {'ids': [], 'cou
 add('設定', '投票設定参照', {'operation': 'readSettings'}, {'ALWVOTE': 'Y', 'passwordNotExposed': True}, 'B-08 O-08', 'API')
 add('管理者認証', '認証成功', {'password': '${VCF_SEED_ADMPSWRD}'}, {'authenticated': True}, 'B-24 O-08', 'API')
 add('管理者認証', '認証失敗', {'password': 'wrong'}, {'authenticated': False, 'passwordNotExposed': True}, 'B-24 O-08', 'API')
-add('画面共通', 'メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger'}, {'matchesAllLedgerElements': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・ADDCMT・READCMT・LRN400・INTERTEST', steps=['仕様書画面台帳の各L-IDを全件照合する', 'VCFMAIN 1/11/12/13/80の経路と表示番号を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、Fキー・エラー位置を照合する', '未定義2～10・90の機能を推測で追加していないことを確認する'])
+add('画面共通', '全対象画面・メニュー番号・原文タイトル・Fキー・エラー位置照合', {'operation': 'compareLedger', 'screens': ['VCFMAIN', 'VOTE1', 'ADDCMT', 'READCMT', 'MAIN', 'MENU', 'ADMPSWRD', 'SETTINGS', 'ENDOFCON', 'VOTEEND', 'DAVE', 'ENDCMT', 'CREDITS', 'INTERTEST', 'SIGNOFF']}, {'matchesAllInScopeScreens': True}, 'B-27 B-01 B-10 B-12 B-17 B-25', 'VCFMAIN・VOTE1・VOTEEND・DAVE・ENDOFCON・ADDCMT・ENDCMT・READCMT・LRN400・EXHBMENU・ADMPSWRD・INTERTEST・CREDITS・SETTINGS・SIGNOFF', steps=['inputs.screensの全画面へ実際に遷移し、原文タイトルを照合する（DAVEはAPIに本文なし、設定・サインオフは移行UI追加画面）', 'VCFMAINの全表示番号と文言、1/11/12/13/80およびキオスク隠し7の経路を確認する', '投票はバッジ→展示→賞、投稿は名前→展示→本文、全対象Fキー・エラー位置を照合する', '5250装飾・ASCIIアートの模写は対象外。未定義2～10・90の機能を推測で追加していないことを確認する'])
 
 spec = json.loads((ROOT / 'spec/tools/spec_data.json').read_text())
 def ledger_screen(row):
+    if row[1] == 'LEARN/400 CALL候補（直接のメニュー経路なし）':
+        return 'CREDITS'
     if row[1] == 'EXHBMENU/7（非表示）':
         return 'ADMPSWRD'
     return row[1].split(' → ')[-1]
@@ -150,10 +152,15 @@ print(f'画面トレーサビリティ: {len(cases)}ケースのL-IDが対象画
 
 headers = ['ケースID', '機能', '前提条件', '操作手順', '期待結果', '対象画面', 'トレーサビリティ（仕様書項目ID）']
 headers += ['実施日', '環境', '合否', '動画ファイル名', '備考']
+headers += ['Web 実施日', 'Web 環境', 'Web 合否', 'Web 動画ファイル名', 'Web 備考']
 result_file = ROOT / 'backend/test-results/api_e2e_results.json'
 api_results = {}
 if result_file.exists():
     api_results = {result['caseId']: result for result in json.loads(result_file.read_text())['results']}
+web_result_file = ROOT / 'frontend/test-results/web_e2e_results.json'
+web_results = {}
+if web_result_file.exists():
+    web_results = {result['caseId']: result for result in json.loads(web_result_file.read_text())['results']}
 rows = [headers]
 for case in cases:
     result = current_result(case, api_results, baseline)
@@ -162,6 +169,9 @@ for case in cases:
     rows.append([case['id'], case['function'] + '：' + case['name'], case['preconditions'] + '\n基準データはtests/cases.json baseline参照。', '\n'.join(case['steps']) + '\n入力: ' + json.dumps(case['inputs'], ensure_ascii=False), json.dumps(case['expected'], ensure_ascii=False), case['screen'], ', '.join(case['specIds']),
                  result.get('executedAt', '') if status != 'UI専用・フェーズ3/4' else '',
                  'API (Spring Boot/H2)' if result else '', status, '', result.get('notes', '')])
+    web = current_result(case, web_results, baseline)
+    rows[-1] += [web.get('executedAt', ''), 'Web (React/Chromium)' if web else '', web.get('status', '未実施'),
+                 web.get('video', ''), web.get('notes', '')]
 write_book(ROOT / 'tests/VCF400_e2e_cases.xlsx', {'E2Eテストケース': rows})
 (ROOT / 'tests/cases.json').write_text(json.dumps({'schemaVersion': 1, 'baseline': baseline, 'cases': cases}, ensure_ascii=False, indent=2) + '\n')
 print(f'ケース生成: tests/VCF400_e2e_cases.xlsx / tests/cases.json ({len(cases)}件、API結果{len(api_results)}件反映)')

@@ -63,4 +63,4 @@
 | E2E-055 | 投票設定参照 | 合格 | {"ALWVOTE":"Y","passwordNotExposed":true} | {"ALWVOTE":"Y","passwordNotExposed":true} |
 | E2E-056 | 認証成功 | 合格 | {"authenticated":true} | {"authenticated":true} |
 | E2E-057 | 認証失敗 | 合格 | {"authenticated":false,"passwordNotExposed":true} | {"authenticated":false,"passwordNotExposed":true} |
-| E2E-058 | メニュー番号・原文タイトル・Fキー・エラー位置照合 | UI専用・フェーズ3/4 | {"matchesAllLedgerElements":true} | {} |
+| E2E-058 | 全対象画面・メニュー番号・原文タイトル・Fキー・エラー位置照合 | UI専用・フェーズ3/4 | {"matchesAllInScopeScreens":true} | {} |

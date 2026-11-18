@@ -19,16 +19,17 @@ org.vcf400.AdminDisabledTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.AdminSecurityTest: Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ApiConcurrencyTest: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ApiCasesTest: Tests run: 58, Failures: 0, Errors: 0, Skipped: 0
-org.vcf400.ApiSecurityTest: Tests run: 14, Failures: 0, Errors: 0, Skipped: 0
+org.vcf400.ApiSecurityTest: Tests run: 16, Failures: 0, Errors: 0, Skipped: 0
+org.vcf400.E2eFixturesTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ReviewRegressionTest: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 org.vcf400.ScreensTest: Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-Tests run: 88, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 91, Failures: 0, Errors: 0, Skipped: 0
 API共通ケース: 全58件 / 合格55 / 不合格0 / UI専用3
 ```
 
 JUnitの58件にはUI専用として分類する3件も含む（JUnit上のSkippedではなく、レポート上の明示分類）。
 UI専用: E2E-015、E2E-024（F12取消）、E2E-058（全画面台帳照合）。これらをAPI合格数には算入しない。
-独立した30件で認証なし・不正token、token更新/失効/期限、パスワード未設定、ハッシュ格納、
+独立した33件で認証なし・不正token、token更新/失効/期限、パスワード未設定、ハッシュ格納、
 型・長さ・範囲検証、認証応答の秘匿、CALL許可リスト、メニューとメタデータ等を検証した。
 
 PRレビュー回帰検証:
@@ -37,7 +38,7 @@ PRレビュー回帰検証:
 - ALWVOTE更新はvote()と同じVisitorServiceインスタンスのモニターを使用。DB保存・コミットまでロックを保持する。
 - 実H2と2スレッドで、旧パスワード検証中の変更待機、投票中の締切待機、締切中の投票待機を検証。ラッチで停止点を制御し、ThreadMXBeanで待機モニターの一致を確認。締切後は投票を保存せず、変更後は旧ログインtokenを拒否する。
 - 先頭F8はページ1へクランプ。from=0/1、global/EXH001、明示的backPageの優先、未存在コレクション404・負数400を確認。原典PAGEBACKは0未満へ減算せず、1→0の位置決め後CHAIN/READEで読み直す。IBM i実機は未検証。
-- Phase 3 frontendのF8先頭ガード・backPage送信・応答利用を静的確認。レスポンス形式は変更せず互換。frontendブランチは変更・再実行していない。
+- Phase 3 frontendのF8先頭ガード・backPage送信・応答利用と互換。main統合後にWeb全63件を実行し合格。
 - POST /api/vote・/api/guestbookはprofileクエリーをサポートし、本文の展示よりprofileを優先する。ただし共通ケースでprofileがあるのはE2E-014/025のフォーム取得のみで、固定展示の保存を期待するケースはない。指摘4に対応するrunner変更は不要として未変更（固定展示POSTの共通ケース検証は未実施）。
 - 追加テスト初回の例外宣言不足と、JDK repository spyでcallRealMethodを使えない問題を修正。repository spy既定の実JPA委譲を使い、最終全88件が合格。
 - 7テーブルそれぞれ単独で既存行がある状態でstartup runnerを実行し、全シードをスキップすることを確認。全テーブル空の場合は初期投入し、再実行でも重複しない。
@@ -66,6 +67,7 @@ Excel: 58ケース・結果5列・全参照ID・環境・動画空欄: PASS {'�
 - 任意プログラム実行なし。CALLはCREDITS/NTRSTITの画面・復帰先を宣言的に返す。
 - 本番TLS、レート制限、複数ノードtoken共有は運用側の追加作業。既定はループバックのみ。
 
-未実施: PostgreSQL実サーバー、IBM i実機、Web/Windows操作・録画、Excel GUI目視。
+未実施: PostgreSQL実サーバー、IBM i実機、Windows操作・録画、Excel GUI目視。
 APIはMockMvcからHTTPディスパッチ→サービス→JPA→H2まで実行。外部TCP経由の検証ではない。
+Webの実HTTP操作・録画は別途`frontend/test-results/`で記録する。
 既存Java lint/typecheck集約スクリプトはなく、Maven testでJavaコンパイルと全JUnitを実行。

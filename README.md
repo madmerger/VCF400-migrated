@@ -3,7 +3,7 @@
 ## フェーズ1成果物
 
 - `spec/VCF400_spec.xlsx`: 概要・画面台帳・業務ルール・データモデル・非対象スコープ。
-- `tests/VCF400_e2e_cases.xlsx`: 共通E2Eケース。まだ実行結果ではない。
+- `tests/VCF400_e2e_cases.xlsx`: 共通E2Eケースと環境別の実行結果。
 - `tests/cases.json`: 独立リセットする基準データ、構造化入力・期待値、仕様ID。
 
 再生成（Python 3、openpyxl 3.1.5）:
@@ -18,8 +18,8 @@ python3 tests/tools/gen_cases.py
 通常の生成はコミット済み `spec/tools/spec_data.json` を使用するため原典チェックアウト不要。
 原典は master `30bfc334b99c75d28091c7815e4617cb456dd7f4`。
 
-仕様書はソース読解に基づく。IBM i実機・Web・WindowsのE2Eは未実施。
-バックエンド実装・APIテストは `backend/` を参照。Web/Windows・動画・最終結果列の集約は別セッション。
+仕様書はソース読解に基づく。IBM i実機・WindowsのE2Eは未実施。
+バックエンド実装・APIテストは `backend/`、Web UI・ブラウザーテストは `frontend/` を参照。
 空DB、不正ページ引数等の移行API側の期待値は防御的な方針であり原典実測値ではない。
 APIのURL・HTTPステータス・認証契約は `backend/README.md` に記載。
 
@@ -33,3 +33,11 @@ Java 17とMavenを用意し、`cd backend && mvn spring-boot:run` で起動す�
 未設定なら管理者ログインは無効。認証情報の既定値はない。
 API一覧、PostgreSQLプロファイル、保存方式、安全性の制約は [backend/README.md](backend/README.md) を参照。
 共通ケース結果は `backend/test-results/` に出力し、`python3 tests/tools/gen_cases.py` でExcel結果列に反映する。
+
+## フェーズ3 Web
+
+React + TypeScript + Vite。`cd frontend && npm ci && npm run dev -- --port 5173`。
+バックエンドを8080で起動し、`http://127.0.0.1:5173`を開く。
+`npm run build`、`npm run test:e2e`、`npm run video`でビルド・共通58ケース・H.264結合録画を生成する。
+E2E実行時はサーバーを自動起動するため手動サーバーは停止しておく。
+詳細、テスト専用リセットの安全境界、動画・Excelの環境別列構成は[frontend/README.md](frontend/README.md)を参照。

@@ -125,6 +125,12 @@ public class ApiController {
         }
     }
 
+    @PostMapping("/admin/logout")
+    public Map<String, Object> logout(@RequestHeader(value = "Authorization", required = false) String authorization) {
+        security.revoke(authorization);
+        return Map.of("loggedOut", true);
+    }
+
     @GetMapping("/settings")
     public Map<String, Object> settings() {
         return Map.of("ALWVOTE", settings.findById("ALWVOTE").map(s -> s.VALUE).orElse("Y"), "passwordNotExposed", true);
