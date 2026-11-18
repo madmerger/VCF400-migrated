@@ -1,0 +1,3226 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "説明": "各ケース前に独立リセット。特記なき利用者はMM2024。展示・コメント・ページは検証専用の仮定でありSAVF実測ではない。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。APIのURL/HTTPステータスは実装時に決定。",
+    "settings": {
+      "ALWVOTE": "Y",
+      "ADMPSWRD": "${VCF_SEED_ADMPSWRD}"
+    },
+    "exhibits": [
+      {
+        "EXHBDBID": 1,
+        "EXHUSRPRF": "EXH001",
+        "EXHBITOR": "展示者一",
+        "EXHBCITY": "Atlanta",
+        "EXHBSTATE": "GA",
+        "EXHBTITLE": "展示一",
+        "EXHBDESC": "展示説明一",
+        "ELIGIBLE": 1,
+        "ENLRN400": 1
+      },
+      {
+        "EXHBDBID": 2,
+        "EXHUSRPRF": "EXH002",
+        "EXHBITOR": "展示者二",
+        "EXHBCITY": "Atlanta",
+        "EXHBSTATE": "GA",
+        "EXHBTITLE": "展示二",
+        "EXHBDESC": "展示説明二",
+        "ELIGIBLE": 0,
+        "ENLRN400": 0
+      }
+    ],
+    "awards": [
+      {
+        "AWARDID": 1,
+        "AWARDTITLE": "Best in Show"
+      },
+      {
+        "AWARDID": 2,
+        "AWARDTITLE": "Ed Fair"
+      }
+    ],
+    "votes": [
+      {
+        "BADGENBR": 1001,
+        "AWARDNBR": 1,
+        "EXHBNBR": "EXH001"
+      }
+    ],
+    "comments": [
+      {
+        "CMTID": 1,
+        "VISIBLE": "Y",
+        "EXHBID": "EXH001",
+        "GUESTNAME": "Alice",
+        "GUESTCMT": "Great exhibit"
+      },
+      {
+        "CMTID": 3,
+        "VISIBLE": "N",
+        "EXHBID": "EXH001",
+        "GUESTNAME": "Bob",
+        "GUESTCMT": "非公開原文"
+      },
+      {
+        "CMTID": 5,
+        "VISIBLE": "Y",
+        "EXHBID": "EXH002",
+        "GUESTNAME": "Carol",
+        "GUESTCMT": "Last comment"
+      }
+    ],
+    "pages": [
+      {
+        "PAGENBR": 1,
+        "CONTENT": "開始",
+        "EXTRA": ""
+      },
+      {
+        "PAGENBR": 2,
+        "CONTENT": "通常ページ",
+        "EXTRA": ""
+      },
+      {
+        "PAGENBR": 3,
+        "CONTENT": "JUMP",
+        "EXTRA": "0005"
+      },
+      {
+        "PAGENBR": 4,
+        "CONTENT": "読み飛ばすページ",
+        "EXTRA": ""
+      },
+      {
+        "PAGENBR": 5,
+        "CONTENT": "移動先",
+        "EXTRA": ""
+      },
+      {
+        "PAGENBR": 6,
+        "CONTENT": "CALL",
+        "EXTRA": "CREDITS"
+      },
+      {
+        "PAGENBR": 7,
+        "CONTENT": "呼出し復帰先",
+        "EXTRA": ""
+      },
+      {
+        "PAGENBR": 8,
+        "CONTENT": "終了ページ",
+        "EXTRA": "END"
+      }
+    ],
+    "pageCollections": {
+      "global": "pages",
+      "EXH001": "pages"
+    }
+  },
+  "cases": [
+    {
+      "id": "E2E-001",
+      "function": "投票",
+      "name": "正常投票・Best in Show",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH001",
+        "award": 1
+      },
+      "expected": {
+        "saved": true,
+        "screen": "VOTEEND"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-01",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-002",
+      "function": "投票",
+      "name": "正常投票・Ed Fair",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH001",
+        "award": 2
+      },
+      "expected": {
+        "saved": true,
+        "screen": "VOTEEND"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-01",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-003",
+      "function": "投票",
+      "name": "重複バッジ・別賞でも拒否",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1001,
+        "exhibit": "EXH001",
+        "award": 2
+      },
+      "expected": {
+        "saved": false,
+        "error": "You have already voted."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-03",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-004",
+      "function": "投票",
+      "name": "不適格展示",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH002",
+        "award": 1
+      },
+      "expected": {
+        "saved": false,
+        "error": "Exhibit ineligible for award"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-04",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-005",
+      "function": "投票",
+      "name": "存在しない展示",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH999",
+        "award": 1
+      },
+      "expected": {
+        "saved": false,
+        "error": "Exhibit does not exist"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-05",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-006",
+      "function": "投票",
+      "name": "存在しない賞",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH001",
+        "award": 999
+      },
+      "expected": {
+        "saved": false,
+        "error": "Award does not exist."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-06",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-007",
+      "function": "投票",
+      "name": "全チェック失敗・最後のエラー優先",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1001,
+        "exhibit": "EXH999",
+        "award": 999
+      },
+      "expected": {
+        "saved": false,
+        "error": "Award does not exist."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-03",
+        "B-04",
+        "B-05",
+        "B-06",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-008",
+      "function": "投票",
+      "name": "重複と不適格・適格性エラー優先",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1001,
+        "exhibit": "EXH002",
+        "award": 1
+      },
+      "expected": {
+        "saved": false,
+        "error": "Exhibit ineligible for award"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-03",
+        "B-04",
+        "B-07",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-009",
+      "function": "投票",
+      "name": "投票期間終了・画面スキップ",
+      "preconditions": "baselineを毎回リセット。{\"settings\": {\"ALWVOTE\": \"N\"}}",
+      "setup": {
+        "settings": {
+          "ALWVOTE": "N"
+        }
+      },
+      "inputs": {
+        "selectMenuOption": 11
+      },
+      "expected": {
+        "saved": false,
+        "screen": "ENDOFCON",
+        "voteFormVisible": false
+      },
+      "steps": [
+        "VCFMAINで11（またはEXHBMENUで1）を選択する",
+        "バッジ・展示・アワードの入力画面が表示されないことを確認する",
+        "ENDOFCONの The voting period has ended and you can no longer vote. を確認する"
+      ],
+      "screen": "ENDOFCON",
+      "specIds": [
+        "B-08",
+        "L-102",
+        "L-103",
+        "L-104",
+        "L-105",
+        "L-106",
+        "L-107",
+        "L-108",
+        "L-109"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-010",
+      "function": "投票",
+      "name": "バッジ未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 0,
+        "exhibit": "EXH001",
+        "award": 1
+      },
+      "expected": {
+        "saved": false,
+        "error": "Must enter badge number"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-02",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-011",
+      "function": "投票",
+      "name": "展示未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "",
+        "award": 1
+      },
+      "expected": {
+        "saved": false,
+        "error": "Must enter Exhibit ID"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-02",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-012",
+      "function": "投票",
+      "name": "賞未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "EXH001",
+        "award": 0
+      },
+      "expected": {
+        "saved": false,
+        "error": "Must enter Award ID"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-02",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-013",
+      "function": "投票",
+      "name": "全項目未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 0,
+        "exhibit": "",
+        "award": 0
+      },
+      "expected": {
+        "saved": false,
+        "error": "Must enter Exhibit ID"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1 → VOTEEND",
+      "specIds": [
+        "B-02",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-059",
+        "L-060",
+        "L-061",
+        "L-062",
+        "L-063",
+        "L-064",
+        "L-065",
+        "L-066",
+        "L-067",
+        "L-068",
+        "L-069",
+        "L-070",
+        "L-071",
+        "L-072",
+        "L-073",
+        "L-074",
+        "L-075",
+        "L-076",
+        "L-077",
+        "L-078",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-014",
+      "function": "投票",
+      "name": "キオスク展示固定",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001",
+        "open": "vote"
+      },
+      "expected": {
+        "exhibit": "EXH001",
+        "exhibitEditable": false
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1",
+      "specIds": [
+        "B-09",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-015",
+      "function": "投票",
+      "name": "F12取消・書込みなし",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "action": "F12"
+      },
+      "expected": {
+        "saved": false,
+        "returned": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "VOTE1",
+      "specIds": [
+        "B-01",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-243",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251"
+      ],
+      "execution": {
+        "status": "UI専用・フェーズ3/4"
+      }
+    },
+    {
+      "id": "E2E-016",
+      "function": "投票",
+      "name": "DAVE隠し画面",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "badge": 1002,
+        "exhibit": "DAVE",
+        "award": 1
+      },
+      "expected": {
+        "screen": "DAVE",
+        "saved": false
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "DAVE",
+      "specIds": [
+        "B-26",
+        "L-079",
+        "L-080",
+        "L-081",
+        "L-082",
+        "L-083",
+        "L-084",
+        "L-085",
+        "L-086",
+        "L-087",
+        "L-088",
+        "L-089",
+        "L-090",
+        "L-091",
+        "L-092",
+        "L-093",
+        "L-094",
+        "L-095",
+        "L-096",
+        "L-097",
+        "L-098",
+        "L-099",
+        "L-100",
+        "L-101"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-017",
+      "function": "ゲストブック投稿",
+      "name": "正常登録・max+1",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "Visitor",
+        "exhibit": "EXH001",
+        "comment": "Hello"
+      },
+      "expected": {
+        "saved": true,
+        "CMTID": 6,
+        "VISIBLE": "Y",
+        "screen": "ENDCMT"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT → ENDCMT",
+      "specIds": [
+        "B-10",
+        "B-11",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-124",
+        "L-125",
+        "L-126",
+        "L-127",
+        "L-128",
+        "L-129",
+        "L-130",
+        "L-131",
+        "L-132",
+        "L-133",
+        "L-134",
+        "L-135",
+        "L-136",
+        "L-137",
+        "L-138",
+        "L-139",
+        "L-140",
+        "L-141",
+        "L-142",
+        "L-143",
+        "L-144",
+        "L-145",
+        "L-146",
+        "L-147",
+        "L-148",
+        "L-149",
+        "L-150",
+        "L-151",
+        "L-152",
+        "L-153",
+        "L-154",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-018",
+      "function": "ゲストブック投稿",
+      "name": "空DBへの初回登録",
+      "preconditions": "baselineを毎回リセット。{\"comments\": []}",
+      "setup": {
+        "comments": []
+      },
+      "inputs": {
+        "name": "Visitor",
+        "exhibit": "EXH001",
+        "comment": "First"
+      },
+      "expected": {
+        "saved": true,
+        "CMTID": 1,
+        "VISIBLE": "Y"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-11",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-019",
+      "function": "ゲストブック投稿",
+      "name": "name未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "",
+        "exhibit": "EXH001",
+        "comment": "Hello"
+      },
+      "expected": {
+        "saved": false,
+        "errorDisplay": "Must enter your name"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-10",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-020",
+      "function": "ゲストブック投稿",
+      "name": "exhibit未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "Visitor",
+        "exhibit": "",
+        "comment": "Hello"
+      },
+      "expected": {
+        "saved": false,
+        "errorDisplay": "Must enter Exhibit ID"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-10",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-021",
+      "function": "ゲストブック投稿",
+      "name": "comment未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "Visitor",
+        "exhibit": "EXH001",
+        "comment": ""
+      },
+      "expected": {
+        "saved": false,
+        "errorDisplay": "Must enter a comment"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-10",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-022",
+      "function": "ゲストブック投稿",
+      "name": "全項目未入力・最終エラー",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "",
+        "exhibit": "",
+        "comment": ""
+      },
+      "expected": {
+        "saved": false,
+        "errorDisplay": "Must enter a comment"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-10",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-023",
+      "function": "ゲストブック投稿",
+      "name": "存在しない展示も原典は登録",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "name": "Visitor",
+        "exhibit": "EXH999",
+        "comment": "Hello"
+      },
+      "expected": {
+        "saved": true,
+        "CMTID": 6
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-11",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-024",
+      "function": "ゲストブック投稿",
+      "name": "F12取消",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "action": "F12"
+      },
+      "expected": {
+        "saved": false,
+        "returned": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-10",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "UI専用・フェーズ3/4"
+      }
+    },
+    {
+      "id": "E2E-025",
+      "function": "ゲストブック投稿",
+      "name": "キオスク展示固定",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001",
+        "open": "comment"
+      },
+      "expected": {
+        "exhibit": "EXH001",
+        "exhibitEditable": false
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADDCMT",
+      "specIds": [
+        "B-09",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-244",
+        "L-252",
+        "L-253",
+        "L-254"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-026",
+      "function": "ゲストブック閲覧",
+      "name": "通常閲覧",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 1
+      },
+      "expected": {
+        "name": "Alice",
+        "comment": "Great exhibit",
+        "title": "展示一"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-16",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-027",
+      "function": "ゲストブック閲覧",
+      "name": "非表示は名前・本文を置換",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 3
+      },
+      "expected": {
+        "name": "Name Hidden",
+        "comment": "This comment hidden by an admin - offensive content."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-14",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-028",
+      "function": "ゲストブック閲覧",
+      "name": "キオスクから別展示は非公開",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 5,
+        "profile": "EXH001"
+      },
+      "expected": {
+        "name": "",
+        "title": "",
+        "comment": "This comment is not part of this guestbook."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-15",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-029",
+      "function": "ゲストブック閲覧",
+      "name": "同展示は公開",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 1,
+        "profile": "EXH001"
+      },
+      "expected": {
+        "name": "Alice",
+        "comment": "Great exhibit"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-16",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-030",
+      "function": "ゲストブック閲覧",
+      "name": "末尾超過は最終レコード",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 9999
+      },
+      "expected": {
+        "CMTID": 5,
+        "name": "Carol",
+        "comment": "Last comment"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-13",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-031",
+      "function": "ゲストブック閲覧",
+      "name": "欠番は次のID",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 4
+      },
+      "expected": {
+        "CMTID": 5,
+        "name": "Carol"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-13",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-032",
+      "function": "ゲストブック閲覧",
+      "name": "ID未入力",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "id": 0
+      },
+      "expected": {
+        "error": "Must enter CommentID"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-12",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-033",
+      "function": "ゲストブック閲覧",
+      "name": "表示件数は最終ID",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "open": "read"
+      },
+      "expected": {
+        "displayedTotal": 5
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "B-13",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-034",
+      "function": "ゲストブック閲覧",
+      "name": "空DB閲覧",
+      "preconditions": "baselineを毎回リセット。{\"comments\": []}",
+      "setup": {
+        "comments": []
+      },
+      "inputs": {
+        "id": 1
+      },
+      "expected": {
+        "empty": true,
+        "note": "移行API方針。原典未測定、例外や他レコード漏洩なし"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "READCMT",
+      "specIds": [
+        "O-04",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-255"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-035",
+      "function": "LEARN/400",
+      "name": "最初のページ",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "open": "global"
+      },
+      "expected": {
+        "page": 1,
+        "content": "開始"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-17",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-036",
+      "function": "LEARN/400",
+      "name": "通常前進",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 1,
+        "action": "F5"
+      },
+      "expected": {
+        "page": 2,
+        "content": "通常ページ"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-17",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-037",
+      "function": "LEARN/400",
+      "name": "JUMP分岐",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 2,
+        "action": "F5"
+      },
+      "expected": {
+        "action": "JUMP",
+        "page": 5,
+        "content": "移動先",
+        "backPage": 2
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-20",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-038",
+      "function": "LEARN/400",
+      "name": "CALL分岐と復帰",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 5,
+        "action": "F5"
+      },
+      "expected": {
+        "action": "CALL",
+        "program": "CREDITS",
+        "pageAfterReturn": 7,
+        "backPage": 5
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-19",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-039",
+      "function": "LEARN/400",
+      "name": "ENDで終了",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 7,
+        "action": "F5"
+      },
+      "expected": {
+        "ended": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-18",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-040",
+      "function": "LEARN/400",
+      "name": "通常戻る",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 2,
+        "action": "F8"
+      },
+      "expected": {
+        "page": 1
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-21",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-041",
+      "function": "LEARN/400",
+      "name": "JUMP後戻る",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 5,
+        "backPage": 2,
+        "action": "F8"
+      },
+      "expected": {
+        "page": 2
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-20",
+        "B-21",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-042",
+      "function": "LEARN/400",
+      "name": "CALL後戻る",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 7,
+        "backPage": 5,
+        "action": "F8"
+      },
+      "expected": {
+        "page": 5
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-19",
+        "B-21",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-043",
+      "function": "LEARN/400",
+      "name": "末尾前進",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "from": 8,
+        "action": "F5"
+      },
+      "expected": {
+        "content": "",
+        "allowForward": false
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-21",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-044",
+      "function": "LEARN/400",
+      "name": "F3終了",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "action": "F3"
+      },
+      "expected": {
+        "ended": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-17",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-045",
+      "function": "LEARN/400",
+      "name": "展示別ページ",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "open": "EXH001"
+      },
+      "expected": {
+        "page": 1,
+        "content": "開始",
+        "collection": "EXH001"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "B-22",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-046",
+      "function": "LEARN/400",
+      "name": "ページなし",
+      "preconditions": "baselineを毎回リセット。{\"pages\": []}",
+      "setup": {
+        "pages": []
+      },
+      "inputs": {
+        "open": "global"
+      },
+      "expected": {
+        "empty": true,
+        "note": "移行API方針。原典未測定"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "O-04",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-047",
+      "function": "LEARN/400",
+      "name": "不正JUMP引数",
+      "preconditions": "baselineを毎回リセット。{\"replacePage\": {\"PAGENBR\": 3, \"CONTENT\": \"JUMP\", \"EXTRA\": \"INVALID\"}}",
+      "setup": {
+        "replacePage": {
+          "PAGENBR": 3,
+          "CONTENT": "JUMP",
+          "EXTRA": "INVALID"
+        }
+      },
+      "inputs": {
+        "from": 2,
+        "action": "F5"
+      },
+      "expected": {
+        "validationError": true,
+        "note": "移行API方針。原典未測定"
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "LRN400 MAIN",
+      "specIds": [
+        "O-04",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-048",
+      "function": "キオスク",
+      "name": "正しいパスワードで終了",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001",
+        "option": 7,
+        "password": "${VCF_SEED_ADMPSWRD}"
+      },
+      "expected": {
+        "exited": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "EXHBMENU → ADMPSWRD",
+      "specIds": [
+        "B-24",
+        "L-185",
+        "L-186",
+        "L-187",
+        "L-188",
+        "L-189",
+        "L-190",
+        "L-191",
+        "L-192",
+        "L-193",
+        "L-194",
+        "L-195",
+        "L-196",
+        "L-197",
+        "L-198",
+        "L-199",
+        "L-200",
+        "L-201",
+        "L-202",
+        "L-203",
+        "L-204"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-049",
+      "function": "キオスク",
+      "name": "誤ったパスワード",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001",
+        "option": 7,
+        "password": "wrong"
+      },
+      "expected": {
+        "exited": false,
+        "customError": null
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "EXHBMENU → ADMPSWRD",
+      "specIds": [
+        "B-24",
+        "L-185",
+        "L-186",
+        "L-187",
+        "L-188",
+        "L-189",
+        "L-190",
+        "L-191",
+        "L-192",
+        "L-193",
+        "L-194",
+        "L-195",
+        "L-196",
+        "L-197",
+        "L-198",
+        "L-199",
+        "L-200",
+        "L-201",
+        "L-202",
+        "L-203",
+        "L-204"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-050",
+      "function": "キオスク",
+      "name": "空パスワード",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001",
+        "option": 7,
+        "password": ""
+      },
+      "expected": {
+        "exited": false
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "ADMPSWRD",
+      "specIds": [
+        "B-24",
+        "L-202",
+        "L-203",
+        "L-204"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-051",
+      "function": "キオスク",
+      "name": "全項目表示・隠し7は非表示",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH001"
+      },
+      "expected": {
+        "visibleOptions": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "hiddenOptions": [
+          7
+        ],
+        "title": "WELCOME TO..."
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "EXHBMENU",
+      "specIds": [
+        "B-23",
+        "L-185",
+        "L-186",
+        "L-187",
+        "L-188",
+        "L-189",
+        "L-190",
+        "L-191",
+        "L-192",
+        "L-193",
+        "L-194",
+        "L-195",
+        "L-196",
+        "L-197",
+        "L-198",
+        "L-199",
+        "L-200",
+        "L-201"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-052",
+      "function": "キオスク",
+      "name": "不適格・学習無効",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "profile": "EXH002"
+      },
+      "expected": {
+        "visibleOptions": [
+          3,
+          4
+        ],
+        "blockedOptions": [
+          1,
+          2
+        ]
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "EXHBMENU",
+      "specIds": [
+        "B-23",
+        "L-185",
+        "L-186",
+        "L-187",
+        "L-188",
+        "L-189",
+        "L-190",
+        "L-191",
+        "L-192",
+        "L-193",
+        "L-194",
+        "L-195",
+        "L-196",
+        "L-197",
+        "L-198",
+        "L-199",
+        "L-200",
+        "L-201"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-053",
+      "function": "展示一覧",
+      "name": "展示データ一覧",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "operation": "listExhibits"
+      },
+      "expected": {
+        "ids": [
+          "EXH001",
+          "EXH002"
+        ],
+        "count": 2
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "API（旧画面に一覧なし）",
+      "specIds": [
+        "D-02"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-054",
+      "function": "展示一覧",
+      "name": "空一覧",
+      "preconditions": "baselineを毎回リセット。{\"exhibits\": []}",
+      "setup": {
+        "exhibits": []
+      },
+      "inputs": {
+        "operation": "listExhibits"
+      },
+      "expected": {
+        "ids": [],
+        "count": 0
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "API（旧画面に一覧なし）",
+      "specIds": [
+        "D-02"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-055",
+      "function": "設定",
+      "name": "投票設定参照",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "operation": "readSettings"
+      },
+      "expected": {
+        "ALWVOTE": "Y",
+        "passwordNotExposed": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "API",
+      "specIds": [
+        "B-08",
+        "O-08"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-056",
+      "function": "管理者認証",
+      "name": "認証成功",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "password": "${VCF_SEED_ADMPSWRD}"
+      },
+      "expected": {
+        "authenticated": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "API",
+      "specIds": [
+        "B-24",
+        "O-08"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-057",
+      "function": "管理者認証",
+      "name": "認証失敗",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "password": "wrong"
+      },
+      "expected": {
+        "authenticated": false,
+        "passwordNotExposed": true
+      },
+      "steps": [
+        "対象機能を開く",
+        "inputsの順序で入力・操作する",
+        "expectedと保存データを照合する"
+      ],
+      "screen": "API",
+      "specIds": [
+        "B-24",
+        "O-08"
+      ],
+      "execution": {
+        "status": "合格"
+      }
+    },
+    {
+      "id": "E2E-058",
+      "function": "画面共通",
+      "name": "メニュー番号・原文タイトル・Fキー・エラー位置照合",
+      "preconditions": "baselineを毎回リセット。追加条件なし。",
+      "setup": {},
+      "inputs": {
+        "operation": "compareLedger"
+      },
+      "expected": {
+        "matchesAllLedgerElements": true
+      },
+      "steps": [
+        "仕様書画面台帳の各L-IDを全件照合する",
+        "VCFMAIN 1/11/12/13/80の経路と表示番号を確認する",
+        "投票はバッジ→展示→賞、投稿は名前→展示→本文、Fキー・エラー位置を照合する",
+        "未定義2～10・90の機能を推測で追加していないことを確認する"
+      ],
+      "screen": "VCFMAIN・VOTE1・ADDCMT・READCMT・LRN400・INTERTEST",
+      "specIds": [
+        "B-27",
+        "B-01",
+        "B-10",
+        "B-12",
+        "B-17",
+        "B-25",
+        "L-001",
+        "L-002",
+        "L-003",
+        "L-004",
+        "L-005",
+        "L-006",
+        "L-007",
+        "L-008",
+        "L-009",
+        "L-010",
+        "L-011",
+        "L-012",
+        "L-013",
+        "L-014",
+        "L-015",
+        "L-016",
+        "L-017",
+        "L-018",
+        "L-019",
+        "L-020",
+        "L-021",
+        "L-022",
+        "L-023",
+        "L-024",
+        "L-025",
+        "L-026",
+        "L-027",
+        "L-028",
+        "L-029",
+        "L-030",
+        "L-031",
+        "L-032",
+        "L-033",
+        "L-034",
+        "L-035",
+        "L-036",
+        "L-037",
+        "L-038",
+        "L-039",
+        "L-040",
+        "L-041",
+        "L-042",
+        "L-043",
+        "L-044",
+        "L-045",
+        "L-046",
+        "L-047",
+        "L-048",
+        "L-049",
+        "L-050",
+        "L-051",
+        "L-052",
+        "L-053",
+        "L-054",
+        "L-055",
+        "L-056",
+        "L-057",
+        "L-058",
+        "L-110",
+        "L-111",
+        "L-112",
+        "L-113",
+        "L-114",
+        "L-115",
+        "L-116",
+        "L-117",
+        "L-118",
+        "L-119",
+        "L-120",
+        "L-121",
+        "L-122",
+        "L-123",
+        "L-155",
+        "L-156",
+        "L-157",
+        "L-158",
+        "L-159",
+        "L-160",
+        "L-161",
+        "L-162",
+        "L-163",
+        "L-164",
+        "L-165",
+        "L-166",
+        "L-167",
+        "L-168",
+        "L-169",
+        "L-170",
+        "L-171",
+        "L-172",
+        "L-173",
+        "L-174",
+        "L-175",
+        "L-176",
+        "L-177",
+        "L-178",
+        "L-179",
+        "L-180",
+        "L-181",
+        "L-182",
+        "L-183",
+        "L-184",
+        "L-205",
+        "L-206",
+        "L-207",
+        "L-208",
+        "L-209",
+        "L-210",
+        "L-211",
+        "L-212",
+        "L-213",
+        "L-214",
+        "L-215",
+        "L-216",
+        "L-217",
+        "L-218",
+        "L-219",
+        "L-220",
+        "L-221",
+        "L-222",
+        "L-223",
+        "L-224",
+        "L-225",
+        "L-226",
+        "L-227",
+        "L-228",
+        "L-243",
+        "L-244",
+        "L-245",
+        "L-246",
+        "L-247",
+        "L-248",
+        "L-249",
+        "L-250",
+        "L-251",
+        "L-252",
+        "L-253",
+        "L-254",
+        "L-255"
+      ],
+      "execution": {
+        "status": "UI専用・フェーズ3/4"
+      }
+    }
+  ]
+}

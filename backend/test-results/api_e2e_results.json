@@ -1,0 +1,988 @@
+{
+  "summary" : {
+    "failed" : 0,
+    "total" : 58,
+    "uiOnly" : 3,
+    "passed" : 55
+  },
+  "results" : [ {
+    "caseId" : "E2E-001",
+    "name" : "正常投票・Best in Show",
+    "executedAt" : "2026-11-17T17:37:50.359397502Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : true,
+      "screen" : "VOTEEND"
+    },
+    "fingerprint" : "950ef8071779125eea2768f9e49c77d2fcb05c1df2bf9fee1ef49abc16fa9599",
+    "video" : "",
+    "actual" : {
+      "saved" : true,
+      "screen" : "VOTEEND"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-002",
+    "name" : "正常投票・Ed Fair",
+    "executedAt" : "2026-11-17T17:37:50.524712530Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : true,
+      "screen" : "VOTEEND"
+    },
+    "fingerprint" : "979466a66ebf65bc9982b3d0b3bf4b70d011501954169adb81b10dd551ce628d",
+    "video" : "",
+    "actual" : {
+      "saved" : true,
+      "screen" : "VOTEEND"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-003",
+    "name" : "重複バッジ・別賞でも拒否",
+    "executedAt" : "2026-11-17T17:37:50.672993997Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "You have already voted."
+    },
+    "fingerprint" : "41d1f8d0b7a4a2a8953eb94bcf448faa68ed72a9f48bb507670bc40c58a17293",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "You have already voted."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-004",
+    "name" : "不適格展示",
+    "executedAt" : "2026-11-17T17:37:50.816961586Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Exhibit ineligible for award"
+    },
+    "fingerprint" : "c0f55754b3ee711d116c0e05d942bb20dc216ffae60f61aee8e94922c7b54484",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Exhibit ineligible for award"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-005",
+    "name" : "存在しない展示",
+    "executedAt" : "2026-11-17T17:37:50.963727420Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Exhibit does not exist"
+    },
+    "fingerprint" : "a577cdd0adbe33fa11c06bdc0f8eaadd2e5392312ea28bf6332f4f125b74dbcd",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Exhibit does not exist"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-006",
+    "name" : "存在しない賞",
+    "executedAt" : "2026-11-17T17:37:51.108611617Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Award does not exist."
+    },
+    "fingerprint" : "26e30224e409f336a1674e5c5f71355a2002efd6e1fcbaa7203c36653230c3a9",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Award does not exist."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-007",
+    "name" : "全チェック失敗・最後のエラー優先",
+    "executedAt" : "2026-11-17T17:37:51.251971017Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Award does not exist."
+    },
+    "fingerprint" : "8601e6b51b448e8dde2008585a57a536a7eca61268d85d6aca148915174f7209",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Award does not exist."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-008",
+    "name" : "重複と不適格・適格性エラー優先",
+    "executedAt" : "2026-11-17T17:37:51.398039978Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Exhibit ineligible for award"
+    },
+    "fingerprint" : "1283e96a7375eae16861769f45402d286dd2f9c21aff6962f39225fa0f3b9edc",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Exhibit ineligible for award"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-009",
+    "name" : "投票期間終了・画面スキップ",
+    "executedAt" : "2026-11-17T17:37:51.555026631Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "screen" : "ENDOFCON",
+      "voteFormVisible" : false
+    },
+    "fingerprint" : "d7701e8003451880e27d7b155f9c29c935e5d148b2df019d79fdb8b64f4e4c1f",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "screen" : "ENDOFCON",
+      "voteFormVisible" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-010",
+    "name" : "バッジ未入力",
+    "executedAt" : "2026-11-17T17:37:51.705346929Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Must enter badge number"
+    },
+    "fingerprint" : "dcdfa6f7a5dc52d22d7f9a8dce527f46022284b75eeb7e6ec1d7d3dc151ef084",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Must enter badge number"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-011",
+    "name" : "展示未入力",
+    "executedAt" : "2026-11-17T17:37:51.853040806Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Must enter Exhibit ID"
+    },
+    "fingerprint" : "853fdafc924fe448c7b7f217e172c66444ddce330855c9d682ea1ddda84a2a1e",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Must enter Exhibit ID"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-012",
+    "name" : "賞未入力",
+    "executedAt" : "2026-11-17T17:37:52.010591147Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Must enter Award ID"
+    },
+    "fingerprint" : "7e4c39607048802af06a035188276b574d110a97ddc140cf4e269a75dc1170ab",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Must enter Award ID"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-013",
+    "name" : "全項目未入力",
+    "executedAt" : "2026-11-17T17:37:52.156642178Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "error" : "Must enter Exhibit ID"
+    },
+    "fingerprint" : "f7e426a6f77f3daa748b715cabfb26889c7db05fce9ecd0ab93d8ba51552edac",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "error" : "Must enter Exhibit ID"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-014",
+    "name" : "キオスク展示固定",
+    "executedAt" : "2026-11-17T17:37:52.300285927Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "exhibit" : "EXH001",
+      "exhibitEditable" : false
+    },
+    "fingerprint" : "21bc52229af53fee753e83be4eb99c99b6ebfa9813fdfe3135e1b2937742de1e",
+    "video" : "",
+    "actual" : {
+      "exhibit" : "EXH001",
+      "exhibitEditable" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-015",
+    "name" : "F12取消・書込みなし",
+    "executedAt" : "2026-11-17T17:37:52.443306405Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "returned" : true
+    },
+    "fingerprint" : "a9c7043621766fcf78b0c6fc645d233ab7b06e28b94759aeec2edf38c5537f49",
+    "video" : "",
+    "status" : "UI専用・フェーズ3/4",
+    "actual" : { },
+    "notes" : "取消ボタン・全画面配置の照合はUIで実施"
+  }, {
+    "caseId" : "E2E-016",
+    "name" : "DAVE隠し画面",
+    "executedAt" : "2026-11-17T17:37:52.443784162Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "screen" : "DAVE",
+      "saved" : false
+    },
+    "fingerprint" : "3256dca942551cc49d4cbe6cb2ef09f42c0cca31e50db67bffeaaa0f5123b1ef",
+    "video" : "",
+    "actual" : {
+      "screen" : "DAVE",
+      "saved" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-017",
+    "name" : "正常登録・max+1",
+    "executedAt" : "2026-11-17T17:37:52.586885448Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : true,
+      "CMTID" : 6,
+      "VISIBLE" : "Y",
+      "screen" : "ENDCMT"
+    },
+    "fingerprint" : "fb8a5e02cf4ee86702785210c6a37a3e5a0cd35ed6d5190e9770626618b35ae3",
+    "video" : "",
+    "actual" : {
+      "saved" : true,
+      "CMTID" : 6,
+      "VISIBLE" : "Y",
+      "screen" : "ENDCMT"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-018",
+    "name" : "空DBへの初回登録",
+    "executedAt" : "2026-11-17T17:37:52.732471541Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : true,
+      "CMTID" : 1,
+      "VISIBLE" : "Y"
+    },
+    "fingerprint" : "8dfe35dc6e1b1a8c1ee80c15e46c6cda6ec57fca1b62f112066c24c2b44c6091",
+    "video" : "",
+    "actual" : {
+      "saved" : true,
+      "CMTID" : 1,
+      "VISIBLE" : "Y"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-019",
+    "name" : "name未入力",
+    "executedAt" : "2026-11-17T17:37:52.875433482Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter your name"
+    },
+    "fingerprint" : "d6a79e96a29337e68794200ce05fa9b84bbaf63087282fec29ec39b27dcf2bb5",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter your name"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-020",
+    "name" : "exhibit未入力",
+    "executedAt" : "2026-11-17T17:37:53.055584698Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter Exhibit ID"
+    },
+    "fingerprint" : "84a933d71f919989286c8eaa4d5c51cde5ff274212b30003afb13bc3a93131a1",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter Exhibit ID"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-021",
+    "name" : "comment未入力",
+    "executedAt" : "2026-11-17T17:37:53.211209187Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter a comment"
+    },
+    "fingerprint" : "084d0369f77063e404637010b62770422ae2c4d0a39f080a0956251eb59d2071",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter a comment"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-022",
+    "name" : "全項目未入力・最終エラー",
+    "executedAt" : "2026-11-17T17:37:53.352080395Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter a comment"
+    },
+    "fingerprint" : "fcf26d6ac00f930c43e1df829cef56e26e31bd2cbad5868a66ea80db5de00ef4",
+    "video" : "",
+    "actual" : {
+      "saved" : false,
+      "errorDisplay" : "Must enter a comment"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-023",
+    "name" : "存在しない展示も原典は登録",
+    "executedAt" : "2026-11-17T17:37:53.491385629Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : true,
+      "CMTID" : 6
+    },
+    "fingerprint" : "5c942f47ea75f96128704a20ae3d525a1c5fa5149956c423acc525a2f85f2fe9",
+    "video" : "",
+    "actual" : {
+      "saved" : true,
+      "CMTID" : 6
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-024",
+    "name" : "F12取消",
+    "executedAt" : "2026-11-17T17:37:53.633604067Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "saved" : false,
+      "returned" : true
+    },
+    "fingerprint" : "a9c7043621766fcf78b0c6fc645d233ab7b06e28b94759aeec2edf38c5537f49",
+    "video" : "",
+    "status" : "UI専用・フェーズ3/4",
+    "actual" : { },
+    "notes" : "取消ボタン・全画面配置の照合はUIで実施"
+  }, {
+    "caseId" : "E2E-025",
+    "name" : "キオスク展示固定",
+    "executedAt" : "2026-11-17T17:37:53.634042694Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "exhibit" : "EXH001",
+      "exhibitEditable" : false
+    },
+    "fingerprint" : "d74137a3ea95354954938d113b79cf64c40e7c5fcb64151bb4c77f5f177d13d6",
+    "video" : "",
+    "actual" : {
+      "exhibit" : "EXH001",
+      "exhibitEditable" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-026",
+    "name" : "通常閲覧",
+    "executedAt" : "2026-11-17T17:37:53.772812036Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "name" : "Alice",
+      "comment" : "Great exhibit",
+      "title" : "展示一"
+    },
+    "fingerprint" : "f12c552eb3435d06971e924fd129de38cc67817fb775c239f7ecca4deea3e39a",
+    "video" : "",
+    "actual" : {
+      "name" : "Alice",
+      "comment" : "Great exhibit",
+      "title" : "展示一"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-027",
+    "name" : "非表示は名前・本文を置換",
+    "executedAt" : "2026-11-17T17:37:53.921750731Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "name" : "Name Hidden",
+      "comment" : "This comment hidden by an admin - offensive content."
+    },
+    "fingerprint" : "4868515c0a730adc5ea6faf2329febcd7e8594df00441a2244fd420b47b1fc9f",
+    "video" : "",
+    "actual" : {
+      "name" : "Name Hidden",
+      "comment" : "This comment hidden by an admin - offensive content."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-028",
+    "name" : "キオスクから別展示は非公開",
+    "executedAt" : "2026-11-17T17:37:54.068159659Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "name" : "",
+      "title" : "",
+      "comment" : "This comment is not part of this guestbook."
+    },
+    "fingerprint" : "ea6f7ef6411ee28c10fb682295dba1a0258cc6453a6e6bccba2f878510b1969e",
+    "video" : "",
+    "actual" : {
+      "name" : "",
+      "title" : "",
+      "comment" : "This comment is not part of this guestbook."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-029",
+    "name" : "同展示は公開",
+    "executedAt" : "2026-11-17T17:37:54.216369773Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "name" : "Alice",
+      "comment" : "Great exhibit"
+    },
+    "fingerprint" : "948a9d931b7fd576f74e90b3c4e7465bcbe36a47bd03f13dab33001570e5495e",
+    "video" : "",
+    "actual" : {
+      "name" : "Alice",
+      "comment" : "Great exhibit"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-030",
+    "name" : "末尾超過は最終レコード",
+    "executedAt" : "2026-11-17T17:37:54.365013510Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "CMTID" : 5,
+      "name" : "Carol",
+      "comment" : "Last comment"
+    },
+    "fingerprint" : "d01165919c71f6cbd2a427110e4c6085a53d3d8372f59829004062261cb682d9",
+    "video" : "",
+    "actual" : {
+      "CMTID" : 5,
+      "name" : "Carol",
+      "comment" : "Last comment"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-031",
+    "name" : "欠番は次のID",
+    "executedAt" : "2026-11-17T17:37:54.509367887Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "CMTID" : 5,
+      "name" : "Carol"
+    },
+    "fingerprint" : "2a709c0e4356bbf13c66cf6ec352c50da72c686aac288d6e2543a940679fd814",
+    "video" : "",
+    "actual" : {
+      "CMTID" : 5,
+      "name" : "Carol"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-032",
+    "name" : "ID未入力",
+    "executedAt" : "2026-11-17T17:37:54.658059169Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "error" : "Must enter CommentID"
+    },
+    "fingerprint" : "647e8c1cc927432a6979289cbfffb85f9262c6dc9712bbc847dc94c466426a65",
+    "video" : "",
+    "actual" : {
+      "error" : "Must enter CommentID"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-033",
+    "name" : "表示件数は最終ID",
+    "executedAt" : "2026-11-17T17:37:54.798753513Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "displayedTotal" : 5
+    },
+    "fingerprint" : "66554166930d294cffdc6e526edb9d24ed0037e05c31d0d3070b6800ab18fb74",
+    "video" : "",
+    "actual" : {
+      "displayedTotal" : 5
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-034",
+    "name" : "空DB閲覧",
+    "executedAt" : "2026-11-17T17:37:54.940978034Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "empty" : true,
+      "note" : "移行API方針。原典未測定、例外や他レコード漏洩なし"
+    },
+    "fingerprint" : "6c0ab30432de80e10d527db0a3a46ba4fd83aa8a710b80e0d39dd64e7b6c1397",
+    "video" : "",
+    "actual" : {
+      "empty" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-035",
+    "name" : "最初のページ",
+    "executedAt" : "2026-11-17T17:37:55.086489811Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 1,
+      "content" : "開始"
+    },
+    "fingerprint" : "f27ff3cbe9e0f89323aaae4ebc9d15217bbc7ea4bdd3ac2a4407297d5864f3ac",
+    "video" : "",
+    "actual" : {
+      "page" : 1,
+      "content" : "開始"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-036",
+    "name" : "通常前進",
+    "executedAt" : "2026-11-17T17:37:55.231650152Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 2,
+      "content" : "通常ページ"
+    },
+    "fingerprint" : "bbe13dab9ceb6ff693dce880676c2ceac71212d9e4d325f35e411621d1bedea4",
+    "video" : "",
+    "actual" : {
+      "page" : 2,
+      "content" : "通常ページ"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-037",
+    "name" : "JUMP分岐",
+    "executedAt" : "2026-11-17T17:37:55.393867013Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "action" : "JUMP",
+      "page" : 5,
+      "content" : "移動先",
+      "backPage" : 2
+    },
+    "fingerprint" : "2c066f5688699ed69cd0c68ebd44cc48fe58a453d74e7e9178777e9dd63dfb4e",
+    "video" : "",
+    "actual" : {
+      "action" : "JUMP",
+      "page" : 5,
+      "content" : "移動先",
+      "backPage" : 2
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-038",
+    "name" : "CALL分岐と復帰",
+    "executedAt" : "2026-11-17T17:37:55.565572905Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "action" : "CALL",
+      "program" : "CREDITS",
+      "pageAfterReturn" : 7,
+      "backPage" : 5
+    },
+    "fingerprint" : "72a2ad0d03b9ab52336c91936b232b877d4adadc9974ca382fbaad8367a7c48d",
+    "video" : "",
+    "actual" : {
+      "action" : "CALL",
+      "program" : "CREDITS",
+      "pageAfterReturn" : 7,
+      "backPage" : 5
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-039",
+    "name" : "ENDで終了",
+    "executedAt" : "2026-11-17T17:37:55.815331956Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "ended" : true
+    },
+    "fingerprint" : "f315a4057b5a14cd03f9cd480daa46791bb33b3a8e1e6e5b423ed124fdce00c5",
+    "video" : "",
+    "actual" : {
+      "ended" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-040",
+    "name" : "通常戻る",
+    "executedAt" : "2026-11-17T17:37:56.066688408Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 1
+    },
+    "fingerprint" : "6c7eddf2bf52680d58cdcdcd8ccd745307f5df8f83c8c135fe06461e630f11f7",
+    "video" : "",
+    "actual" : {
+      "page" : 1
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-041",
+    "name" : "JUMP後戻る",
+    "executedAt" : "2026-11-17T17:37:56.336465097Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 2
+    },
+    "fingerprint" : "30d72f972a8fcba2ac2df327d86ffb2ed303ffd5ac9d5bdef4ea69fcd21cb7f7",
+    "video" : "",
+    "actual" : {
+      "page" : 2
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-042",
+    "name" : "CALL後戻る",
+    "executedAt" : "2026-11-17T17:37:56.589053031Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 5
+    },
+    "fingerprint" : "2218402b16ea183f9e8a99b918df83442eccf5b26184bf876bac8c272f9d9cf4",
+    "video" : "",
+    "actual" : {
+      "page" : 5
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-043",
+    "name" : "末尾前進",
+    "executedAt" : "2026-11-17T17:37:56.801251618Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "content" : "",
+      "allowForward" : false
+    },
+    "fingerprint" : "d1acee2461e98cacc0a37036bb6083d2989bba715b329330c84fd0b5d93760fb",
+    "video" : "",
+    "actual" : {
+      "content" : "",
+      "allowForward" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-044",
+    "name" : "F3終了",
+    "executedAt" : "2026-11-17T17:37:57.039809567Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "ended" : true
+    },
+    "fingerprint" : "03731aed5e1e77bcd30f4d46112d536187b87468818e460ef7301346c9ba3028",
+    "video" : "",
+    "actual" : {
+      "ended" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-045",
+    "name" : "展示別ページ",
+    "executedAt" : "2026-11-17T17:37:57.266345574Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "page" : 1,
+      "content" : "開始",
+      "collection" : "EXH001"
+    },
+    "fingerprint" : "710ccec5b3a5862111f84565e93b217da292b6b6c79c71d31083075bb3b29969",
+    "video" : "",
+    "actual" : {
+      "page" : 1,
+      "content" : "開始",
+      "collection" : "EXH001"
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-046",
+    "name" : "ページなし",
+    "executedAt" : "2026-11-17T17:37:57.502119119Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "empty" : true,
+      "note" : "移行API方針。原典未測定"
+    },
+    "fingerprint" : "ab814dea1ed42520edccedd5365f6bf7af6064fc42a926a0c8aa22aede2bab12",
+    "video" : "",
+    "actual" : {
+      "empty" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-047",
+    "name" : "不正JUMP引数",
+    "executedAt" : "2026-11-17T17:37:57.682491697Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "validationError" : true,
+      "note" : "移行API方針。原典未測定"
+    },
+    "fingerprint" : "7ea9a16435886968fa2bc16ced045418f588b4166845208dde33845640456826",
+    "video" : "",
+    "actual" : {
+      "validationError" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-048",
+    "name" : "正しいパスワードで終了",
+    "executedAt" : "2026-11-17T17:37:57.823600374Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "exited" : true
+    },
+    "fingerprint" : "a39c9e60bc8ec39505aff797ecf2b9c196d7dc7788e3ce4d626d2ae617444280",
+    "video" : "",
+    "actual" : {
+      "exited" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-049",
+    "name" : "誤ったパスワード",
+    "executedAt" : "2026-11-17T17:37:58.107127420Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "exited" : false,
+      "customError" : null
+    },
+    "fingerprint" : "601aa37fec4ee9b248c1af1a5db4a14781f90b225ffac5469793962fc42bff19",
+    "video" : "",
+    "actual" : {
+      "exited" : false,
+      "customError" : null
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-050",
+    "name" : "空パスワード",
+    "executedAt" : "2026-11-17T17:37:58.383405982Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "exited" : false
+    },
+    "fingerprint" : "6b7f06b342eaacc2ca2f93cc13b6c7c60461e38c644e3c098a5f57c5d84e8484",
+    "video" : "",
+    "actual" : {
+      "exited" : false
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-051",
+    "name" : "全項目表示・隠し7は非表示",
+    "executedAt" : "2026-11-17T17:37:58.655821575Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "visibleOptions" : [ 1, 2, 3, 4 ],
+      "hiddenOptions" : [ 7 ],
+      "title" : "WELCOME TO..."
+    },
+    "fingerprint" : "b9b6c26aef199291abc3d2c6affeebfdcad2ec4b9f64a11bac397f965290b022",
+    "video" : "",
+    "actual" : {
+      "visibleOptions" : [ 1, 2, 3, 4 ],
+      "hiddenOptions" : [ 7 ],
+      "title" : "WELCOME TO..."
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-052",
+    "name" : "不適格・学習無効",
+    "executedAt" : "2026-11-17T17:37:58.796073208Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "visibleOptions" : [ 3, 4 ],
+      "blockedOptions" : [ 1, 2 ]
+    },
+    "fingerprint" : "8af2f151a2c4d83a31f4486a7efb270585e68ea193c2fbddb773db945e0b23e4",
+    "video" : "",
+    "actual" : {
+      "visibleOptions" : [ 3, 4 ],
+      "blockedOptions" : [ 1, 2 ]
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-053",
+    "name" : "展示データ一覧",
+    "executedAt" : "2026-11-17T17:37:58.936815842Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "ids" : [ "EXH001", "EXH002" ],
+      "count" : 2
+    },
+    "fingerprint" : "6b2c779f0af41bd1132372db8d1dc32d77da9992a5cfc34fccbccc70f11621b1",
+    "video" : "",
+    "actual" : {
+      "ids" : [ "EXH001", "EXH002" ],
+      "count" : 2
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-054",
+    "name" : "空一覧",
+    "executedAt" : "2026-11-17T17:37:59.078716202Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "ids" : [ ],
+      "count" : 0
+    },
+    "fingerprint" : "2586fe1808567c4177eed1c888136bfe132a58ae215599b2a0ca4f09b5dd672e",
+    "video" : "",
+    "actual" : {
+      "ids" : [ ],
+      "count" : 0
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-055",
+    "name" : "投票設定参照",
+    "executedAt" : "2026-11-17T17:37:59.217534945Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "ALWVOTE" : "Y",
+      "passwordNotExposed" : true
+    },
+    "fingerprint" : "93d183b8b55e9f3ef40cf93a8c61bd3a10072038f50f53242a976c600fc08b27",
+    "video" : "",
+    "actual" : {
+      "ALWVOTE" : "Y",
+      "passwordNotExposed" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-056",
+    "name" : "認証成功",
+    "executedAt" : "2026-11-17T17:37:59.356088510Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "authenticated" : true
+    },
+    "fingerprint" : "8f6a59cecd9b2d7996c836e0f200750fe3fae3908648bb52faa846157bd1022e",
+    "video" : "",
+    "actual" : {
+      "authenticated" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-057",
+    "name" : "認証失敗",
+    "executedAt" : "2026-11-17T17:37:59.627996720Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "authenticated" : false,
+      "passwordNotExposed" : true
+    },
+    "fingerprint" : "e1a073bac40bf2dfb13c5f51651600d0a3ce31dfa01bad2e835d8261934bce6c",
+    "video" : "",
+    "actual" : {
+      "authenticated" : false,
+      "passwordNotExposed" : true
+    },
+    "status" : "合格",
+    "notes" : "期待値の全業務フィールドを照合。投票・投稿は保存件数も検証。"
+  }, {
+    "caseId" : "E2E-058",
+    "name" : "メニュー番号・原文タイトル・Fキー・エラー位置照合",
+    "executedAt" : "2026-11-17T17:37:59.913733567Z",
+    "environment" : "API (Spring Boot/H2)",
+    "expected" : {
+      "matchesAllLedgerElements" : true
+    },
+    "fingerprint" : "3811930ce3ee1bfaf272138ce45563066054b66aeaa437896577582a11d214b0",
+    "video" : "",
+    "status" : "UI専用・フェーズ3/4",
+    "actual" : { },
+    "notes" : "取消ボタン・全画面配置の照合はUIで実施"
+  } ]
+}

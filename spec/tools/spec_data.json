@@ -1,0 +1,2574 @@
+{
+  "概要": [
+    [
+      "項目ID",
+      "項目",
+      "内容",
+      "根拠"
+    ],
+    [
+      "O-01",
+      "目的",
+      "VCFMAIN 利用者機能の移行。Java 17/Spring Boot・JPA・H2/PostgreSQL、Web、Windowsで共通仕様を使用。UIはモダン化しグリーンスクリーン模写はしない。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-02",
+      "原典",
+      "madmerger/VCF400 master 30bfc334b99c75d28091c7815e4617cb456dd7f4。原典は読み取り専用。README、Operator’s Guide、Page Programming Guideも参照。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-03",
+      "保持事項",
+      "メニュー階層・番号、入力順、Fキーの番号と役割、タイトル原文、エラー位置と文言、業務ルールを保持。台帳の行・列は旧画面上の位置。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-04",
+      "検証状況",
+      "本書はソース静的解析。実機未実行、Excelケースは未実施。空DB・ページ欠損・型変換エラーの原典挙動は未測定。移行APIでは検証エラーとし、500やデータ破壊を防ぐ方針（要実装時確認）。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-05",
+      "基準データ",
+      "tests/cases.json の baseline を使用。展示・コメント・ページはテスト専用の仮定。AWARD 001=Best in Show、002=Ed Fair。管理者パスワードはテスト時に環境変数 VCF_SEED_ADMPSWRD で注入。未設定時は管理者ログイン無効。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-06",
+      "原典差異",
+      "VCFMAINの表示1はLearn AS/400 NavigationだがコマンドはLRN400。表示2～10、90にはVCFMAINQQ内の実行定義なし。欠落機能を推測して実装しない。CREDITSは直接呼出しなし、CALLページによる呼出し候補としてのみ収録。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-07",
+      "分岐表記補正",
+      "ユーザー前提の EXTRA='CALL'/'JUMP' は原典では CONTENT='CALL'/'JUMP'、EXTRAが引数。ENDのみEXTRA。EXHBMENUは原典でSETTINGS先頭レコードを読むが、確定前提に従いADMPSWRDをキー指定する。",
+      "依頼の確定前提・原典読解"
+    ],
+    [
+      "O-08",
+      "安全性",
+      "ADMPSWRDは管理者認証用。移行先APIで平文返却しない。動的CALLは任意のOSコマンド実行にせず許可済み機能を解決する。認証方式・HTTP契約はフェーズ2で確定。",
+      "依頼の確定前提・原典読解"
+    ]
+  ],
+  "画面台帳": [
+    [
+      "項目ID",
+      "メニュー経路・画面",
+      "要素",
+      "原文・フィールド・役割",
+      "位置・型長・入力順",
+      "原典"
+    ],
+    [
+      "L-001",
+      "VCFMAIN",
+      "Fキー",
+      "F3 メニュー標準",
+      "レコード定義",
+      "QMNUSRC/VCFMAIN.mnudds:16"
+    ],
+    [
+      "L-002",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "AS/400 DEMO MENU",
+      "行1 列33",
+      "QMNUSRC/VCFMAIN.mnudds:20"
+    ],
+    [
+      "L-003",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "WELCOME TO...",
+      "行2 列2",
+      "QMNUSRC/VCFMAIN.mnudds:23"
+    ],
+    [
+      "L-004",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Type Number, then press ENTER     ",
+      "行019 列2",
+      "QMNUSRC/VCFMAIN.mnudds:27"
+    ],
+    [
+      "L-005",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "V I N T A G E  C O M P U T E R  F E S T I V A L",
+      "行3 列10",
+      "QMNUSRC/VCFMAIN.mnudds:29"
+    ],
+    [
+      "L-006",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "2 0 2 4",
+      "行3 列59",
+      "QMNUSRC/VCFMAIN.mnudds:31"
+    ],
+    [
+      "L-007",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Start Here",
+      "行4 列2",
+      "QMNUSRC/VCFMAIN.mnudds:33"
+    ],
+    [
+      "L-008",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "1. Learn AS/400 Navigation",
+      "行5 列7",
+      "QMNUSRC/VCFMAIN.mnudds:35"
+    ],
+    [
+      "L-009",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "2. IBM Midrange History",
+      "行6 列7",
+      "QMNUSRC/VCFMAIN.mnudds:36"
+    ],
+    [
+      "L-010",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "3. About This System",
+      "行7 列7",
+      "QMNUSRC/VCFMAIN.mnudds:37"
+    ],
+    [
+      "L-011",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "4. About Gertie the System/34",
+      "行8 列7",
+      "QMNUSRC/VCFMAIN.mnudds:38"
+    ],
+    [
+      "L-012",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Office Tasks",
+      "行9 列2",
+      "QMNUSRC/VCFMAIN.mnudds:39"
+    ],
+    [
+      "L-013",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "5. Start OfficeVision/400",
+      "行10 列7",
+      "QMNUSRC/VCFMAIN.mnudds:41"
+    ],
+    [
+      "L-014",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "6. Start a Calendar",
+      "行11 列7",
+      "QMNUSRC/VCFMAIN.mnudds:42"
+    ],
+    [
+      "L-015",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "7. Start the Clock",
+      "行12 列7",
+      "QMNUSRC/VCFMAIN.mnudds:43"
+    ],
+    [
+      "L-016",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Entertainment",
+      "行13 列2",
+      "QMNUSRC/VCFMAIN.mnudds:44"
+    ],
+    [
+      "L-017",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "8. Play Snake",
+      "行14 列7",
+      "QMNUSRC/VCFMAIN.mnudds:46"
+    ],
+    [
+      "L-018",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "9. Play Yahtzee",
+      "行15 列7",
+      "QMNUSRC/VCFMAIN.mnudds:47"
+    ],
+    [
+      "L-019",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "10. Play PacMan",
+      "行16 列6",
+      "QMNUSRC/VCFMAIN.mnudds:48"
+    ],
+    [
+      "L-020",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "System Tasks",
+      "行8 列42",
+      "QMNUSRC/VCFMAIN.mnudds:49"
+    ],
+    [
+      "L-021",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "80. Sign Off the System",
+      "行9 列47",
+      "QMNUSRC/VCFMAIN.mnudds:51"
+    ],
+    [
+      "L-022",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Administration",
+      "行10 列42",
+      "QMNUSRC/VCFMAIN.mnudds:52"
+    ],
+    [
+      "L-023",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "90. Start Admin Menu",
+      "行11 列47",
+      "QMNUSRC/VCFMAIN.mnudds:54"
+    ],
+    [
+      "L-024",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Type the menu number you want and then",
+      "行13 列34",
+      "QMNUSRC/VCFMAIN.mnudds:55"
+    ],
+    [
+      "L-025",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "press the ENTER key which is located where",
+      "行14 列34",
+      "QMNUSRC/VCFMAIN.mnudds:58"
+    ],
+    [
+      "L-026",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "the right CTRL key normally is on a PC",
+      "行15 列34",
+      "QMNUSRC/VCFMAIN.mnudds:61"
+    ],
+    [
+      "L-027",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "keyboard. Or type the menu option you are",
+      "行16 列34",
+      "QMNUSRC/VCFMAIN.mnudds:64"
+    ],
+    [
+      "L-028",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "Exhibit Tasks   ",
+      "行4 列42",
+      "QMNUSRC/VCFMAIN.mnudds:67"
+    ],
+    [
+      "L-029",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "11. Nominate Exhibit for Award",
+      "行5 列47",
+      "QMNUSRC/VCFMAIN.mnudds:69"
+    ],
+    [
+      "L-030",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "12. Sign Exhibit Guestbook",
+      "行6 列47",
+      "QMNUSRC/VCFMAIN.mnudds:70"
+    ],
+    [
+      "L-031",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "curious about and press the HELP key.",
+      "行17 列34",
+      "QMNUSRC/VCFMAIN.mnudds:71"
+    ],
+    [
+      "L-032",
+      "VCFMAIN",
+      "固定文言（タイトル・ラベル等）",
+      "13. Read a Guestbook Comment",
+      "行7 列47",
+      "QMNUSRC/VCFMAIN.mnudds:74"
+    ],
+    [
+      "L-033",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "Fキー",
+      "F5 Submit",
+      "レコード定義",
+      "QSDASRC/VOTESCR.dspf:6"
+    ],
+    [
+      "L-034",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "Fキー",
+      "F12 Cancel",
+      "レコード定義",
+      "QSDASRC/VOTESCR.dspf:7"
+    ],
+    [
+      "L-035",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "VINTAGE COMPUTER FESTIVAL",
+      "行1 列3",
+      "QSDASRC/VOTESCR.dspf:8"
+    ],
+    [
+      "L-036",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "NOMINATE EXHIBIT FOR AWARD",
+      "行1 列34",
+      "QSDASRC/VOTESCR.dspf:9"
+    ],
+    [
+      "L-037",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "First, type your SFGE Badge Number...............:",
+      "行3 列7",
+      "QSDASRC/VOTESCR.dspf:11"
+    ],
+    [
+      "L-038",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "入力",
+      "INPUTBADGE",
+      "行3 列58 / 4D 小数0 / I",
+      "QSDASRC/VOTESCR.dspf:13"
+    ],
+    [
+      "L-039",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Second, type the Exhibit ID you are nominating...:",
+      "行4 列7",
+      "QSDASRC/VOTESCR.dspf:16"
+    ],
+    [
+      "L-040",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Third, type the Award ID you are selecting.......:",
+      "行5 列7",
+      "QSDASRC/VOTESCR.dspf:18"
+    ],
+    [
+      "L-041",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "入力",
+      "INPUTAWARD",
+      "行5 列58 / 3D 小数0 / I",
+      "QSDASRC/VOTESCR.dspf:20"
+    ],
+    [
+      "L-042",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "001. Best in Show Award",
+      "行9 列5",
+      "QSDASRC/VOTESCR.dspf:23"
+    ],
+    [
+      "L-043",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "- This award is given to the exhibit who you",
+      "行9 列31",
+      "QSDASRC/VOTESCR.dspf:25"
+    ],
+    [
+      "L-044",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "believe to be the best in show for2024.",
+      "行10 列10",
+      "QSDASRC/VOTESCR.dspf:27"
+    ],
+    [
+      "L-045",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "002. The Ed Fair Award",
+      "行12 列5",
+      "QSDASRC/VOTESCR.dspf:29"
+    ],
+    [
+      "L-046",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "- This award is given to the exhibit that is",
+      "行12 列31",
+      "QSDASRC/VOTESCR.dspf:31"
+    ],
+    [
+      "L-047",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "deemed the most informative of theshow.",
+      "行13 列10",
+      "QSDASRC/VOTESCR.dspf:33"
+    ],
+    [
+      "L-048",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行14 列4",
+      "QSDASRC/VOTESCR.dspf:35"
+    ],
+    [
+      "L-049",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd5/F5 = Submit Vote",
+      "行24 列4",
+      "QSDASRC/VOTESCR.dspf:38"
+    ],
+    [
+      "L-050",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd12/F12 = Cancel",
+      "行24 列31",
+      "QSDASRC/VOTESCR.dspf:40"
+    ],
+    [
+      "L-051",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "エラー行",
+      "ERRLINE",
+      "行6 列14 / 45A 小数0 / O",
+      "QSDASRC/VOTESCR.dspf:42"
+    ],
+    [
+      "L-052",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Available Awards for This Year:",
+      "行8 列5",
+      "QSDASRC/VOTESCR.dspf:43"
+    ],
+    [
+      "L-053",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行7 列4",
+      "QSDASRC/VOTESCR.dspf:44"
+    ],
+    [
+      "L-054",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "V1R0M4",
+      "行23 列67",
+      "QSDASRC/VOTESCR.dspf:47"
+    ],
+    [
+      "L-055",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "You may only vote for ONE award.",
+      "行15 列4",
+      "QSDASRC/VOTESCR.dspf:48"
+    ],
+    [
+      "L-056",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "Choose your nomination carefully!",
+      "行15 列38",
+      "QSDASRC/VOTESCR.dspf:50"
+    ],
+    [
+      "L-057",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "入力",
+      "INEXHB",
+      "行4 列58 / 9A 小数0 / B",
+      "QSDASRC/VOTESCR.dspf:51"
+    ],
+    [
+      "L-058",
+      "VCFMAIN/11・EXHBMENU/1 → VOTE1",
+      "固定文言（タイトル・ラベル等）",
+      "TAB = Switch Fields",
+      "行23 列4",
+      "QSDASRC/VOTESCR.dspf:55"
+    ],
+    [
+      "L-059",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " _____ _   _    _    _   _ _  __ ",
+      "行1 列4",
+      "QSDASRC/VOTESCR.dspf:59"
+    ],
+    [
+      "L-060",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "|_   _| | | |  / \\  | \\ | | |/ / ",
+      "行2 列4",
+      "QSDASRC/VOTESCR.dspf:60"
+    ],
+    [
+      "L-061",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "  | | | |_| | / _ \\ |  \\| |   /  ",
+      "行3 列4",
+      "QSDASRC/VOTESCR.dspf:61"
+    ],
+    [
+      "L-062",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "  | | |  _  |/ ___ \\| |\\  | . \\  ",
+      "行4 列4",
+      "QSDASRC/VOTESCR.dspf:62"
+    ],
+    [
+      "L-063",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "  |_| |_| |_/_/   \\_\\_| \\_|_|\\_\\  ",
+      "行5 列4",
+      "QSDASRC/VOTESCR.dspf:63"
+    ],
+    [
+      "L-064",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "         __   _____  _   _   ________  ____  ",
+      "行6 列4",
+      "QSDASRC/VOTESCR.dspf:64"
+    ],
+    [
+      "L-065",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "\\ \\ / / _ \\| | | | |  ___/ _ \\|  _\\ ",
+      "行7 列13",
+      "QSDASRC/VOTESCR.dspf:66"
+    ],
+    [
+      "L-066",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "\\ V / | | | | | | | |_ | | | | |_)|",
+      "行8 列14",
+      "QSDASRC/VOTESCR.dspf:68"
+    ],
+    [
+      "L-067",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "| || |_| | |_| | |  _|| |_| |  _ /",
+      "行9 列15",
+      "QSDASRC/VOTESCR.dspf:70"
+    ],
+    [
+      "L-068",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "|_| \\___/ \\___/  |_|   \\___/|_| \\_\\ ",
+      "行10 列15",
+      "QSDASRC/VOTESCR.dspf:72"
+    ],
+    [
+      "L-069",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " __     _____ _____ ___ _   _  ____ _   ",
+      "行11 列22",
+      "QSDASRC/VOTESCR.dspf:74"
+    ],
+    [
+      "L-070",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "\\ \\   / / _ \\_   _|_ _| \\ | |/ ___| | ",
+      "行12 列23",
+      "QSDASRC/VOTESCR.dspf:76"
+    ],
+    [
+      "L-071",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " \\ \\ / / | | || |  | ||  \\| | |  _| |  ",
+      "行13 列23",
+      "QSDASRC/VOTESCR.dspf:78"
+    ],
+    [
+      "L-072",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " \\ V /| |_| || |  | || |\\  | |_| |_|  ",
+      "行14 列24",
+      "QSDASRC/VOTESCR.dspf:80"
+    ],
+    [
+      "L-073",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " \\_/  \\___/ |_| |___|_| \\_|\\____(_)  ",
+      "行15 列25",
+      "QSDASRC/VOTESCR.dspf:82"
+    ],
+    [
+      "L-074",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行16 列4",
+      "QSDASRC/VOTESCR.dspf:84"
+    ],
+    [
+      "L-075",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " Your vote has been RECORDED! Thank you for participating in the awards",
+      "行17 列4",
+      "QSDASRC/VOTESCR.dspf:87"
+    ],
+    [
+      "L-076",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " show for Vintage Computer Festival Southeast 2024! Enjoy the rest of",
+      "行18 列4",
+      "QSDASRC/VOTESCR.dspf:90"
+    ],
+    [
+      "L-077",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " our exhibits and the rest of the Southern Fried Gaming Expo!",
+      "行19 列4",
+      "QSDASRC/VOTESCR.dspf:93"
+    ],
+    [
+      "L-078",
+      "VCFMAIN/11・EXHBMENU/1 → VOTEEND",
+      "固定文言（タイトル・ラベル等）",
+      " Press ENTER to return to the mainmenu.",
+      "行21 列4",
+      "QSDASRC/VOTESCR.dspf:95"
+    ],
+    [
+      "L-079",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行1 列3",
+      "QSDASRC/VOTESCR.dspf:99"
+    ],
+    [
+      "L-080",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行2 列3",
+      "QSDASRC/VOTESCR.dspf:102"
+    ],
+    [
+      "L-081",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行3 列3",
+      "QSDASRC/VOTESCR.dspf:105"
+    ],
+    [
+      "L-082",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行4 列3",
+      "QSDASRC/VOTESCR.dspf:108"
+    ],
+    [
+      "L-083",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行5 列3",
+      "QSDASRC/VOTESCR.dspf:111"
+    ],
+    [
+      "L-084",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬ ######################################## ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行6 列3",
+      "QSDASRC/VOTESCR.dspf:114"
+    ],
+    [
+      "L-085",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬ ######################################## ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行7 列3",
+      "QSDASRC/VOTESCR.dspf:117"
+    ],
+    [
+      "L-086",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ########### ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行8 列3",
+      "QSDASRC/VOTESCR.dspf:120"
+    ],
+    [
+      "L-087",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ########### ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行9 列3",
+      "QSDASRC/VOTESCR.dspf:123"
+    ],
+    [
+      "L-088",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ########### ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行10 列3",
+      "QSDASRC/VOTESCR.dspf:126"
+    ],
+    [
+      "L-089",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ########### ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行11 列3",
+      "QSDASRC/VOTESCR.dspf:129"
+    ],
+    [
+      "L-090",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行12 列3",
+      "QSDASRC/VOTESCR.dspf:132"
+    ],
+    [
+      "L-091",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行13 列3",
+      "QSDASRC/VOTESCR.dspf:135"
+    ],
+    [
+      "L-092",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬ THE GREAT DAVE MIGHTY AND POWERFUL IS HE ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行14 列3",
+      "QSDASRC/VOTESCR.dspf:138"
+    ],
+    [
+      "L-093",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬ BLESSED BE THE NAME OF DAVE...      AMEN ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行15 列3",
+      "QSDASRC/VOTESCR.dspf:141"
+    ],
+    [
+      "L-094",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行16 列3",
+      "QSDASRC/VOTESCR.dspf:144"
+    ],
+    [
+      "L-095",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行17 列3",
+      "QSDASRC/VOTESCR.dspf:147"
+    ],
+    [
+      "L-096",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行18 列3",
+      "QSDASRC/VOTESCR.dspf:150"
+    ],
+    [
+      "L-097",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行19 列3",
+      "QSDASRC/VOTESCR.dspf:153"
+    ],
+    [
+      "L-098",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行20 列3",
+      "QSDASRC/VOTESCR.dspf:156"
+    ],
+    [
+      "L-099",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行21 列3",
+      "QSDASRC/VOTESCR.dspf:159"
+    ],
+    [
+      "L-100",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行22 列3",
+      "QSDASRC/VOTESCR.dspf:162"
+    ],
+    [
+      "L-101",
+      "VCFMAIN/11・EXHBMENU/1 → DAVE",
+      "固定文言（タイトル・ラベル等）",
+      "¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬",
+      "行23 列3",
+      "QSDASRC/VOTESCR.dspf:165"
+    ],
+    [
+      "L-102",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      " ____   ___  ____  ______   ___ ",
+      "行1 列4",
+      "QSDASRC/VOTESCR.dspf:182"
+    ],
+    [
+      "L-103",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "/ ___| / _ \\|  _ \\|  _ \\ \\ / / |",
+      "行2 列4",
+      "QSDASRC/VOTESCR.dspf:183"
+    ],
+    [
+      "L-104",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "\\___ \\| | | | |_) | |_) \\ V /| |",
+      "行3 列4",
+      "QSDASRC/VOTESCR.dspf:184"
+    ],
+    [
+      "L-105",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      " ___) | |_| |  _ <|  _ < | | |_|",
+      "行4 列4",
+      "QSDASRC/VOTESCR.dspf:185"
+    ],
+    [
+      "L-106",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "|____/ \\___/|_| \\_\\_| \\_\\|_| (_)",
+      "行5 列4",
+      "QSDASRC/VOTESCR.dspf:186"
+    ],
+    [
+      "L-107",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "The voting period has ended and you can no longer vote.",
+      "行8 列4",
+      "QSDASRC/VOTESCR.dspf:187"
+    ],
+    [
+      "L-108",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "However, you may sign this exhibitguestbook if you would like.",
+      "行9 列4",
+      "QSDASRC/VOTESCR.dspf:189"
+    ],
+    [
+      "L-109",
+      "VCFMAIN/11・EXHBMENU/1 → ENDOFCON",
+      "固定文言（タイトル・ラベル等）",
+      "Press ENTER to exit.",
+      "行14 列4",
+      "QSDASRC/VOTESCR.dspf:191"
+    ],
+    [
+      "L-110",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "Fキー",
+      "F5 Submit",
+      "レコード定義",
+      "QSDASRC/GUESTBKSCR.dspf:6"
+    ],
+    [
+      "L-111",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "Fキー",
+      "F12 Cancel",
+      "レコード定義",
+      "QSDASRC/GUESTBKSCR.dspf:7"
+    ],
+    [
+      "L-112",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "VINTAGE COMPUTER FESTIVAL",
+      "行1 列3",
+      "QSDASRC/GUESTBKSCR.dspf:8"
+    ],
+    [
+      "L-113",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "GUESTBOOK/400 - ADD COMMENT",
+      "行1 列32",
+      "QSDASRC/GUESTBKSCR.dspf:9"
+    ],
+    [
+      "L-114",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Your Name................:",
+      "行3 列3",
+      "QSDASRC/GUESTBKSCR.dspf:10"
+    ],
+    [
+      "L-115",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Exhibit",
+      "行4 列3",
+      "QSDASRC/GUESTBKSCR.dspf:11"
+    ],
+    [
+      "L-116",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "ID...............:",
+      "行4 列11",
+      "QSDASRC/GUESTBKSCR.dspf:12"
+    ],
+    [
+      "L-117",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "入力",
+      "INNAME",
+      "行3 列32 / 16A 小数0 / I",
+      "QSDASRC/GUESTBKSCR.dspf:13"
+    ],
+    [
+      "L-118",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Comment..................:",
+      "行5 列3",
+      "QSDASRC/GUESTBKSCR.dspf:16"
+    ],
+    [
+      "L-119",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "入力",
+      "INCMT",
+      "行6 列3 / 200A 小数0 / I",
+      "QSDASRC/GUESTBKSCR.dspf:17"
+    ],
+    [
+      "L-120",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "エラー行",
+      "ERRLINE",
+      "行10 列5 / 21A 小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:20"
+    ],
+    [
+      "L-121",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd5 / F5 = Submit Comment",
+      "行24 列3",
+      "QSDASRC/GUESTBKSCR.dspf:21"
+    ],
+    [
+      "L-122",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd12 / F12 = Cancel",
+      "行24 列34",
+      "QSDASRC/GUESTBKSCR.dspf:23"
+    ],
+    [
+      "L-123",
+      "VCFMAIN/12・EXHBMENU/3 → ADDCMT",
+      "入力",
+      "INID",
+      "行4 列32 / 9A 小数0 / B",
+      "QSDASRC/GUESTBKSCR.dspf:25"
+    ],
+    [
+      "L-124",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      " _______ _    _          _   _ _  __ _____          ",
+      "行2 列5",
+      "QSDASRC/GUESTBKSCR.dspf:30"
+    ],
+    [
+      "L-125",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "|__   __| |  | |   /\\   | \\ | | |/// ____|         ",
+      "行3 列5",
+      "QSDASRC/GUESTBKSCR.dspf:32"
+    ],
+    [
+      "L-126",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "   | |  | |__| |  /  \\  |  \\| |   /| (___           ",
+      "行4 列5",
+      "QSDASRC/GUESTBKSCR.dspf:34"
+    ],
+    [
+      "L-127",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行4 列58",
+      "QSDASRC/GUESTBKSCR.dspf:36"
+    ],
+    [
+      "L-128",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "   | |  |  __  | / /\\ \\ | . ` |  /\\___ \\          ",
+      "行5 列5",
+      "QSDASRC/GUESTBKSCR.dspf:37"
+    ],
+    [
+      "L-129",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行5 列58",
+      "QSDASRC/GUESTBKSCR.dspf:39"
+    ],
+    [
+      "L-130",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "   | |  | |  | |/ ____ \\| |\\  | . \\ ____) |         ",
+      "行6 列5",
+      "QSDASRC/GUESTBKSCR.dspf:40"
+    ],
+    [
+      "L-131",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行6 列58",
+      "QSDASRC/GUESTBKSCR.dspf:42"
+    ],
+    [
+      "L-132",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      " __|_|_ |_|_ |_/_/_   \\_\\_|_\\_|_|\\_\\_____/__        ",
+      "行7 列5",
+      "QSDASRC/GUESTBKSCR.dspf:43"
+    ],
+    [
+      "L-133",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行7 列58",
+      "QSDASRC/GUESTBKSCR.dspf:45"
+    ],
+    [
+      "L-134",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "|  ____/ __ \\|  __ \\  |__   __| | | |  ____|       ",
+      "行8 列5",
+      "QSDASRC/GUESTBKSCR.dspf:46"
+    ],
+    [
+      "L-135",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行8 列58",
+      "QSDASRC/GUESTBKSCR.dspf:48"
+    ],
+    [
+      "L-136",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "| |__ | |  | | |__) |    | |  | |__| | |__          ",
+      "行9 列5",
+      "QSDASRC/GUESTBKSCR.dspf:49"
+    ],
+    [
+      "L-137",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行9 列58",
+      "QSDASRC/GUESTBKSCR.dspf:51"
+    ],
+    [
+      "L-138",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "|  __|| |  | |  _  /     | |  |  __  |  __|         ",
+      "行10 列5",
+      "QSDASRC/GUESTBKSCR.dspf:52"
+    ],
+    [
+      "L-139",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行10 列58",
+      "QSDASRC/GUESTBKSCR.dspf:54"
+    ],
+    [
+      "L-140",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "| |   | |__| | | \\ \\     | |  | | | | |____        ",
+      "行11 列5",
+      "QSDASRC/GUESTBKSCR.dspf:55"
+    ],
+    [
+      "L-141",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行11 列58",
+      "QSDASRC/GUESTBKSCR.dspf:57"
+    ],
+    [
+      "L-142",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "|_|____\\____/|_|  \\_\\__  |_|__|_|_|_|______|___ _  ",
+      "行12 列5",
+      "QSDASRC/GUESTBKSCR.dspf:58"
+    ],
+    [
+      "L-143",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行12 列58",
+      "QSDASRC/GUESTBKSCR.dspf:60"
+    ],
+    [
+      "L-144",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      " / ____/ __ \\|  \\/  |  \\/  |  ____| \\ | |__   __| | ",
+      "行13 列5",
+      "QSDASRC/GUESTBKSCR.dspf:61"
+    ],
+    [
+      "L-145",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行13 列58",
+      "QSDASRC/GUESTBKSCR.dspf:63"
+    ],
+    [
+      "L-146",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "| |   | |  | | \\  / | \\  / | |__  |  \\| |  | |  | | ",
+      "行14 列5",
+      "QSDASRC/GUESTBKSCR.dspf:64"
+    ],
+    [
+      "L-147",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行14 列58",
+      "QSDASRC/GUESTBKSCR.dspf:66"
+    ],
+    [
+      "L-148",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "| |   | |  | | |\\/| | |\\/| |  __| | . ` |  | |  | | ",
+      "行15 列5",
+      "QSDASRC/GUESTBKSCR.dspf:67"
+    ],
+    [
+      "L-149",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行15 列58",
+      "QSDASRC/GUESTBKSCR.dspf:69"
+    ],
+    [
+      "L-150",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "| |___| |__| | |  | | |  | | |____| |\\  |  | |  |_| ",
+      "行16 列5",
+      "QSDASRC/GUESTBKSCR.dspf:70"
+    ],
+    [
+      "L-151",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "                          ",
+      "行16 列58",
+      "QSDASRC/GUESTBKSCR.dspf:72"
+    ],
+    [
+      "L-152",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      " \\_____\\____/|_|  |_|_|  |_|______|_| \\_|  |_|  (_) ",
+      "行17 列5",
+      "QSDASRC/GUESTBKSCR.dspf:73"
+    ],
+    [
+      "L-153",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Thank you for commenting on this exhibit! Your Comment ID Is:",
+      "行19 列4",
+      "QSDASRC/GUESTBKSCR.dspf:75"
+    ],
+    [
+      "L-154",
+      "投稿完了 → ENDCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Press ENTER to exit.",
+      "行21 列4",
+      "QSDASRC/GUESTBKSCR.dspf:77"
+    ],
+    [
+      "L-155",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "Fキー",
+      "F5 Submit",
+      "レコード定義",
+      "QSDASRC/GUESTBKSCR.dspf:80"
+    ],
+    [
+      "L-156",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "Fキー",
+      "F12 Cancel",
+      "レコード定義",
+      "QSDASRC/GUESTBKSCR.dspf:81"
+    ],
+    [
+      "L-157",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "VINTAGE COMPUTER FESTIVAL",
+      "行1 列4",
+      "QSDASRC/GUESTBKSCR.dspf:82"
+    ],
+    [
+      "L-158",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "GUESTBOOK/400 - Read a Comment",
+      "行1 列33",
+      "QSDASRC/GUESTBKSCR.dspf:83"
+    ],
+    [
+      "L-159",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Enter a Comment ID:",
+      "行3 列4",
+      "QSDASRC/GUESTBKSCR.dspf:84"
+    ],
+    [
+      "L-160",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行5 列4",
+      "QSDASRC/GUESTBKSCR.dspf:85"
+    ],
+    [
+      "L-161",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "出力",
+      "OUTNAME",
+      "行6 列4 / 11  小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:88"
+    ],
+    [
+      "L-162",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "says to:  ",
+      "行6 列18",
+      "QSDASRC/GUESTBKSCR.dspf:89"
+    ],
+    [
+      "L-163",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "出力",
+      "OUTCMT",
+      "行8 列4 / 200  小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:90"
+    ],
+    [
+      "L-164",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Is this comment inappropriate? Please report the Comment ID to the",
+      "行21 列5",
+      "QSDASRC/GUESTBKSCR.dspf:91"
+    ],
+    [
+      "L-165",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "folks at the Midrange Madness table and we will address the comment.",
+      "行22 列5",
+      "QSDASRC/GUESTBKSCR.dspf:93"
+    ],
+    [
+      "L-166",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd5 / F5 = Submit  Cmd12 / F12 = Cancel",
+      "行24 列5",
+      "QSDASRC/GUESTBKSCR.dspf:95"
+    ],
+    [
+      "L-167",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "エラー行",
+      "ERRLINE",
+      "行4 列4 / 20A 小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:98"
+    ],
+    [
+      "L-168",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "入力",
+      "INCMTID",
+      "行3 列25 / 4Y 小数0 / I",
+      "QSDASRC/GUESTBKSCR.dspf:99"
+    ],
+    [
+      "L-169",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行11 列4",
+      "QSDASRC/GUESTBKSCR.dspf:102"
+    ],
+    [
+      "L-170",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "Currently hosting",
+      "行3 列49",
+      "QSDASRC/GUESTBKSCR.dspf:105"
+    ],
+    [
+      "L-171",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "出力",
+      "WTFCMTNUM",
+      "行3 列67 / 4  小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:106"
+    ],
+    [
+      "L-172",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "comments and counting.",
+      "行4 列49",
+      "QSDASRC/GUESTBKSCR.dspf:107"
+    ],
+    [
+      "L-173",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "出力",
+      "OUTTITLE",
+      "行6 列29 / 50  小数0 / O",
+      "QSDASRC/GUESTBKSCR.dspf:108"
+    ],
+    [
+      "L-174",
+      "VCFMAIN/13・EXHBMENU/4 → READCMT",
+      "固定文言（タイトル・ラベル等）",
+      "--------------------------------------------------------------------------",
+      "行23 列4",
+      "QSDASRC/GUESTBKSCR.dspf:109"
+    ],
+    [
+      "L-175",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "Fキー",
+      "F3 Exit",
+      "レコード定義",
+      "QSDASRC/LRN400SCR.dspf:6"
+    ],
+    [
+      "L-176",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "Fキー",
+      "F5 Fwd",
+      "レコード定義",
+      "QSDASRC/LRN400SCR.dspf:7"
+    ],
+    [
+      "L-177",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "Fキー",
+      "F8 Back",
+      "レコード定義",
+      "QSDASRC/LRN400SCR.dspf:8"
+    ],
+    [
+      "L-178",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "固定文言（タイトル・ラベル等）",
+      "LEARN/400",
+      "行1 列3",
+      "QSDASRC/LRN400SCR.dspf:9"
+    ],
+    [
+      "L-179",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "出力",
+      "OUTPAGENBR",
+      "行1 列76 / 4A 小数0 / O",
+      "QSDASRC/LRN400SCR.dspf:10"
+    ],
+    [
+      "L-180",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "固定文言（タイトル・ラベル等）",
+      "Page",
+      "行1 列70",
+      "QSDASRC/LRN400SCR.dspf:11"
+    ],
+    [
+      "L-181",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "固定文言（タイトル・ラベル等）",
+      "_____________________________________________________________________________",
+      "行2 列3",
+      "QSDASRC/LRN400SCR.dspf:12"
+    ],
+    [
+      "L-182",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "固定文言（タイトル・ラベル等）",
+      "Cmd3/F3 = Exit  Cmd5/F5 = ForwardsCmd8 / F8 = Backwards",
+      "行23 列3",
+      "QSDASRC/LRN400SCR.dspf:15"
+    ],
+    [
+      "L-183",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "固定文言（タイトル・ラベル等）",
+      "_____________________________________________________________________________",
+      "行22 列3",
+      "QSDASRC/LRN400SCR.dspf:18"
+    ],
+    [
+      "L-184",
+      "VCFMAIN/1・EXHBMENU/2 → LEARN/400",
+      "出力",
+      "OUTCONTENT",
+      "行3 列1 / 1500A 小数0 / O",
+      "QSDASRC/LRN400SCR.dspf:22"
+    ],
+    [
+      "L-185",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "----------------------------------------------------------------------------",
+      "行19 列3",
+      "QSDASRC/EXHBMENUSC.dspf:6"
+    ],
+    [
+      "L-186",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "1. Nominate This Exhibit for Award",
+      "行20 列4",
+      "QSDASRC/EXHBMENUSC.dspf:9"
+    ],
+    [
+      "L-187",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "2. Learn More About This Exhibit",
+      "行21 列4",
+      "QSDASRC/EXHBMENUSC.dspf:12"
+    ],
+    [
+      "L-188",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "3. Sign Exhibit Guestbook",
+      "行22 列4",
+      "QSDASRC/EXHBMENUSC.dspf:15"
+    ],
+    [
+      "L-189",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "Select Menu Option, Press ENTER:",
+      "行23 列44",
+      "QSDASRC/EXHBMENUSC.dspf:17"
+    ],
+    [
+      "L-190",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "WELCOME TO...",
+      "行1 列3",
+      "QSDASRC/EXHBMENUSC.dspf:19"
+    ],
+    [
+      "L-191",
+      "VCFSTUB → EXHBMENU",
+      "出力",
+      "OUTTITLE",
+      "行2 列6 / 75A 小数0 / O",
+      "QSDASRC/EXHBMENUSC.dspf:20"
+    ],
+    [
+      "L-192",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "HOSTED",
+      "行3 列3",
+      "QSDASRC/EXHBMENUSC.dspf:21"
+    ],
+    [
+      "L-193",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "BY",
+      "行3 列10",
+      "QSDASRC/EXHBMENUSC.dspf:22"
+    ],
+    [
+      "L-194",
+      "VCFSTUB → EXHBMENU",
+      "出力",
+      "OUTNAME",
+      "行3 列13 / 25A 小数0 / O",
+      "QSDASRC/EXHBMENUSC.dspf:23"
+    ],
+    [
+      "L-195",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "OF",
+      "行3 列39",
+      "QSDASRC/EXHBMENUSC.dspf:24"
+    ],
+    [
+      "L-196",
+      "VCFSTUB → EXHBMENU",
+      "出力",
+      "OUTCITY",
+      "行3 列42 / 15A 小数0 / O",
+      "QSDASRC/EXHBMENUSC.dspf:25"
+    ],
+    [
+      "L-197",
+      "VCFSTUB → EXHBMENU",
+      "出力",
+      "OUTSTATE",
+      "行3 列58 / 2A 小数0 / O",
+      "QSDASRC/EXHBMENUSC.dspf:26"
+    ],
+    [
+      "L-198",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "----------------------------------------------------------------------------",
+      "行4 列3",
+      "QSDASRC/EXHBMENUSC.dspf:27"
+    ],
+    [
+      "L-199",
+      "VCFSTUB → EXHBMENU",
+      "出力",
+      "OUTDESC",
+      "行5 列2 / 1000A 小数0 / O",
+      "QSDASRC/EXHBMENUSC.dspf:30"
+    ],
+    [
+      "L-200",
+      "VCFSTUB → EXHBMENU",
+      "入力",
+      "INOPT",
+      "行23 列78 / 1Y 小数0 / I",
+      "QSDASRC/EXHBMENUSC.dspf:31"
+    ],
+    [
+      "L-201",
+      "VCFSTUB → EXHBMENU",
+      "固定文言（タイトル・ラベル等）",
+      "4. Read Exhibit Guestbook",
+      "行23 列4",
+      "QSDASRC/EXHBMENUSC.dspf:34"
+    ],
+    [
+      "L-202",
+      "EXHBMENU/7（非表示）",
+      "固定文言（タイトル・ラベル等）",
+      "Are you sure you want to exit the kiosk?",
+      "行4 列5",
+      "QSDASRC/EXHBMENUSC.dspf:69"
+    ],
+    [
+      "L-203",
+      "EXHBMENU/7（非表示）",
+      "固定文言（タイトル・ラベル等）",
+      "Type the Administrator password, press ENTER to sign off",
+      "行5 列5",
+      "QSDASRC/EXHBMENUSC.dspf:71"
+    ],
+    [
+      "L-204",
+      "EXHBMENU/7（非表示）",
+      "入力",
+      "INPWD",
+      "行7 列5 / 9A 小数0 / I",
+      "QSDASRC/EXHBMENUSC.dspf:73"
+    ],
+    [
+      "L-205",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "VCF/400 - How to Navigate",
+      "行1 列3",
+      "QSDASRC/INTERSCR.dspf:6"
+    ],
+    [
+      "L-206",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Before you start, here is how to navigate:",
+      "行3 列3",
+      "QSDASRC/INTERSCR.dspf:7"
+    ],
+    [
+      "L-207",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "-----------------------------------------------------------------------------",
+      "行4 列3",
+      "QSDASRC/INTERSCR.dspf:9"
+    ],
+    [
+      "L-208",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Use",
+      "行5 列3",
+      "QSDASRC/INTERSCR.dspf:13"
+    ],
+    [
+      "L-209",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "ARROW KEYS",
+      "行5 列7",
+      "QSDASRC/INTERSCR.dspf:14"
+    ],
+    [
+      "L-210",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "or",
+      "行5 列18",
+      "QSDASRC/INTERSCR.dspf:16"
+    ],
+    [
+      "L-211",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "TAB KEY",
+      "行5 列21",
+      "QSDASRC/INTERSCR.dspf:17"
+    ],
+    [
+      "L-212",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "to move between fields.",
+      "行5 列29",
+      "QSDASRC/INTERSCR.dspf:19"
+    ],
+    [
+      "L-213",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Use",
+      "行7 列3",
+      "QSDASRC/INTERSCR.dspf:20"
+    ],
+    [
+      "L-214",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "F5",
+      "行7 列7",
+      "QSDASRC/INTERSCR.dspf:21"
+    ],
+    [
+      "L-215",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "or",
+      "行7 列10",
+      "QSDASRC/INTERSCR.dspf:23"
+    ],
+    [
+      "L-216",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "ENTER",
+      "行7 列13",
+      "QSDASRC/INTERSCR.dspf:24"
+    ],
+    [
+      "L-217",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "to perform your action.  ",
+      "行7 列19",
+      "QSDASRC/INTERSCR.dspf:26"
+    ],
+    [
+      "L-218",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Use",
+      "行9 列3",
+      "QSDASRC/INTERSCR.dspf:27"
+    ],
+    [
+      "L-219",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "F12",
+      "行9 列7",
+      "QSDASRC/INTERSCR.dspf:28"
+    ],
+    [
+      "L-220",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "to quit at any time.",
+      "行9 列11",
+      "QSDASRC/INTERSCR.dspf:30"
+    ],
+    [
+      "L-221",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Keyboard not responding? If you see",
+      "行12 列3",
+      "QSDASRC/INTERSCR.dspf:31"
+    ],
+    [
+      "L-222",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "X II",
+      "行12 列39",
+      "QSDASRC/INTERSCR.dspf:33"
+    ],
+    [
+      "L-223",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "in the left corner, press",
+      "行12 列44",
+      "QSDASRC/INTERSCR.dspf:35"
+    ],
+    [
+      "L-224",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "RIGHT CTRL",
+      "行12 列70",
+      "QSDASRC/INTERSCR.dspf:36"
+    ],
+    [
+      "L-225",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "to continue.",
+      "行13 列3",
+      "QSDASRC/INTERSCR.dspf:38"
+    ],
+    [
+      "L-226",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "-----------------------------------------------------------------------------",
+      "行14 列3",
+      "QSDASRC/INTERSCR.dspf:39"
+    ],
+    [
+      "L-227",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Got all that?",
+      "行16 列33",
+      "QSDASRC/INTERSCR.dspf:43"
+    ],
+    [
+      "L-228",
+      "VOTESTUB・ADDGBSTUB・READGBSTUB → NTRSTIT",
+      "固定文言（タイトル・ラベル等）",
+      "Press ENTER to continue.",
+      "行17 列28",
+      "QSDASRC/INTERSCR.dspf:44"
+    ],
+    [
+      "L-229",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "VCF/400 - Credits and Copyright",
+      "行1 列3",
+      "QSDASRC/CREDITSSCR.dspf:6"
+    ],
+    [
+      "L-230",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "VCF/400 V1R0 - Copyright (c) 2023-2024 The Little Beige Box",
+      "行3 列3",
+      "QSDASRC/CREDITSSCR.dspf:8"
+    ],
+    [
+      "L-231",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "https://github.com/LBBNetwork",
+      "行4 列3",
+      "QSDASRC/CREDITSSCR.dspf:10"
+    ],
+    [
+      "L-232",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "With special thanks to:",
+      "行6 列3",
+      "QSDASRC/CREDITSSCR.dspf:11"
+    ],
+    [
+      "L-233",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      " - The Atlanta Historical Computing Society",
+      "行7 列3",
+      "QSDASRC/CREDITSSCR.dspf:12"
+    ],
+    [
+      "L-234",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      " - The Southern-Fried Gaming Expo",
+      "行8 列3",
+      "QSDASRC/CREDITSSCR.dspf:15"
+    ],
+    [
+      "L-235",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "- The IBM i Hobbyists Community",
+      "行9 列4",
+      "QSDASRC/CREDITSSCR.dspf:17"
+    ],
+    [
+      "L-236",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "- Joe G.",
+      "行10 列4",
+      "QSDASRC/CREDITSSCR.dspf:19"
+    ],
+    [
+      "L-237",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "- James M.",
+      "行11 列4",
+      "QSDASRC/CREDITSSCR.dspf:21"
+    ],
+    [
+      "L-238",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "- Ben S.",
+      "行12 列4",
+      "QSDASRC/CREDITSSCR.dspf:23"
+    ],
+    [
+      "L-239",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "- Mainframes with Matthew / racingmars",
+      "行13 列4",
+      "QSDASRC/CREDITSSCR.dspf:25"
+    ],
+    [
+      "L-240",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "Dedicated to A.,",
+      "行19 列32",
+      "QSDASRC/CREDITSSCR.dspf:28"
+    ],
+    [
+      "L-241",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "my Dear One",
+      "行20 列34",
+      "QSDASRC/CREDITSSCR.dspf:30"
+    ],
+    [
+      "L-242",
+      "LEARN/400 CALL候補（直接のメニュー経路なし）",
+      "固定文言（タイトル・ラベル等）",
+      "Press ENTER to return to the VCF/400 main menu.",
+      "行22 列17",
+      "QSDASRC/CREDITSSCR.dspf:32"
+    ],
+    [
+      "L-243",
+      "VOTE1",
+      "入力順",
+      "バッジ → 展示ID → アワードID",
+      "入力順1→2→3",
+      "QSDASRC/VOTESCR.dspf:11-22"
+    ],
+    [
+      "L-244",
+      "ADDCMT",
+      "入力順",
+      "名前 → 展示ID → コメント",
+      "入力順1→2→3",
+      "QSDASRC/GUESTBKSCR.dspf:10-25"
+    ],
+    [
+      "L-245",
+      "VOTE1",
+      "エラー文言",
+      "Must enter badge number",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-246",
+      "VOTE1",
+      "エラー文言",
+      "Must enter Award ID",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-247",
+      "VOTE1",
+      "エラー文言",
+      "Must enter Exhibit ID",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-248",
+      "VOTE1",
+      "エラー文言",
+      "You have already voted.",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-249",
+      "VOTE1",
+      "エラー文言",
+      "Exhibit ineligible for award",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-250",
+      "VOTE1",
+      "エラー文言",
+      "Exhibit does not exist",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-251",
+      "VOTE1",
+      "エラー文言",
+      "Award does not exist.",
+      "行6列14・45文字。個別エラー、最後の失敗が表示",
+      "QRPGLESRC/ADDVOTE.rpgle:16-23;42-61;84-112"
+    ],
+    [
+      "L-252",
+      "ADDCMT",
+      "エラー文言",
+      "Must enter Exhibit ID",
+      "行10列5・21文字。原文を21文字に切詰め",
+      "QRPGLESRC/ADDGBCMT.rpgle:10-13;26-44"
+    ],
+    [
+      "L-253",
+      "ADDCMT",
+      "エラー文言",
+      "Must enter your name   ",
+      "行10列5・21文字。原文を21文字に切詰め",
+      "QRPGLESRC/ADDGBCMT.rpgle:10-13;26-44"
+    ],
+    [
+      "L-254",
+      "ADDCMT",
+      "エラー文言",
+      "Must enter a comment",
+      "行10列5・21文字。原文を21文字に切詰め",
+      "QRPGLESRC/ADDGBCMT.rpgle:10-13;26-44"
+    ],
+    [
+      "L-255",
+      "READCMT",
+      "エラー文言",
+      "Must enter CommentID",
+      "行4列4・20文字",
+      "QRPGLESRC/READGBCMT.rpgle:8;32-34"
+    ]
+  ],
+  "業務ルール": [
+    [
+      "項目ID",
+      "規則",
+      "条件",
+      "結果",
+      "原典"
+    ],
+    [
+      "B-01",
+      "投票入力順",
+      "VOTE1",
+      "バッジ4桁 → 展示ID9文字 → アワードID3桁。F5/Enter送信、F12取消。F5のみ強制ではない。",
+      "QRPGLESRC/ADDVOTE.rpgle:40-79; QSDASRC/VOTESCR.dspf:11-22"
+    ],
+    [
+      "B-02",
+      "必須入力",
+      "バッジ0・アワード0・展示空白",
+      "順に検査、最後の失敗で上書き。Must enter badge number / Must enter Award ID / Must enter Exhibit ID",
+      "QRPGLESRC/ADDVOTE.rpgle:42-61"
+    ],
+    [
+      "B-03",
+      "バッジ重複チェック1",
+      "BADGENBRが既存",
+      "You have already voted. / バッジ単位で1票（アワード別ではない）",
+      "QRPGLESRC/ADDVOTE.rpgle:84-89"
+    ],
+    [
+      "B-04",
+      "適格性チェック2",
+      "ELIGIBLE=0",
+      "Exhibit ineligible for award / それ以外は加点。原典はSETLL/READ後に検査。",
+      "QRPGLESRC/ADDVOTE.rpgle:91-98"
+    ],
+    [
+      "B-05",
+      "展示存在チェック3",
+      "展示IDが存在しない",
+      "Exhibit does not exist",
+      "QRPGLESRC/ADDVOTE.rpgle:100-105"
+    ],
+    [
+      "B-06",
+      "アワード存在チェック4",
+      "アワードIDが存在しない",
+      "Award does not exist.",
+      "QRPGLESRC/ADDVOTE.rpgle:107-112"
+    ],
+    [
+      "B-07",
+      "4チェック全成功",
+      "CHECKOK=4",
+      "投票登録、VOTEENDへ。失敗時登録しない。ERRLINEは後の失敗が優先（award > exhibit > eligible > duplicate）、行6列14・45文字。",
+      "QRPGLESRC/ADDVOTE.rpgle:81-122"
+    ],
+    [
+      "B-08",
+      "投票期間終了",
+      "SETTINGS.ALWVOTE='N'",
+      "投票画面を出さずENDOFCON。The voting period has ended and you can no longer vote.",
+      "QRPGLESRC/ADDVOTE.rpgle:137-151"
+    ],
+    [
+      "B-09",
+      "展示固定",
+      "LAUNCH <> 'MM2024'",
+      "投票INEXHBと投稿INIDを利用者プロファイルで固定（保護）。MM2024では自由入力。",
+      "QRPGLESRC/ADDVOTE.rpgle:124-135; QRPGLESRC/ADDGBCMT.rpgle:81-89"
+    ],
+    [
+      "B-10",
+      "投稿入力・必須",
+      "名前16文字 → 展示ID9文字 → コメント200文字",
+      "F5/Enter送信、F12取消。展示・名前・コメント順の必須検査。Must enter Exhibit ID / Must enter your name    / Must enter a comment。行10列5・21文字へ代入し長文は切詰め。",
+      "QRPGLESRC/ADDGBCMT.rpgle:24-59; QSDASRC/GUESTBKSCR.dspf:4-27"
+    ],
+    [
+      "B-11",
+      "コメント登録",
+      "必須入力あり",
+      "CMTID=max+1、VISIBLE='Y'。名前・展示ID・本文保存。ENDCMTの完了文はComment ID Is:とあるがID出力フィールドなし。展示存在検査は原典にはない。",
+      "QRPGLESRC/ADDGBCMT.rpgle:61-79"
+    ],
+    [
+      "B-12",
+      "閲覧入力",
+      "INCMTID=0",
+      "Must enter CommentID / 行4列4・20文字。F5/Enter表示、F12取消。",
+      "QRPGLESRC/READGBCMT.rpgle:26-50; QSDASRC/GUESTBKSCR.dspf:78-108"
+    ],
+    [
+      "B-13",
+      "閲覧検索・末尾",
+      "指定ID以上をSETLL/READ。末尾超過",
+      "次のレコード。末尾超過は最後のレコードへフォールバック（確定前提）。表示件数は件数COUNTではなく最終CMTID。",
+      "QRPGLESRC/READGBCMT.rpgle:53-86"
+    ],
+    [
+      "B-14",
+      "非表示コメント",
+      "VISIBLE='N'",
+      "Name Hidden / This comment hidden by an admin - offensive content.（本文も置換）。利用者・管理者とも優先適用。",
+      "QRPGLESRC/READGBCMT.rpgle:57-60"
+    ],
+    [
+      "B-15",
+      "別展示コメント",
+      "VISIBLE<>'N' かつ EXHBID<>USERPRF かつ USERPRF<>'MM2024'",
+      "This comment is not part of this guestbook. / 名前とタイトルを空白化。",
+      "QRPGLESRC/READGBCMT.rpgle:61-73"
+    ],
+    [
+      "B-16",
+      "通常閲覧",
+      "同展示またはMM2024",
+      "名前（表示11文字）・本文・展示タイトル（50文字）を表示。",
+      "QRPGLESRC/READGBCMT.rpgle:61-67"
+    ],
+    [
+      "B-17",
+      "LEARN初期・操作",
+      "先頭レコード表示",
+      "F3終了、F5前進、F8後退。通常ページは1500文字。初期表示時はPARSESCRIPTを呼ばず前進時に解決。",
+      "QRPGLESRC/LRN400.rpgle:11-35;93-130"
+    ],
+    [
+      "B-18",
+      "LEARN END",
+      "EXTRA='END'",
+      "前進時に終了。CONTENTがCALL/JUMPなら後段判定に上書きされる。",
+      "QRPGLESRC/LRN400.rpgle:37-59"
+    ],
+    [
+      "B-19",
+      "LEARN CALL",
+      "CONTENT='CALL'",
+      "EXTRAのプログラムを呼び出す。復帰後CURPAGENBR+1へ。戻り先は分岐ページ-1。",
+      "QRPGLESRC/LRN400.rpgle:42-65;73-91"
+    ],
+    [
+      "B-20",
+      "LEARN JUMP",
+      "CONTENT='JUMP'",
+      "EXTRAのページ番号へ（先頭ゼロ付き）。戻り先は分岐ページ-1。",
+      "QRPGLESRC/LRN400.rpgle:46-48;67-91"
+    ],
+    [
+      "B-21",
+      "LEARN末尾・戻る",
+      "前進対象なし / 分岐後F8",
+      "対象なしでは内容空白、ALWFWD=0。F8はFRMPAGENBRがあれば分岐前ページへ、なければ1減算（0より下げない）。JUMPTO先で再帰解決はしない。",
+      "QRPGLESRC/LRN400.rpgle:93-130"
+    ],
+    [
+      "B-22",
+      "展示専用データ",
+      "LRN400STUB",
+      "現在のプロファイル名のファイルにLRN400STRをオーバーライドし、終了時解除。移行では展示単位のページ集合として扱う。",
+      "QCLSRC/LRN400STUB.clp:2-8"
+    ],
+    [
+      "B-23",
+      "キオスク項目",
+      "EXHBMENU",
+      "1=投票（ELIGIBLE=1のみ表示・起動）、2=LEARN（ENLRN400=1のみ）、3=投稿、4=閲覧。非表示7=管理者パスワード。",
+      "QRPGLESRC/EXHBMENU.rpgle:16-46;62-86"
+    ],
+    [
+      "B-24",
+      "管理者終了",
+      "EXHBMENU/7",
+      "ADMPSWRDに一致すればキオスク終了。不一致は終了しない。専用エラーテキスト・Fキー定義なし。原典はSETTINGS先頭を読むが確定前提でADMPSWRDを参照。",
+      "QRPGLESRC/EXHBMENU.rpgle:48-60"
+    ],
+    [
+      "B-25",
+      "導入案内",
+      "VCFMAIN/11・12・13の各stub",
+      "処理前にNTRSTIT。VCFSTUB経由も同じstubを使用。ARROW/TAB移動、F5/ENTER操作、F12終了の案内。",
+      "QCLSRC/VOTESTUB.clp:5-6; QCLSRC/ADDGBSTUB.clp:5-6; QCLSRC/READGBSTUB.clp:5-6"
+    ],
+    [
+      "B-26",
+      "DAVE隠し分岐",
+      "INEXHB='DAVE'",
+      "DAVE表示後に終了。通常投票は保存しない。",
+      "QRPGLESRC/ADDVOTE.rpgle:63-65;153-158"
+    ],
+    [
+      "B-27",
+      "メニューコマンド",
+      "VCFMAIN",
+      "1=LRN400、11=VOTESTUB、12=ADDGBSTUB、13=READGBSTUB、80=signoff。その他の表示項目は実行定義欠落。",
+      "QMNUSRC/VCFMAINQQ.mnucmd:2-6"
+    ]
+  ],
+  "データモデル": [
+    [
+      "項目ID",
+      "ファイル",
+      "フィールド",
+      "型・桁数",
+      "キー",
+      "意味・原典"
+    ],
+    [
+      "D-01",
+      "EXHBDB",
+      "EXHBDBID",
+      "B 3桁 小数0（DDS数値桁、バイト数ではない）",
+      "非キー（外部キー宣言なし）",
+      "展示管理番号 / QDDSSRC/EXHBDB.pf:3"
+    ],
+    [
+      "D-02",
+      "EXHBDB",
+      "EXHUSRPRF",
+      "A 9桁文字",
+      "一意キー",
+      "展示ID・関連利用者 / QDDSSRC/EXHBDB.pf:4"
+    ],
+    [
+      "D-03",
+      "EXHBDB",
+      "EXHBITOR",
+      "A 20桁文字",
+      "非キー（外部キー宣言なし）",
+      "展示者 / QDDSSRC/EXHBDB.pf:5"
+    ],
+    [
+      "D-04",
+      "EXHBDB",
+      "EXHBCITY",
+      "A 20桁文字",
+      "非キー（外部キー宣言なし）",
+      "市 / QDDSSRC/EXHBDB.pf:6"
+    ],
+    [
+      "D-05",
+      "EXHBDB",
+      "EXHBSTATE",
+      "A 2桁文字",
+      "非キー（外部キー宣言なし）",
+      "州 / QDDSSRC/EXHBDB.pf:7"
+    ],
+    [
+      "D-06",
+      "EXHBDB",
+      "EXHBTITLE",
+      "A 50桁文字",
+      "非キー（外部キー宣言なし）",
+      "展示タイトル / QDDSSRC/EXHBDB.pf:8"
+    ],
+    [
+      "D-07",
+      "EXHBDB",
+      "EXHBDESC",
+      "A 1000桁文字",
+      "非キー（外部キー宣言なし）",
+      "展示説明 / QDDSSRC/EXHBDB.pf:9"
+    ],
+    [
+      "D-08",
+      "EXHBDB",
+      "ELIGIBLE",
+      "B 1桁 小数0（DDS数値桁、バイト数ではない）",
+      "非キー（外部キー宣言なし）",
+      "投票可否0/1 / QDDSSRC/EXHBDB.pf:10"
+    ],
+    [
+      "D-09",
+      "EXHBDB",
+      "ENLRN400",
+      "B 1桁 小数0（DDS数値桁、バイト数ではない）",
+      "非キー（外部キー宣言なし）",
+      "学習可否0/1 / QDDSSRC/EXHBDB.pf:11"
+    ],
+    [
+      "D-10",
+      "VOTINGDB",
+      "BADGENBR",
+      "B 4桁 小数0（DDS数値桁、バイト数ではない）",
+      "一意キー",
+      "バッジ番号 / QDDSSRC/VOTINGDB.pf:4"
+    ],
+    [
+      "D-11",
+      "VOTINGDB",
+      "AWARDNBR",
+      "B 3桁 小数0（DDS数値桁、バイト数ではない）",
+      "非キー（外部キー宣言なし）",
+      "投票先賞 / QDDSSRC/VOTINGDB.pf:5"
+    ],
+    [
+      "D-12",
+      "VOTINGDB",
+      "EXHBNBR",
+      "A 9桁文字",
+      "非キー（外部キー宣言なし）",
+      "投票先展示 / QDDSSRC/VOTINGDB.pf:6"
+    ],
+    [
+      "D-13",
+      "GUESTBKDB",
+      "CMTID",
+      "B 4桁 小数0（DDS数値桁、バイト数ではない）",
+      "一意キー",
+      "コメント番号 / QDDSSRC/GUESTBKDB.pf:3"
+    ],
+    [
+      "D-14",
+      "GUESTBKDB",
+      "VISIBLE",
+      "A 1桁文字",
+      "非キー（外部キー宣言なし）",
+      "公開Y・非表示N / QDDSSRC/GUESTBKDB.pf:4"
+    ],
+    [
+      "D-15",
+      "GUESTBKDB",
+      "EXHBID",
+      "A 9桁文字",
+      "非キー（外部キー宣言なし）",
+      "コメント先展示 / QDDSSRC/GUESTBKDB.pf:5"
+    ],
+    [
+      "D-16",
+      "GUESTBKDB",
+      "GUESTNAME",
+      "A 20桁文字",
+      "非キー（外部キー宣言なし）",
+      "投稿者名 / QDDSSRC/GUESTBKDB.pf:6"
+    ],
+    [
+      "D-17",
+      "GUESTBKDB",
+      "GUESTCMT",
+      "A 200桁文字",
+      "非キー（外部キー宣言なし）",
+      "本文 / QDDSSRC/GUESTBKDB.pf:7"
+    ],
+    [
+      "D-18",
+      "AWARDDB",
+      "AWARDID",
+      "B 3桁 小数0（DDS数値桁、バイト数ではない）",
+      "一意キー",
+      "賞番号 / QDDSSRC/AWARDDB.pf:3"
+    ],
+    [
+      "D-19",
+      "AWARDDB",
+      "AWARDTITLE",
+      "A 100桁文字",
+      "非キー（外部キー宣言なし）",
+      "賞名 / QDDSSRC/AWARDDB.pf:4"
+    ],
+    [
+      "D-20",
+      "AWARDDB",
+      "AWARDDESC",
+      "A 1000桁文字",
+      "非キー（外部キー宣言なし）",
+      "賞説明 / QDDSSRC/AWARDDB.pf:5"
+    ],
+    [
+      "D-21",
+      "SETTINGS",
+      "SETTING",
+      "A 9桁文字",
+      "一意キー",
+      "設定名 ALWVOTE/ADMPSWRD / QDDSSRC/SETTINGS.pf:3"
+    ],
+    [
+      "D-22",
+      "SETTINGS",
+      "VALUE",
+      "A 9桁文字",
+      "非キー（外部キー宣言なし）",
+      "設定値 / QDDSSRC/SETTINGS.pf:4"
+    ],
+    [
+      "D-23",
+      "SECOFRS",
+      "USERPROF",
+      "A 9桁文字",
+      "一意キー",
+      "管理者プロファイル（利用者機能では未参照） / QDDSSRC/SECOFRS.pf:3"
+    ],
+    [
+      "D-24",
+      "LRN400STR",
+      "PAGENBR",
+      "B 4桁 小数0（DDS数値桁、バイト数ではない）",
+      "一意キー",
+      "ページ番号 / QDDSSRC/LRN400STR.pf:4"
+    ],
+    [
+      "D-25",
+      "LRN400STR",
+      "CONTENT",
+      "A 1500桁文字",
+      "非キー（外部キー宣言なし）",
+      "本文・CALL/JUMP命令 / QDDSSRC/LRN400STR.pf:5"
+    ],
+    [
+      "D-26",
+      "LRN400STR",
+      "EXTRA",
+      "A 9桁文字",
+      "非キー（外部キー宣言なし）",
+      "END・呼出し先・移動先 / QDDSSRC/LRN400STR.pf:6"
+    ]
+  ],
+  "非対象スコープ": [
+    [
+      "項目ID",
+      "対象",
+      "取り扱い",
+      "根拠"
+    ],
+    [
+      "X-01",
+      "ADMMAIN系",
+      "管理機能一式は非対象。SECOFRSはモデルのみ記載。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-02",
+      "VCFMAIN 90",
+      "Start Admin Menuは非対象。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-03",
+      "PRTLSTVOTE/PRTLSTCMT",
+      "投票・投稿後の印刷呼出しは言及のみ。スプールは移植しない。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-04",
+      "BMOVDB",
+      "非対象DB。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-05",
+      "OLDVOTE/OLDADDVOTE/PRINTER/BEEMOVIE",
+      "旧版・印刷・余興プログラムは言及のみ。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-06",
+      "PASSSCR/管理DDS形式",
+      "PASSSCRは対象プログラムからの参照なし。ADMCREATE/ADMDELETE/HIDECMT/MAINADMINは管理用。利用者画面として実装しない。",
+      "依頼スコープ・原典呼出し定義"
+    ],
+    [
+      "X-07",
+      "VCFMAIN 2～10",
+      "番号・表示文言は保持するが外部オフィス・ゲームの実装は対象利用者機能に含めない。",
+      "依頼スコープ・原典呼出し定義"
+    ]
+  ]
+}
